@@ -136,7 +136,7 @@
 		}
 	};
 </script>
-<style>
+<style lang="scss" scoped>
 	.jiangqie-searchbox {
 		width: 100%;
 		height: 92rpx;

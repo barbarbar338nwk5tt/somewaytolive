@@ -60,6 +60,19 @@
 				</view>
 			</view>
 			
+			<view v-if="pre_next" class="jiangqie-pre-next-view">
+				<view @click="clickNext" class="jiangqie-next-view">
+					<template v-if="next">
+						<uni-icons type="arrowleft" size="24"></uni-icons>上一篇
+					</template>
+				</view>
+				<view @click="clickPre" class="jiangqie-pre-view">
+					<template v-if="pre">
+						下一篇<uni-icons type="arrowright" size="24"></uni-icons>
+					</template>
+				</view>
+			</view>
+			
 			<!-- #ifdef MP-WEIXIN -->
 			<template v-if="wx_ad_bottom">
 				<ad :unit-id="wx_ad_bottom"></ad>
@@ -224,6 +237,10 @@
 				
 				wx_ad_top: undefined,
 				wx_ad_bottom: undefined,
+				
+				pre_next: undefined,
+				pre: undefined,
+				next: undefined,
 
 				//小程序码
 				acode: '',
@@ -293,6 +310,11 @@
 				
 				this.wx_ad_top = res.data.wx_ad_top;
 				this.wx_ad_bottom = res.data.wx_ad_bottom;
+				this.pre_next = res.data.pre_next;
+				if (this.pre_next) {
+					this.pre = res.data.pre;
+					this.next = res.data.next;
+				}
 				
 				// #ifdef MP-BAIDU
 				let keywords = [];
@@ -608,6 +630,24 @@
 					this.post_favorite = (this.post_favorite == 1 ? 0 : 1);
 				});
 			},
+			
+			/**
+			 * 上一篇
+			 */
+			clickPre() {
+				if (this.pre) {
+					Util.openLink('/pages/article/article?post_id=' + this.pre)
+				}
+			},
+			
+			/**
+			 * 下一篇
+			 */
+			clickNext() {
+				if (this.next) {
+					Util.openLink('/pages/article/article?post_id=' + this.next)
+				}
+			},
 
 			/**
 			 * 加载微信小程序码
@@ -672,7 +712,7 @@
 		}
 	};
 </script>
-<style>
+<style lang="scss" scoped>
 	button {
 		margin: 0;
 		padding: 0;
@@ -1185,5 +1225,17 @@
 
 	.jiangqie-official-mod {
 		padding: 10rpx 0;
+	}
+	
+	.jiangqie-pre-next-view {
+		display: flex;
+		justify-content: space-between;
+		padding-bottom: 30rpx;
+		border-bottom: 1rpx solid #EEEEEE;
+		color: #333333;
+		.jiangqie-pre-view, .jiangqie-next-view  {
+			display: flex;
+			align-items: center;
+		}
 	}
 </style>

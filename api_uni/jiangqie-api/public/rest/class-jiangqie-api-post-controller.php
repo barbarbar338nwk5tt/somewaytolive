@@ -372,6 +372,18 @@ class JiangQie_API_Post_Controller extends JiangQie_API_Base_Controller
 			$post['wx_ad_bottom'] = false;
 		}
 
+		//上一篇 下一篇
+		if (JiangQie_API::option_value('switch_pre_next')) {
+			$post['pre_next'] = true;
+			$GLOBALS['post'] = $postObj;
+			$pre_post = get_previous_post();
+			$post['pre'] = $pre_post ? $pre_post->ID : false;
+			$next_post = get_next_post();
+			$post['next'] = $next_post ? $next_post->ID: false;
+		} else {
+			$post['pre_next'] = false;
+		}
+
 		return $this->make_success($post);
 	}
 

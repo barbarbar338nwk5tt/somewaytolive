@@ -103,7 +103,7 @@
 	};
 </script>
 
-<style>
+<style lang="scss" scoped>
 	.container {
 		padding: 0 50rpx 40rpx 50rpx;
 		box-sizing: border-box;

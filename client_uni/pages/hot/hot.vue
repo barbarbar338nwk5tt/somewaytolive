@@ -220,7 +220,7 @@
 	};
 </script>
 
-<style>
+<style lang="scss" scoped>
 	.jiangqie-timeline-view {
 		text-align: left;
 		padding-left: 66rpx;

@@ -59,6 +59,7 @@ class JiangQie_API_Admin
         require_once $base_dir . 'partials/hot.php';
         require_once $base_dir . 'partials/ad.php';
 		require_once $base_dir . 'partials/profile.php';
+        require_once $base_dir . 'partials/article.php';
 
         //
         // 备份

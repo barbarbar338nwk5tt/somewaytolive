@@ -233,6 +233,7 @@
 	 */
 	const Constants = require("@/utils/constants.js");
 	const Api = require("@/utils/api.js");
+	const Util = require("@/utils/util.js");
 	const Rest = require("@/utils/rest.js");
 
 	import JiangqieLoading from "@/components/loading/loading";
@@ -447,12 +448,12 @@
 
 			handlerIconNavClick: function(e) {
 				let link = e.currentTarget.dataset.link;
-				this.openLink(link);
+				Util.openLink(link);
 			},
 
 			handlerActiveClick: function(e) {
 				let link = e.currentTarget.dataset.link;
-				this.openLink(link);
+				Util.openLink(link);
 			},
 
 			handlerArticleClick: function(e) {
@@ -497,61 +498,61 @@
 				});
 			},
 
-			openLink: function(link) {
-				// #ifdef MP-WEIXIN
-				if (link.startsWith('finder:')) {
-					let finder = '';
-					let feedId = '';
-					let index = link.indexOf(';feedId:');
-					if (index < 0) {
-						finder = link.substring('finder:'.length);
-					} else {
-						finder = link.substring('finder:'.length, index);
-						feedId = link.substring(index + ';feedId:'.length);
-					}
-					let params = {
-						finderUserName: finder,
-						fail: res => {
-							uni.setClipboardData({
-								data: link
-							});
-						}
-					};
+			// openLink: function(link) {
+			// 	// #ifdef MP-WEIXIN
+			// 	if (link.startsWith('finder:')) {
+			// 		let finder = '';
+			// 		let feedId = '';
+			// 		let index = link.indexOf(';feedId:');
+			// 		if (index < 0) {
+			// 			finder = link.substring('finder:'.length);
+			// 		} else {
+			// 			finder = link.substring('finder:'.length, index);
+			// 			feedId = link.substring(index + ';feedId:'.length);
+			// 		}
+			// 		let params = {
+			// 			finderUserName: finder,
+			// 			fail: res => {
+			// 				uni.setClipboardData({
+			// 					data: link
+			// 				});
+			// 			}
+			// 		};
 					
-					if (feedId != '') {
-						params.feedId = feedId;
-						wx.openChannelsActivity(params);
-					} else {
-						wx.openChannelsUserProfile(params);
-					}
+			// 		if (feedId != '') {
+			// 			params.feedId = feedId;
+			// 			wx.openChannelsActivity(params);
+			// 		} else {
+			// 			wx.openChannelsUserProfile(params);
+			// 		}
 					
-					return;
-				}
-				// #endif
+			// 		return;
+			// 	}
+			// 	// #endif
 				
-				if (link.startsWith('/pages')) {
-					uni.navigateTo({
-						url: link
-					});
-				} else {
-					uni.navigateToMiniProgram({
-						appId: link,
-						fail: res => {
-							if (res.errMsg && res.errMsg.indexOf('fail cancel') < 0) {
-								uni.showToast({
-									icon: 'none',
-									title: res.errMsg
-								});
-							}
-						}
-					});
-				}
-			}
+			// 	if (link.startsWith('/pages')) {
+			// 		uni.navigateTo({
+			// 			url: link
+			// 		});
+			// 	} else {
+			// 		uni.navigateToMiniProgram({
+			// 			appId: link,
+			// 			fail: res => {
+			// 				if (res.errMsg && res.errMsg.indexOf('fail cancel') < 0) {
+			// 					uni.showToast({
+			// 						icon: 'none',
+			// 						title: res.errMsg
+			// 					});
+			// 				}
+			// 			}
+			// 		});
+			// 	}
+			// }
 		}
 	};
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.jiangqie-logo {
 		display: flex;
 		align-items: center;

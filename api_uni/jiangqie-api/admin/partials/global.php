@@ -98,21 +98,21 @@ CSF::createSection($prefix, array(
             'default' => '1'
         ),
 
-        array(
-            'id'    => 'switch_comment',
-            'type'  => 'switcher',
-            'title' => '评论',
-            'subtitle' => '是否开启评论功能?',
-            'default' => '1'
-        ),
+        // array(
+        //     'id'    => 'switch_comment',
+        //     'type'  => 'switcher',
+        //     'title' => '评论',
+        //     'subtitle' => '是否开启评论功能?',
+        //     'default' => '1'
+        // ),
 
-        array(
-            'id'    => 'switch_comment_verify',
-            'type'  => 'switcher',
-            'title' => '评论审核',
-            'subtitle' => '评论是否需要审核?',
-            'default' => '1'
-        ),
+        // array(
+        //     'id'    => 'switch_comment_verify',
+        //     'type'  => 'switcher',
+        //     'title' => '评论审核',
+        //     'subtitle' => '评论是否需要审核?',
+        //     'default' => '1'
+        // ),
 
         array(
             'id'      => 'default_thumbnail',

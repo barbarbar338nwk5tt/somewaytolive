@@ -75,7 +75,7 @@
 		}
 	};
 </script>
-<style>
+<style lang="scss" scoped>
 	.jiangqie-page-body {
 		padding: 0 30rpx 30rpx 30rpx;
 	}
