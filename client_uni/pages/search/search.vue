@@ -82,23 +82,15 @@
 		props: {},
 
 		onLoad: function(options) {
-			let that = this;
 			uni.getStorage({
 				key: Constant.JQ_SEARCH_KEY,
-				success(res) {
-					that.setData({
-						historySearch: res.data
-					});
+				success: (res) => {
+					this.historySearch = res.data;
 				}
-
 			});
-			that.setData({
-				placeholder: getApp().globalData.appName
-			});
+			this.placeholder = getApp().globalData.appName;
 			Rest.get(Api.JIANGQIE_POSTS_SEARCH_HOT).then(res => {
-				that.setData({
-					hotSearch: res.data
-				});
+				this.hotSearch = res.data;
 			});
 		},
 
@@ -121,9 +113,7 @@
 			//输入
 			handlerSearchInput: function(e) {
 				this.keyword = e.detail.value;
-				this.setData({
-					canSearch: this.keyword.length > 0
-				});
+				this.canSearch = this.keyword.length > 0;
 			},
 
 			handerSearchConfirm: function(e) {
@@ -136,24 +126,20 @@
 			},
 
 			search: function() {
-				let that = this;
 				uni.getStorage({
 					key: Constant.JQ_SEARCH_KEY,
 					success(res) {
-						let keys = [that.keyword];
+						let keys = [this.keyword];
 
-						for (let i = 0; i < res.data.length && keys.length < Constant
-							.JQ_SEARCH_MAX_COUNT; i++) {
-							if (that.keyword == res.data[i]) {
+						for (let i = 0; i < res.data.length && keys.length < Constant.JQ_SEARCH_MAX_COUNT; i++) {
+							if (this.keyword == res.data[i]) {
 								continue;
 							}
 
 							keys.push(res.data[i]);
 						}
 
-						that.setData({
-							historySearch: keys
-						});
+						this.historySearch = keys;
 						uni.setStorage({
 							data: keys,
 							key: Constant.JQ_SEARCH_KEY
@@ -161,10 +147,8 @@
 					},
 
 					fail(e) {
-						let keys = [that.keyword];
-						that.setData({
-							historySearch: keys
-						});
+						let keys = [this.keyword];
+						this.historySearch = keys;
 						uni.setStorage({
 							data: keys,
 							key: Constant.JQ_SEARCH_KEY
@@ -184,7 +168,6 @@
 
 			//清楚搜索历史
 			handlerClearHistory: function(e) {
-				let that = this;
 				uni.showModal({
 					title: '提示',
 					content: '确定要清除吗？',
@@ -193,13 +176,9 @@
 							uni.setStorage({
 								key: Constant.JQ_SEARCH_KEY,
 								data: [],
-
-								success() {
-									that.setData({
-										historySearch: []
-									});
+								success: () => {
+									this.historySearch = [];
 								}
-
 							});
 						}
 					}
@@ -216,7 +195,6 @@
 
 			//历史删除
 			handlerSearchItemDelete: function(e) {
-				let that = this;
 				uni.showModal({
 					title: '提示',
 					content: '确定要删除吗？',
@@ -225,17 +203,15 @@
 							let item = e.currentTarget.dataset.item;
 							let keys = [];
 
-							for (let i = 0; i < that.historySearch.length; i++) {
-								if (item == that.historySearch[i]) {
+							for (let i = 0; i < this.historySearch.length; i++) {
+								if (item == this.historySearch[i]) {
 									continue;
 								}
 
-								keys.push(that.historySearch[i]);
+								keys.push(this.historySearch[i]);
 							}
 
-							that.setData({
-								historySearch: keys
-							});
+							this.historySearch = keys;
 							uni.setStorage({
 								data: keys,
 								key: Constant.JQ_SEARCH_KEY

@@ -94,9 +94,7 @@
 		props: {},
 
 		onLoad: function(options) {
-			this.setData({
-				title: getApp().globalData.appName
-			});
+			this.title = getApp().globalData.appName;
 
 			// #ifdef MP-WEIXIN || MP-QQ
 			uni.login({

@@ -128,17 +128,14 @@
 
 		onLoad: function(options) {
 			//获取配置
-			let that = this;
 			Rest.get(Api.JIANGQIE_SETTING_HOT).then(res => {
-				that.setData({
-					setting: {
-						background: res.data.background,
-						title: res.data.title ? res.data.title : that.default.title,
-						description: res.data.description ? res.data.description : that.default
-							.description
-					},
-					tl_background: res.data.tl_background
-				});
+				this.setting = {
+					background: res.data.background,
+					title: res.data.title ? res.data.title : this.default.title,
+					description: res.data.description ? res.data.description : this.default
+						.description
+				};
+				this.tl_background = res.data.tl_background;
 				
 				// #ifdef MP-BAIDU
 				swan.setPageInfo({
@@ -193,9 +190,7 @@
 					return false;
 				}
 
-				this.setData({
-					currentTab: cur
-				});
+				this.currentTab = cur;
 				this.posts = [];
 				this.loadPosts(true);
 			},
@@ -209,20 +204,15 @@
 
 			//加载数据
 			loadPosts(refresh) {
-				let that = this;
-				that.setData({
-					loadding: true
-				});
+				this.loadding = true;
 				Rest.get(Api.JIANGQIE_POSTS_HOT, {
-					'offset': refresh ? 0 : that.posts.length,
-					'sort': that.sorts[that.currentTab]
-				}).then(res => {
-					that.setData({
-						loaded: true,
-						loadding: false,
-						posts: refresh ? res.data : that.posts.concat(res.data),
-						pullUpOn: res.data.length >= Constants.JQ_PER_PAGE_COUNT
-					});
+					'offset': refresh ? 0 : this.posts.length,
+					'sort': this.sorts[this.currentTab]
+				}).then(res => {					
+					this.loaded = true;
+					this.loadding = false;
+					this.posts = (refresh ? res.data : this.posts.concat(res.data)),
+					this.pullUpOn = (res.data.length >= Constants.JQ_PER_PAGE_COUNT)
 				});
 			}
 

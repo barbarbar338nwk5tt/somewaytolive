@@ -204,14 +204,10 @@
 			},
 
 			loadPost: function(refresh) {
-				let that = this;
-				that.setData({
-					loadding: true
-				});
+				this.loadding = true;
 				let offset = 0;
-
 				if (!refresh) {
-					offset = that.posts.length;
+					offset = this.posts.length;
 				}
 
 				let url = '';
@@ -219,29 +215,27 @@
 					offset: offset
 				};
 
-				if (that.cat_id !== undefined) {
+				if (this.cat_id !== undefined) {
 					url = Api.JIANGQIE_POSTS_CATEGORY;
-					params.cat_id = that.cat_id;
-				} else if (that.tag_id !== undefined) {
+					params.cat_id = this.cat_id;
+				} else if (this.tag_id !== undefined) {
 					url = Api.JIANGQIE_POSTS_TAG;
-					params.tag_id = that.tag_id;
-				} else if (that.search !== undefined) {
+					params.tag_id = this.tag_id;
+				} else if (this.search !== undefined) {
 					url = Api.JIANGQIE_POSTS_SEARCH;
-					params.search = that.search;
-				} else if (that.track !== undefined) {
+					params.search = this.search;
+				} else if (this.track !== undefined) {
 					url = Api.JIANGQIE_POSTS_MY;
-					params.track = that.track;
+					params.track = this.track;
 				} else {
 					url = Api.JIANGQIE_POSTS_LAST;
 				}
 
 				Rest.get(url, params).then(res => {
-					that.setData({
-						loaded: true,
-						loadding: false,
-						posts: refresh ? res.data : that.posts.concat(res.data),
-						pullUpOn: res.data.length >= Constants.JQ_PER_PAGE_COUNT
-					});
+					this.loaded = true;
+					this.loadding = false;
+					this.posts = (refresh ? res.data : this.posts.concat(res.data));
+					this.pullUpOn = res.data.length >= Constants.JQ_PER_PAGE_COUNT;
 				});
 			},
 		}

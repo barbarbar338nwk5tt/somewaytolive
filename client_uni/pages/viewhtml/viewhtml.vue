@@ -41,17 +41,16 @@
 		props: {},
 
 		onLoad: function(options) {
-			let that = this;
 			Rest.get(Api.JIANGQIE_POST_PAGE, {
 				page_id: options.page_id
 			}).then(res => {
-				that.page_id = options.page_id;
-				that.title = res.data.title;
+				this.page_id = options.page_id;
+				this.title = res.data.title;
 				uni.setNavigationBarTitle({
 					title: res.data.title
 				});
-				//WxParse.wxParse('article', 'html', res.data.content, that, 5)
-				that.article = that.escape2Html(res.data.content);
+				//WxParse.wxParse('article', 'html', res.data.content, this, 5)
+				this.article = this.escape2Html(res.data.content);
 			});
 		},
 

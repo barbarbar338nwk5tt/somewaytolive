@@ -304,25 +304,20 @@
 		props: {},
 
 		onLoad: function(options) {
-			let that = this; //获取配置
-
 			Rest.get(Api.JIANGQIE_SETTING_HOME).then(res => {
 				let logo = "/static/images/logo.png";
-
 				if (res.data.logo && res.data.logo.length > 0) {
 					logo = res.data.logo;
 				}
 
-				that.setData({
-					logo: logo,
-					topNav: that.topNav.concat(res.data.top_nav),
-					slide: res.data.slide,
-					iconNav: res.data.icon_nav,
-					actives: res.data.actives,
-					hot: res.data.hot,
-					listMode: res.data.list_mode,
-					background: res.data.slide && res.data.slide.length > 0 ? res.data.background : ''
-				});
+				this.logo = logo;
+				this.topNav = this.topNav.concat(res.data.top_nav);
+				this.slide = res.data.slide;
+				this.iconNav = res.data.icon_nav;
+				this.actives = res.data.actives;
+				this.hot = res.data.hot;
+				this.listMode = res.data.list_mode;
+				this.background = (res.data.slide && res.data.slide.length > 0 ? res.data.background : '')
 
 				if (res.data.title && res.data.title.length > 0) {
 					getApp().globalData.appName = res.data.title;
@@ -424,24 +419,19 @@
 
 			//slide start----
 			handlerSlideChange: function(e) {
-				this.setData({
-					current: e.detail.current
-				});
+				this.current = e.detail.current;
 			},
 			//slide end----
 
 			//tab -- start
 			swichNav: function(e) {
 				let cur = e.currentTarget.dataset.current;
-
 				if (this.currentTab == cur) {
 					return false;
 				}
-
-				this.setData({
-					background: cur == 0 && this.slide && this.slide.length > 0 ? Api.JIANGQIE_BG_INDEX : '',
-					currentTab: cur
-				});
+				
+				this.background = (cur == 0 && this.slide && this.slide.length > 0 ? Api.JIANGQIE_BG_INDEX : '');
+				this.currentTab = cur;
 
 				if (cur !== 0) {
 					this.loadPost(true);
@@ -474,47 +464,36 @@
 
 			//加载数据
 			loadPostLast: function(refresh) {
-				let that = this;
-				that.setData({
-					loaddingLast: true
-				});
+				this.loaddingLast = true;
 				let offset = 0;
 
 				if (!refresh) {
-					offset = that.postsLast.length;
+					offset = this.postsLast.length;
 				}
 
 				Rest.get(Api.JIANGQIE_POSTS_LAST, {
 					'offset': offset
 				}).then(res => {
-					that.setData({
-						loaddingLast: false,
-						postsLast: refresh ? res.data : that.postsLast.concat(res.data),
-						pullUpOnLast: res.data.length >= Constants.JQ_PER_PAGE_COUNT
-					});
+					this.loaddingLast = false;
+					this.postsLast = (refresh ? res.data : this.postsLast.concat(res.data));
+					this.pullUpOnLast = (res.data.length >= Constants.JQ_PER_PAGE_COUNT)
 				});
 			},
 
 			loadPost: function(refresh) {
-				let that = this;
-				that.setData({
-					loadding: true
-				});
+				this.loadding = true;
 				let offset = 0;
-
 				if (!refresh) {
-					offset = that.posts.length;
+					offset = this.posts.length;
 				}
 
 				Rest.get(Api.JIANGQIE_POSTS_CATEGORY, {
 					'offset': offset,
-					'cat_id': that.topNav[that.currentTab].id
+					'cat_id': this.topNav[this.currentTab].id
 				}).then(res => {
-					that.setData({
-						loadding: false,
-						posts: refresh ? res.data : that.posts.concat(res.data),
-						pullUpOn: res.data.length >= Constants.JQ_PER_PAGE_COUNT
-					});
+					this.loadding = false;
+					this.posts = (refresh ? res.data : this.posts.concat(res.data));
+					this.pullUpOn = res.data.length >= Constants.JQ_PER_PAGE_COUNT
 				});
 			},
 

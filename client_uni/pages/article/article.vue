@@ -276,21 +276,20 @@
 				return;
 			}
 
-			let that = this;
 			Rest.get(Api.JIANGQIE_POST_DETAIL, {
-				post_id: that.post_id
+				post_id: this.post_id
 			}).then(res => {
 				uni.setNavigationBarTitle({
 					title: res.data.title
 				});
-				that.setData({
-					post: res.data,
-					post_like: res.data.user.islike,
-					post_favorite: res.data.user.isfavorite,
-					comment_count: Number(res.data.comment_count),
-					like_list: res.data.like_list
-				});
-				that.article = that.escape2Html(res.data.content);
+
+				this.post = res.data;
+				this.post_like = res.data.user.islike;
+				this.post_favorite = res.data.user.isfavorite;
+				this.comment_count = Number(res.data.comment_count);
+				this.like_list = res.data.like_list;
+
+				this.article = res.data.content;
 				
 				this.wx_ad_top = res.data.wx_ad_top;
 				this.wx_ad_bottom = res.data.wx_ad_bottom;
@@ -506,23 +505,20 @@
 			 * 文章 点赞
 			 */
 			handlerLikeClick: function(e) {
-				let that = this;
 				Rest.get(Api.JIANGQIE_USER_LIKE, {
-					post_id: that.post.id
+					post_id: this.post.id
 				}).then(res => {
 					let avatar = Auth.getUser().avatar;
-					var index = that.like_list.indexOf(avatar);
+					var index = this.like_list.indexOf(avatar);
 
 					if (index > -1) {
-						that.like_list.splice(index, 1);
+						this.like_list.splice(index, 1);
 					} else {
-						that.like_list.unshift(avatar);
+						this.like_list.unshift(avatar);
 					}
 
-					that.setData({
-						post_like: that.post_like == 1 ? 0 : 1,
-						like_list: that.like_list
-					});
+					this.post_like = (this.post_like == 1 ? 0 : 1);
+					this.like_list = this.like_list;
 				});
 			},
 
@@ -531,18 +527,14 @@
 			 */
 			handlerCommentClick: function(e) {
 				this.comment_id = 0;
-				this.setData({
-					show_comment_submit: true
-				});
+				this.show_comment_submit = true
 			},
 
 			/**
 			 * 评论 取消
 			 */
 			handlerCancelClick: function(e) {
-				this.setData({
-					show_comment_submit: false
-				});
+				this.show_comment_submit = false
 			},
 
 			/**
@@ -557,18 +549,15 @@
 					return;
 				}
 
-				let that = this;
 				Rest.get(Api.JIANGQIE_COMMENT_ADD, {
-					post_id: that.post_id,
-					parent_id: that.comment_id,
-					content: that.comment_content
+					post_id: this.post_id,
+					parent_id: this.comment_id,
+					content: this.comment_content
 				}).then(res => {
-					that.setData({
-						comment_count_change: that.comment_count_change + (res.data.comment_verify ==
-							1 ? 0 : 1),
-						show_comment_submit: false
-					});
-					that.loadComments(true);
+					this.comment_count_change = this.comment_count_change + (res.data.comment_verify ==
+						1 ? 0 : 1);
+					this.show_comment_submit = false;
+					this.loadComments(true);
 				});
 			},
 
@@ -577,30 +566,24 @@
 			 */
 			handlerCommentReplyClick: function(e) {
 				this.comment_id = e.currentTarget.dataset.id;
-				this.setData({
-					show_comment_submit: true
-				});
+				this.show_comment_submit = true;
 			},
 
 			/**
 			 * 评论 删除
 			 */
 			handlerCommentDeleteClick: function(e) {
-				let that = this;
 				uni.showModal({
 					title: '提示',
 					content: '确定要删除吗？',
-
-					success(res) {
+					success: (res) => {
 						if (res.confirm) {
 							let comment_id = e.currentTarget.dataset.id;
 							Rest.get(Api.JIANGQIE_COMMENT_DELETE, {
 								comment_id: comment_id
 							}).then(res => {
-								that.setData({
-									comment_count_change: that.comment_count_change - 1
-								});
-								that.loadComments(true);
+								this.comment_count_change = this.comment_count_change - 1;
+								this.loadComments(true);
 							});
 						}
 					}
@@ -612,22 +595,17 @@
 			 * 评论输入
 			 */
 			handlerContentInput: function(e) {
-				this.setData({
-					comment_content: e.detail.value
-				});
+				this.comment_content = e.detail.value;
 			},
 
 			/**
 			 * 文章 收藏
 			 */
 			handlerFavoriteClick: function(e) {
-				let that = this;
 				Rest.get(Api.JIANGQIE_USER_FAVORITE, {
-					post_id: that.post.id
+					post_id: this.post.id
 				}).then(res => {
-					that.setData({
-						post_favorite: that.post_favorite == 1 ? 0 : 1
-					});
+					this.post_favorite = (this.post_favorite == 1 ? 0 : 1);
 				});
 			},
 
@@ -674,26 +652,20 @@
 			 * 加载 评论
 			 */
 			loadComments: function(refresh) {
-				let that = this;
-				that.setData({
-					loadding: true
-				});
+				this.loadding = true;
 				let offset = 0;
-
 				if (!refresh) {
-					offset = that.comments.length;
+					offset = this.comments.length;
 				}
 
 				Rest.get(Api.JIANGQIE_COMMENT_INDEX, {
-					post_id: that.post_id,
+					post_id: this.post_id,
 					offset: offset
 				}).then(res => {
-					that.setData({
-						loaded: true,
-						loadding: false,
-						comments: refresh ? res.data : that.comments.concat(res.data),
-						pullUpOn: res.data.length >= Constants.JQ_PER_PAGE_COUNT
-					});
+					this.loaded = true;
+					this.loadding = false;
+					this.comments = (refresh ? res.data : this.comments.concat(res.data));
+					this.pullUpOn = (res.data.length >= Constants.JQ_PER_PAGE_COUNT);
 				});
 			},
 

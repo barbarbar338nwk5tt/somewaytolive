@@ -230,24 +230,17 @@
 		props: {},
 
 		onShow: function(options) {
-			let that = this;
-			let user = Auth.getUser();
-			that.setData({
-				user: user
-			});
+			this.user = Auth.getUser();
 			Rest.get(Api.JIANGQIE_SETTING_UCENTER).then(res => {
-				let menu = that.default.menu;
-
+				let menu = this.default.menu;
 				if (res.data.menu.length > 0) {
 					menu = res.data.menu;
 				}
 
-				that.setData({
-					setting: {
-						background: res.data.background
-					},
-					menu: menu
-				});
+				this.setting = {
+					background: res.data.background
+				};
+				this.menu = menu;
 			});
 		},
 
