@@ -10,16 +10,14 @@
 		</view>
 
 		<scroll-view scroll-x scroll-with-animation class="tab-view" :scroll-left="0">
-			<view v-for="(item, index) in tabbar" :key="index"
-				:class="'tab-bar-item ' + (currentTab==index ? 'active' : '')" :data-current="index"
+			<view v-for="(item, index) in tabbar" :key="index" class="tab-bar-item"
+				:class="(currentTab==index ? 'active' : '')" :data-current="index"
 				@tap.stop="swichNav">
 				<text class="tab-bar-title">{{item}}</text>
 			</view>
 		</scroll-view>
 
-		<view
-			:style="tl_background?'background: url(' + tl_background + ') repeat-y; background-position: -30rpx 0;':''">
-
+		<view :style="tl_background?'background: url(' + tl_background + ') repeat-y; background-position: -30rpx 0;':''">
 			<template v-if="posts.length > 0">
 				<view class="jiangqie-timeline-view">
 
@@ -449,6 +447,10 @@
 	}
 
 	.tab-view {
+		position: -webkit-sticky;
+		position: sticky;
+		top: var(--window-top);
+		
 		width: 100%;
 		height: 100rpx;
 		overflow: hidden;
