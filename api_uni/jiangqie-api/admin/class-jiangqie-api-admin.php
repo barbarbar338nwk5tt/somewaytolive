@@ -81,8 +81,13 @@ class JiangQie_API_Admin
 
 			$ids_n = [];
 			foreach ($ids as $id) {
-				if (($type=='cat' && get_category($id)) || (($type=='post' || $type=='page') && get_post($id))) {
+				if (($type=='cat' && get_category($id))) {
 					$ids_n[] = $id;
+				} else if ($type=='post' || $type=='page') {
+					$post = get_post($id);
+					if ($post && $post->post_status == 'publish') {
+						$ids_n[] = $id;
+					}
 				}
 			}
 			return $ids_n;
