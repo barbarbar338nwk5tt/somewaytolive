@@ -45,7 +45,7 @@ function jiangqie_api_action_links($actions)
 add_filter('plugin_action_links_' . JIANG_QIE_API_BASE_NAME, 'jiangqie_api_action_links');
 
 require JIANG_QIE_API_BASE_DIR . 'includes/class-jiangqie-api.php';
-// require JIANG_QIE_API_BASE_DIR . 'includes/zhuige-market.php';
+require JIANG_QIE_API_BASE_DIR . 'includes/zhuige-market.php';
 require JIANG_QIE_API_BASE_DIR . 'includes/jiangqie-function.php';
 require JIANG_QIE_API_BASE_DIR . 'includes/categories-images.php';
 require JIANG_QIE_API_BASE_DIR . 'includes/custom_users_column.php';
