@@ -530,7 +530,7 @@ class JiangQie_API_User_Controller extends JiangQie_API_Base_Controller
 	 */
 	public function set_info($request)
 	{
-		$user_id = get_current_user_id();
+		$user_id = $this->check_login($request);
 		if (!$user_id) {
 			return $this->make_error('还没有登陆', -1);
 		}

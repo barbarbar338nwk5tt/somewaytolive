@@ -196,6 +196,7 @@ class JiangQie_API
 		require_once JIANG_QIE_API_BASE_DIR . 'public/rest/class-jiangqie-api-base-controller.php';
 		require_once JIANG_QIE_API_BASE_DIR . 'public/rest/class-jiangqie-api-setting-controller.php';
 		require_once JIANG_QIE_API_BASE_DIR . 'public/rest/class-jiangqie-api-comment-controller.php';
+		require_once JIANG_QIE_API_BASE_DIR . 'public/rest/class-jiangqie-api-other-controller.php';
 		require_once JIANG_QIE_API_BASE_DIR . 'public/rest/class-jiangqie-api-post-controller.php';
 		require_once JIANG_QIE_API_BASE_DIR . 'public/rest/class-jiangqie-api-category-controller.php';
 		require_once JIANG_QIE_API_BASE_DIR . 'public/rest/class-jiangqie-api-user-controller.php';
@@ -244,6 +245,7 @@ class JiangQie_API
 
 		$controller = [
 			new JiangQie_API_Setting_Controller(),
+			new JiangQie_API_Other_Controller(),
 			new JiangQie_API_Comment_Controller(),
 			new JiangQie_API_Post_Controller(),
 			new JiangQie_API_Category_Controller(),

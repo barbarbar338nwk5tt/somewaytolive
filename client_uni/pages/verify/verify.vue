@@ -33,7 +33,7 @@
 	import Auth from '@/utils/auth';
 	import Api from '@/utils/api';
 	import Rest from '@/utils/rest';
-	
+
 	export default {
 		data() {
 			return {
@@ -41,7 +41,7 @@
 				avatar: '/static/images/default_avatar.jpg'
 			}
 		},
-		
+
 		onLoad(options) {
 			let user = Auth.getUser();
 			if (user) {
@@ -51,7 +51,7 @@
 				}
 			}
 		},
-		
+
 		methods: {
 			/**
 			 * 点击打开链接
@@ -59,23 +59,23 @@
 			openLink(link) {
 				Util.openLink(link);
 			},
-			
+
 			/**
 			 * 选择头像
 			 */
 			onChooseAvatar(e) {
-				Rest.upload(Api.URL('other', 'upload'), e.detail.avatarUrl).then(oo => {
+				Rest.upload(Api.JIANGQIE_OTHER_UPLOAD, e.detail.avatarUrl).then(oo => {
 					this.avatar = oo.data.src;
 				}, err => {
 					console.log(err);
 				});
 			},
-			
+
 			/**
 			 * 点击提交
 			 */
 			clickSubmit() {
-				Rest.post(Api.URL('user', 'init_info'), {
+				Rest.post(Api.JIANGQIE_USER_SET_INFO, {
 					nickname: this.nickname,
 					avatar: this.avatar
 				}).then(res => {
@@ -84,6 +84,12 @@
 							icon: 'none',
 							title: res.msg
 						});
+						
+						let user = Auth.getUser();
+						user.nickname = this.nickname;
+						user.avatar = this.avatar;
+						Auth.setUser(user);
+						
 						setTimeout(() => {
 							Util.navigateBack();
 						}, 1500)
@@ -97,7 +103,7 @@
 					console.log(err)
 				});
 			},
-			
+
 			/**
 			 * 点击返回
 			 */
@@ -129,7 +135,9 @@
 	.jiangqie-verify-info {
 		padding-bottom: 80rpx;
 	}
-	.jiangqie-verify-info button, .jiangqie-verify-info button::after {
+
+	.jiangqie-verify-info button,
+	.jiangqie-verify-info button::after {
 		border: none;
 		background: none;
 	}
