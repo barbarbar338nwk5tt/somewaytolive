@@ -126,7 +126,7 @@
 
 		props: {},
 
-		onLoad: function(options) {
+		onLoad(options) {
 			//获取配置
 			Rest.get(Api.JIANGQIE_SETTING_HOT).then(res => {
 				this.setting = {
@@ -158,7 +158,7 @@
 			// #endif
 		},
 
-		onReachBottom: function() {
+		onReachBottom() {
 			if (!this.pullUpOn) {
 				return;
 			}
@@ -166,7 +166,7 @@
 			this.loadPosts(false);
 		},
 
-		onShareAppMessage: function() {
+		onShareAppMessage() {
 			return {
 				title: getApp().globalData.appName,
 				path: 'pages/index/index'
@@ -174,7 +174,7 @@
 		},
 
 		// #ifdef MP-WEIXIN
-		onShareTimeline: function() {
+		onShareTimeline() {
 			return {
 				title: getApp().globalData.appName
 			};
@@ -183,7 +183,7 @@
 
 		methods: {
 			// 点击标题切换当前页时改变样式
-			swichNav: function(e) {
+			swichNav(e) {
 				let cur = e.currentTarget.dataset.current;
 
 				if (this.currentTab == cur) {
@@ -195,7 +195,7 @@
 				this.loadPosts(true);
 			},
 
-			handlerHotArticle: function(e) {
+			handlerHotArticle(e) {
 				let post_id = e.currentTarget.dataset.id;
 				uni.navigateTo({
 					url: '/pages/article/article?post_id=' + post_id

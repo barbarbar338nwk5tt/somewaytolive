@@ -38,7 +38,7 @@ function request(url, data = {}, method = "GET") {
 			url: url,
 			data: data,
 			method: method,
-			success (res) {
+			success: (res) => {
 				if (res.statusCode != 200) {
 					reject(res.errMsg);
 					return;
@@ -56,10 +56,10 @@ function request(url, data = {}, method = "GET") {
 					return;
 				}
 			},
-			fail (err) {
+			fail: (err) => {
 				reject(err);
 			},
-			complete() {
+			complete: () => {
 				uni.hideLoading();
 			}
 		});

@@ -58,9 +58,9 @@
 
 		props: {},
 
-		onLoad: function(options) {},
+		onLoad(options) {},
 
-		onShareAppMessage: function() {
+		onShareAppMessage() {
 			return {
 				title: getApp().globalData.appName,
 				path: 'pages/index/index'
@@ -68,7 +68,7 @@
 		},
 
 		// #ifdef MP-WEIXIN
-		onShareTimeline: function() {
+		onShareTimeline() {
 			return {
 				title: getApp().globalData.appName
 			};
@@ -76,13 +76,13 @@
 		// #endif
 
 		methods: {
-			copy: function(e) {
+			copy(e) {
 				let text = e.currentTarget.dataset.text;
 				uni.setClipboardData({
 					data: text,
-					success(res) {
+					success: (res) => {
 						uni.getClipboardData({
-							success(res) {
+							success: (res) => {
 								uni.showToast({
 									title: '网址已复制'
 								});
@@ -93,7 +93,7 @@
 				});
 			},
 
-			tipClick: function() {
+			tipClick() {
 				uni.showToast({
 					icon: 'none',
 					title: '酱茄小程序开源版'

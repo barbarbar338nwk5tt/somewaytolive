@@ -26,9 +26,9 @@ function logout() {
 
 module.exports = {
 	//检查登录态
-	checkSession: function() {
+	checkSession() {
 		uni.checkSession({
-			fail() {
+			fail: () => {
 				logout();
 			}
 		});
@@ -43,24 +43,24 @@ module.exports = {
 	isLogin: getToken,
 
 	//获取用户信息
-	getWXUser: function() {
+	getWXUser() {
 		return new Promise(function(resolve, reject) {
 			uni.login({
-				success: function(res) {
+				success: (res) => {
 					resolve(res);
 				},
-				fail: function(err) {
+				fail: (err) => {
 					reject(err);
 				}
 			});
 		});
 	},
 
-	setUser: function(user) {
+	setUser(user) {
 		uni.setStorageSync(Constant.JQ_USER_KEY, user);
 	},
 
-	getUser: function() {
+	getUser() {
 		return uni.getStorageSync(Constant.JQ_USER_KEY);
 	}
 };

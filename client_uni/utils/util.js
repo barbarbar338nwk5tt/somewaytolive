@@ -10,7 +10,7 @@
 function navigateBack() {
 	uni.navigateBack({
 		delta: 1,
-		fail: function(res) {
+		fail: (res) => {
 			uni.switchTab({
 				url: '/pages/index/index'
 			});

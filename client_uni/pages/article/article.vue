@@ -267,7 +267,7 @@
 			lPainter,
 		},
 
-		onLoad: function(options) {
+		onLoad(options) {
 			if (options.scene) {
 				this.post_id = decodeURIComponent(options.scene);
 			} else if (options.post_id) {
@@ -287,7 +287,7 @@
 			// #endif
 		},
 
-		onShow: function() {
+		onShow() {
 			if (!this.needRefresh) {
 				this.needRefresh = true;
 				return;
@@ -331,7 +331,7 @@
 			this.loadComments(true);
 		},
 
-		onReachBottom: function() {
+		onReachBottom() {
 			if (!this.pullUpOn) {
 				return;
 			}
@@ -339,7 +339,7 @@
 			this.loadComments(false);
 		},
 
-		onShareAppMessage: function() {
+		onShareAppMessage() {
 			return {
 				title: this.post.title,
 				imageUrl: this.post.thumbnail,
@@ -348,7 +348,7 @@
 		},
 
 		// #ifdef MP-WEIXIN
-		onShareTimeline: function() {
+		onShareTimeline() {
 			return {
 				title: this.post.title,
 				query: 'post_id=' + this.post_id,
@@ -381,7 +381,7 @@
 
 								uni.saveImageToPhotosAlbum({
 									filePath: this.painterImage,
-									success() {
+									success: () => {
 										uni.showToast({
 											title: '已保存'
 										})
@@ -486,7 +486,7 @@
 				}
 			},
 
-			onPainterSuccess: function(e) {
+			onPainterSuccess(e) {
 				this.painterImage = e;
 
 				// #ifndef MP-BAIDU
@@ -499,7 +499,7 @@
 			/**
 			 * 文章中a标签点击
 			 */
-			wxParseTagATap: function(e) {
+			wxParseTagATap(e) {
 				uni.setClipboardData({
 					data: e.currentTarget.dataset.src
 				});
@@ -508,7 +508,7 @@
 			/**
 			 * 点击 TAG
 			 */
-			handlerTagClick: function(e) {
+			handlerTagClick(e) {
 				let tag_id = e.currentTarget.dataset.id;
 				let tag = e.currentTarget.dataset.tag;
 				uni.navigateTo({
@@ -519,14 +519,14 @@
 			/**
 			 * 跳转返回
 			 */
-			jumpBtn: function(options) {
+			jumpBtn(options) {
 				Util.navigateBack();
 			},
 
 			/**
 			 * 文章 点赞
 			 */
-			handlerLikeClick: function(e) {
+			handlerLikeClick(e) {
 				Rest.get(Api.JIANGQIE_USER_LIKE, {
 					post_id: this.post.id
 				}).then(res => {
@@ -547,7 +547,7 @@
 			/**
 			 * 评论 弹框
 			 */
-			handlerCommentClick: function(e) {
+			handlerCommentClick(e) {
 				this.comment_id = 0;
 				this.show_comment_submit = true
 			},
@@ -555,14 +555,14 @@
 			/**
 			 * 评论 取消
 			 */
-			handlerCancelClick: function(e) {
+			handlerCancelClick(e) {
 				this.show_comment_submit = false
 			},
 
 			/**
 			 * 评论 提交
 			 */
-			handlerCommentSubmit: function(e) {
+			handlerCommentSubmit(e) {
 				if (!this.comment_content) {
 					uni.showToast({
 						icon: 'none',
@@ -586,7 +586,7 @@
 			/**
 			 * 评论 回复
 			 */
-			handlerCommentReplyClick: function(e) {
+			handlerCommentReplyClick(e) {
 				this.comment_id = e.currentTarget.dataset.id;
 				this.show_comment_submit = true;
 			},
@@ -594,7 +594,7 @@
 			/**
 			 * 评论 删除
 			 */
-			handlerCommentDeleteClick: function(e) {
+			handlerCommentDeleteClick(e) {
 				uni.showModal({
 					title: '提示',
 					content: '确定要删除吗？',
@@ -616,14 +616,14 @@
 			/**
 			 * 评论输入
 			 */
-			handlerContentInput: function(e) {
+			handlerContentInput(e) {
 				this.comment_content = e.detail.value;
 			},
 
 			/**
 			 * 文章 收藏
 			 */
-			handlerFavoriteClick: function(e) {
+			handlerFavoriteClick(e) {
 				Rest.get(Api.JIANGQIE_USER_FAVORITE, {
 					post_id: this.post.id
 				}).then(res => {
@@ -652,7 +652,7 @@
 			/**
 			 * 加载微信小程序码
 			 */
-			loadWxacode: function() {
+			loadWxacode() {
 				Rest.get(Api.JIANGQIE_POST_WX_ACODE, {
 					post_id: this.post_id
 				}).then(res => {
@@ -665,7 +665,7 @@
 			/**
 			 * 加载QQ小程序码
 			 */
-			loadQqacode: function() {
+			loadQqacode() {
 				Rest.get(Api.JIANGQIE_POST_QQ_ACODE, {
 					post_id: this.post_id
 				}).then(res => {
@@ -678,7 +678,7 @@
 			/**
 			 * 加载百度小程序码
 			 */
-			loadBdacode: function() {
+			loadBdacode() {
 				Rest.get(Api.JIANGQIE_POST_BD_ACODE, {
 					post_id: this.post_id
 				}).then(res => {
@@ -691,7 +691,7 @@
 			/**
 			 * 加载 评论
 			 */
-			loadComments: function(refresh) {
+			loadComments(refresh) {
 				this.loadding = true;
 				let offset = 0;
 				if (!refresh) {

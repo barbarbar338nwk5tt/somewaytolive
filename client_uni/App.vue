@@ -16,7 +16,7 @@
 			appName: '酱茄Free'
 		},
 		
-		onLaunch: function() {
+		onLaunch() {
 			// Auth.checkSession();
 		},
 		

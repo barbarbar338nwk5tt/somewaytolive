@@ -110,7 +110,7 @@
 		/**
 		 * 生命周期函数--监听页面加载
 		 */
-		onLoad: function(options) {
+		onLoad(options) {
 			if (options.cat_id) {
 				//分类
 				this.title = options.title;
@@ -158,7 +158,7 @@
 			}
 		},
 
-		onShow: function() {
+		onShow() {
 			// #ifdef MP-BAIDU
 			swan.setPageInfo({
 				title: this.title,
@@ -170,9 +170,9 @@
 			this.loadPost(true);
 		},
 
-		onPullDownRefresh: function() {},
+		onPullDownRefresh() {},
 
-		onReachBottom: function() {
+		onReachBottom() {
 			if (!this.pullUpOn) {
 				return;
 			}
@@ -180,7 +180,7 @@
 			this.loadPost(false);
 		},
 
-		onShareAppMessage: function() {
+		onShareAppMessage() {
 			return {
 				title: getApp().globalData.appName,
 				path: 'pages/index/index'
@@ -188,7 +188,7 @@
 		},
 
 		// #ifdef MP-WEIXIN
-		onShareTimeline: function() {
+		onShareTimeline() {
 			return {
 				title: getApp().globalData.appName
 			};
@@ -196,14 +196,14 @@
 		// #endif
 
 		methods: {
-			handlerArticleClick: function(e) {
+			handlerArticleClick(e) {
 				let post_id = e.currentTarget.dataset.id;
 				uni.navigateTo({
 					url: '/pages/article/article?post_id=' + post_id
 				});
 			},
 
-			loadPost: function(refresh) {
+			loadPost(refresh) {
 				this.loadding = true;
 				let offset = 0;
 				if (!refresh) {

@@ -40,7 +40,7 @@
 
 		props: {},
 
-		onLoad: function(options) {
+		onLoad(options) {
 			Rest.get(Api.JIANGQIE_POST_PAGE, {
 				page_id: options.page_id
 			}).then(res => {
@@ -50,11 +50,12 @@
 					title: res.data.title
 				});
 				//WxParse.wxParse('article', 'html', res.data.content, this, 5)
-				this.article = this.escape2Html(res.data.content);
+				// this.article = this.escape2Html(res.data.content);
+				this.article = res.data.content;
 			});
 		},
 
-		onShareAppMessage: function() {
+		onShareAppMessage() {
 			return {
 				title: this.title,
 				path: 'pages/viewhtml/viewhtml?page_id=' + this.page_id
@@ -62,7 +63,7 @@
 		},
 
 		// #ifdef MP-WEIXIN
-		onShareTimeline: function() {
+		onShareTimeline() {
 			return {
 				title: this.title,
 				query: 'page_id=' + this.page_id

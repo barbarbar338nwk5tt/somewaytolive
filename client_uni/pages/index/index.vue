@@ -304,7 +304,7 @@
 
 		props: {},
 
-		onLoad: function(options) {
+		onLoad(options) {
 			Rest.get(Api.JIANGQIE_SETTING_HOME).then(res => {
 				let logo = "/static/images/logo.png";
 				if (res.data.logo && res.data.logo.length > 0) {
@@ -372,7 +372,7 @@
 			// #endif
 		},
 
-		onReachBottom: function() {
+		onReachBottom() {
 			if (this.currentTab == 0) {
 				if (!this.pullUpOnLast) {
 					return;
@@ -388,7 +388,7 @@
 			}
 		},
 
-		onShareAppMessage: function() {
+		onShareAppMessage() {
 			return {
 				title: getApp().globalData.appName,
 				path: 'pages/index/index'
@@ -396,7 +396,7 @@
 		},
 
 		// #ifdef MP-WEIXIN
-		onShareTimeline: function() {
+		onShareTimeline() {
 			return {
 				title: getApp().globalData.appName
 			};
@@ -411,7 +411,7 @@
 
 		methods: {
 			//nav start----
-			handlerSearchClick: function(e) {
+			handlerSearchClick(e) {
 				uni.navigateTo({
 					url: '/pages/search/search'
 				});
@@ -419,13 +419,13 @@
 			//nav end ----
 
 			//slide start----
-			handlerSlideChange: function(e) {
+			handlerSlideChange(e) {
 				this.current = e.detail.current;
 			},
 			//slide end----
 
 			//tab -- start
-			swichNav: function(e) {
+			swichNav(e) {
 				let cur = e.currentTarget.dataset.current;
 				if (this.currentTab == cur) {
 					return false;
@@ -439,24 +439,24 @@
 				}
 			},
 
-			handlerTabMoreClick: function(e) {
+			handlerTabMoreClick(e) {
 				uni.switchTab({
 					url: '/pages/categories/categories'
 				});
 			},
 			//tab -- end
 
-			handlerIconNavClick: function(e) {
+			handlerIconNavClick(e) {
 				let link = e.currentTarget.dataset.link;
 				Util.openLink(link);
 			},
 
-			handlerActiveClick: function(e) {
+			handlerActiveClick(e) {
 				let link = e.currentTarget.dataset.link;
 				Util.openLink(link);
 			},
 
-			handlerArticleClick: function(e) {
+			handlerArticleClick(e) {
 				let post_id = e.currentTarget.dataset.id;
 				uni.navigateTo({
 					url: '/pages/article/article?post_id=' + post_id
@@ -464,7 +464,7 @@
 			},
 
 			//加载数据
-			loadPostLast: function(refresh) {
+			loadPostLast(refresh) {
 				this.loaddingLast = true;
 				let offset = 0;
 
@@ -481,7 +481,7 @@
 				});
 			},
 
-			loadPost: function(refresh) {
+			loadPost(refresh) {
 				this.loadding = true;
 				let offset = 0;
 				if (!refresh) {
@@ -498,7 +498,7 @@
 				});
 			},
 
-			// openLink: function(link) {
+			// openLink(link) {
 			// 	// #ifdef MP-WEIXIN
 			// 	if (link.startsWith('finder:')) {
 			// 		let finder = '';

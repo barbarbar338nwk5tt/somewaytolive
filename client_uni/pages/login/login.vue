@@ -93,7 +93,7 @@
 
 		props: {},
 
-		onLoad: function(options) {
+		onLoad(options) {
 			this.title = getApp().globalData.appName;
 
 			// #ifdef MP-WEIXIN || MP-QQ
@@ -128,7 +128,7 @@
 			});
 		},
 
-		onShareAppMessage: function() {
+		onShareAppMessage() {
 			return {
 				title: getApp().globalData.appName,
 				path: 'pages/index/index'
@@ -136,7 +136,7 @@
 		},
 
 		// #ifdef MP-WEIXIN
-		onShareTimeline: function() {
+		onShareTimeline() {
 			return {
 				title: getApp().globalData.appName
 			};
@@ -144,7 +144,7 @@
 		// #endif
 
 		methods: {
-			handlerCancelClick: function(e) {
+			handlerCancelClick(e) {
 				Util.navigateBack();
 			},
 

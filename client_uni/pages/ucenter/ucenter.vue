@@ -229,7 +229,7 @@
 
 		props: {},
 
-		onShow: function(options) {
+		onShow(options) {
 			this.user = Auth.getUser();
 			Rest.get(Api.JIANGQIE_SETTING_UCENTER).then(res => {
 				let menu = this.default.menu;
@@ -244,7 +244,7 @@
 			});
 		},
 
-		onShareAppMessage: function() {
+		onShareAppMessage() {
 			return {
 				title: getApp().globalData.appName,
 				path: 'pages/index/index'
@@ -252,7 +252,7 @@
 		},
 
 		// #ifdef MP-WEIXIN
-		onShareTimeline: function() {
+		onShareTimeline() {
 			return {
 				title: getApp().globalData.appName
 			};
@@ -260,7 +260,7 @@
 		// #endif
 
 		methods: {
-			handlerPostTrack: function(e) {
+			handlerPostTrack(e) {
 				if (!Auth.getUser()) {
 					uni.navigateTo({
 						url: '/pages/login/login'
@@ -274,17 +274,17 @@
 				});
 			},
 
-			handlerAbout: function(e) {
+			handlerAbout(e) {
 				uni.navigateTo({
 					url: '/pages/about/about'
 				});
 			},
 
-			handlerClearCache: function(e) {
+			handlerClearCache(e) {
 				uni.showModal({
 					title: '提示',
 					content: '清除缓存 需要重新登录',
-					success(res) {
+					success: (res) => {
 						if (res.confirm) {
 							uni.clearStorageSync();
 							uni.showToast({
@@ -299,7 +299,7 @@
 				});
 			},
 
-			handlerLinkClick: function(e) {
+			handlerLinkClick(e) {
 				let link = e.currentTarget.dataset.link;
 
 				if (link.startsWith('/pages')) {
@@ -321,7 +321,7 @@
 				}
 			},
 
-			handlerPageClick: function(e) {
+			handlerPageClick(e) {
 				let page_id = e.currentTarget.dataset.page_id;
 				uni.navigateTo({
 					url: '/pages/viewhtml/viewhtml?page_id=' + page_id

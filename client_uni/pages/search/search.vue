@@ -81,7 +81,7 @@
 
 		props: {},
 
-		onLoad: function(options) {
+		onLoad(options) {
 			uni.getStorage({
 				key: Constant.JQ_SEARCH_KEY,
 				success: (res) => {
@@ -94,7 +94,7 @@
 			});
 		},
 
-		onShareAppMessage: function() {
+		onShareAppMessage() {
 			return {
 				title: getApp().globalData.appName,
 				path: 'pages/index/index'
@@ -102,7 +102,7 @@
 		},
 
 		// #ifdef MP-WEIXIN
-		onShareTimeline: function() {
+		onShareTimeline() {
 			return {
 				title: getApp().globalData.appName
 			};
@@ -111,24 +111,24 @@
 
 		methods: {
 			//输入
-			handlerSearchInput: function(e) {
+			handlerSearchInput(e) {
 				this.keyword = e.detail.value;
 				this.canSearch = this.keyword.length > 0;
 			},
 
-			handerSearchConfirm: function(e) {
+			handerSearchConfirm(e) {
 				this.search();
 			},
 
 			//搜索
-			handerSearchClick: function(e) {
+			handerSearchClick(e) {
 				this.search();
 			},
 
-			search: function() {
+			search() {
 				uni.getStorage({
 					key: Constant.JQ_SEARCH_KEY,
-					success(res) {
+					success: (res) => {
 						let keys = [this.keyword];
 
 						for (let i = 0; i < res.data.length && keys.length < Constant.JQ_SEARCH_MAX_COUNT; i++) {
@@ -146,7 +146,7 @@
 						});
 					},
 
-					fail(e) {
+					fail: (e) => {
 						let keys = [this.keyword];
 						this.historySearch = keys;
 						uni.setStorage({
@@ -162,16 +162,16 @@
 			},
 
 			//取消搜索
-			handerCancelClick: function(e) {
+			handerCancelClick(e) {
 				Util.navigateBack();
 			},
 
 			//清楚搜索历史
-			handlerClearHistory: function(e) {
+			handlerClearHistory(e) {
 				uni.showModal({
 					title: '提示',
 					content: '确定要清除吗？',
-					success(res) {
+					success: (res) => {
 						if (res.confirm) {
 							uni.setStorage({
 								key: Constant.JQ_SEARCH_KEY,
@@ -186,7 +186,7 @@
 			},
 
 			//点击 搜索历史
-			handlerSearchItemClick: function(e) {
+			handlerSearchItemClick(e) {
 				let item = e.currentTarget.dataset.item;
 				uni.navigateTo({
 					url: '/pages/list/list?search=' + item
@@ -194,11 +194,11 @@
 			},
 
 			//历史删除
-			handlerSearchItemDelete: function(e) {
+			handlerSearchItemDelete(e) {
 				uni.showModal({
 					title: '提示',
 					content: '确定要删除吗？',
-					success(res) {
+					success: (res) => {
 						if (res.confirm) {
 							let item = e.currentTarget.dataset.item;
 							let keys = [];

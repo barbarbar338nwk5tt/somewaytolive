@@ -75,7 +75,7 @@
 
 		props: {},
 
-		onLoad: function(options) {
+		onLoad(options) {
 			//获取配置
 			Rest.get(Api.JIANGQIE_SETTING_CATEGORY).then(res => {
 				this.setting = {
@@ -110,7 +110,7 @@
 			// #endif
 		},
 
-		onShareAppMessage: function() {
+		onShareAppMessage() {
 			return {
 				title: getApp().globalData.appName,
 				path: 'pages/index/index'
@@ -118,7 +118,7 @@
 		},
 
 		// #ifdef MP-WEIXIN
-		onShareTimeline: function() {
+		onShareTimeline() {
 			return {
 				title: getApp().globalData.appName
 			};
@@ -126,7 +126,7 @@
 		// #endif
 
 		methods: {
-			handlerCategoryClick: function(e) {
+			handlerCategoryClick(e) {
 				let cat_id = e.currentTarget.dataset.id;
 				let cat_name = e.currentTarget.dataset.name;
 				uni.navigateTo({
