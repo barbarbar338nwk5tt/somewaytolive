@@ -59,6 +59,18 @@ class JiangQie_API
 	}
 
 	/**
+	 * 用户头像
+	 */
+	public static function user_avatar($user_id)
+	{
+		$avatar = get_user_meta($user_id, 'jiangqie_avatar', true);
+		if (empty($avatar)) {
+			$avatar = ZHUIGE_SHOP_BASE_URL . 'public/images/default_avatar.jpg';
+		}
+		return $avatar;
+	}
+
+	/**
 	 * 微信token
 	 */
 	public static function get_wx_token()
