@@ -23,7 +23,7 @@
 
 		onLoad(options) {
 			if (options.src) {
-				this.src = options.src;
+				this.src = decodeURIComponent(options.src);
 			}
 			uni.setNavigationBarTitle({
 				title: getApp().appName
@@ -33,7 +33,7 @@
 		onShareAppMessage() {
 			return {
 				title: getApp().appName,
-				path: 'pages/mix/webview/webview?src=' + this.src
+				path: 'pages/webview/webview?src=' + encodeURIComponent(this.src)
 			};
 		},
 
