@@ -4,7 +4,7 @@
  * Plugin Name:		JiangQie Free Mini Program
  * Plugin URI:		https://www.zhuige.com/product/zxfree.html
  * Description:		为小程序提供定制化API，让Wordpress快速变身小程序。
- * Version:			2.1.3
+ * Version:			2.2.0
  * Author:			酱茄
  * Author URI:		https://www.zhuige.com/
  * License:			GPLv2 or later
