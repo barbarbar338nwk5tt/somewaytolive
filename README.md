@@ -25,7 +25,7 @@
 
 ![追格小程序二维码](https://www.zhuige.com/uploads/20220525/e9d90108578e7a1b3857865d6a4c62f1.jpg) 
 
-![追格小程序二维码](https://www.zhuige.com/uploads/20220525/f90d75fe933564349d71d5b294a97b2f.jpg) 
+<img src="https://www.zhuige.com/uploads/20220525/f90d75fe933564349d71d5b294a97b2f.jpg" alt="微信扫一扫" width="300" height="300" />
 
 
 
@@ -84,6 +84,7 @@
 2. 使用HBuilderX导入client_uni目录，并修改client_uni/utils/config.js中的域名
 
 *本项目依赖 WordPress rest api 功能，请确保其正常*
+
 
 
 ### 功能清单
