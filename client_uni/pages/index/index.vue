@@ -325,7 +325,7 @@
 				});
 
 				if (res.data.title && res.data.title.length > 0) {
-					getApp().appName = res.data.title;
+					getApp().globalData.appName = res.data.title;
 					
 					// #ifdef MP-BAIDU
 					this.bd_title = res.data.title;
@@ -394,7 +394,7 @@
 
 		onShareAppMessage: function() {
 			return {
-				title: getApp().appName,
+				title: getApp().globalData.appName,
 				path: 'pages/index/index'
 			};
 		},
@@ -402,7 +402,7 @@
 		// #ifdef MP-WEIXIN
 		onShareTimeline: function() {
 			return {
-				title: getApp().appName
+				title: getApp().globalData.appName
 			};
 		},
 		// #endif

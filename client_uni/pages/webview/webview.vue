@@ -26,20 +26,20 @@
 				this.src = decodeURIComponent(options.src);
 			}
 			uni.setNavigationBarTitle({
-				title: getApp().appName
+				title: getApp().globalData.appName
 			})
 		},
 
 		onShareAppMessage() {
 			return {
-				title: getApp().appName,
+				title: getApp().globalData.appName,
 				path: 'pages/webview/webview?src=' + encodeURIComponent(this.src)
 			};
 		},
 
 		onShareTimeline() {
 			return {
-				title: getApp().appName
+				title: getApp().globalData.appName
 			};
 		},
 	}

@@ -95,7 +95,7 @@
 
 		onLoad: function(options) {
 			this.setData({
-				title: getApp().appName
+				title: getApp().globalData.appName
 			});
 
 			// #ifdef MP-WEIXIN || MP-QQ
@@ -132,7 +132,7 @@
 
 		onShareAppMessage: function() {
 			return {
-				title: getApp().appName,
+				title: getApp().globalData.appName,
 				path: 'pages/index/index'
 			};
 		},
@@ -140,7 +140,7 @@
 		// #ifdef MP-WEIXIN
 		onShareTimeline: function() {
 			return {
-				title: getApp().appName
+				title: getApp().globalData.appName
 			};
 		},
 		// #endif

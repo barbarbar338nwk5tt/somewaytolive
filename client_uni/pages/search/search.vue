@@ -93,7 +93,7 @@
 
 			});
 			that.setData({
-				placeholder: getApp().appName
+				placeholder: getApp().globalData.appName
 			});
 			Rest.get(Api.JIANGQIE_POSTS_SEARCH_HOT).then(res => {
 				that.setData({
@@ -104,7 +104,7 @@
 
 		onShareAppMessage: function() {
 			return {
-				title: getApp().appName,
+				title: getApp().globalData.appName,
 				path: 'pages/index/index'
 			};
 		},
@@ -112,7 +112,7 @@
 		// #ifdef MP-WEIXIN
 		onShareTimeline: function() {
 			return {
-				title: getApp().appName
+				title: getApp().globalData.appName
 			};
 		},
 		// #endif

@@ -451,7 +451,7 @@
 						},
 						{
 							type: 'text',
-							text: getApp().appName,
+							text: getApp().globalData.appName,
 							css: {
 								left: '30rpx',
 								top: '1170rpx',

@@ -173,7 +173,7 @@
 
 		onShareAppMessage: function() {
 			return {
-				title: getApp().appName,
+				title: getApp().globalData.appName,
 				path: 'pages/index/index'
 			};
 		},
@@ -181,7 +181,7 @@
 		// #ifdef MP-WEIXIN
 		onShareTimeline: function() {
 			return {
-				title: getApp().appName
+				title: getApp().globalData.appName
 			};
 		},
 		// #endif
