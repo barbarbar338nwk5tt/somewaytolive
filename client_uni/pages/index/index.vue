@@ -519,6 +519,37 @@
 			},
 
 			openLink: function(link) {
+				// #ifdef MP-WEIXIN
+				if (link.startsWith('finder:')) {
+					let finder = '';
+					let feedId = '';
+					let index = link.indexOf(';feedId:');
+					if (index < 0) {
+						finder = link.substring('finder:'.length);
+					} else {
+						finder = link.substring('finder:'.length, index);
+						feedId = link.substring(index + ';feedId:'.length);
+					}
+					let params = {
+						finderUserName: finder,
+						fail: res => {
+							uni.setClipboardData({
+								data: link
+							});
+						}
+					};
+					
+					if (feedId != '') {
+						params.feedId = feedId;
+						wx.openChannelsActivity(params);
+					} else {
+						wx.openChannelsUserProfile(params);
+					}
+					
+					return;
+				}
+				// #endif
+				
 				if (link.startsWith('/pages')) {
 					uni.navigateTo({
 						url: link

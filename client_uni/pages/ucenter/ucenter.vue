@@ -291,7 +291,6 @@
 				uni.showModal({
 					title: '提示',
 					content: '清除缓存 需要重新登录',
-
 					success(res) {
 						if (res.confirm) {
 							uni.clearStorageSync();

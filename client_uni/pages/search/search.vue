@@ -85,7 +85,6 @@
 			let that = this;
 			uni.getStorage({
 				key: Constant.JQ_SEARCH_KEY,
-
 				success(res) {
 					that.setData({
 						historySearch: res.data
@@ -140,7 +139,6 @@
 				let that = this;
 				uni.getStorage({
 					key: Constant.JQ_SEARCH_KEY,
-
 					success(res) {
 						let keys = [that.keyword];
 
@@ -190,7 +188,6 @@
 				uni.showModal({
 					title: '提示',
 					content: '确定要清除吗？',
-
 					success(res) {
 						if (res.confirm) {
 							uni.setStorage({
@@ -206,7 +203,6 @@
 							});
 						}
 					}
-
 				});
 			},
 
@@ -224,7 +220,6 @@
 				uni.showModal({
 					title: '提示',
 					content: '确定要删除吗？',
-
 					success(res) {
 						if (res.confirm) {
 							let item = e.currentTarget.dataset.item;
@@ -247,7 +242,6 @@
 							});
 						}
 					}
-
 				});
 			}
 		}
