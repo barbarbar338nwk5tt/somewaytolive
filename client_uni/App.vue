@@ -1,6 +1,6 @@
 <script>
 	/*
-	 * 酱茄小程序开源版 v1.8.0
+	 * 酱茄小程序开源版 v1.8.2
 	 * Author: 酱茄
 	 * Help document: https://www.jiangqie.com/ky
 	 * github: https://github.com/longwenjunjie/jiangqie_kafei

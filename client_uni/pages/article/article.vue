@@ -519,7 +519,7 @@
 			/**
 			 * 跳转返回
 			 */
-			jumpBtn(options) {
+			jumpBtn() {
 				Util.navigateBack();
 			},
 

@@ -206,6 +206,7 @@
 		}
 	};
 </script>
+
 <style lang="scss" scoped>
 	.jiangqie-app-info {
 		padding: 50rpx 40rpx;

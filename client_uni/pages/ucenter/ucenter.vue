@@ -334,6 +334,7 @@
 		}
 	};
 </script>
+
 <style lang="scss" scoped>
 	.jiangqie-top-bg {
 		background-repeat: no-repeat;

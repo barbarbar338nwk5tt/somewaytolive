@@ -7,8 +7,9 @@
  * Copyright © 2020-2022 www.jiangqie.com All rights reserved.
  */
 
-const Constant = require("./constants.js"); //获取TOKEN
+const Constant = require("./constants.js");
 
+//获取TOKEN
 function getToken() {
 	let user = uni.getStorageSync(Constant.JQ_USER_KEY);
 
@@ -17,9 +18,9 @@ function getToken() {
 	}
 
 	return user.token;
-} //注销
+}
 
-
+//注销
 function logout() {
 	uni.setStorageSync(Constant.JQ_USER_KEY, false);
 }

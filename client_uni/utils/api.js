@@ -6,6 +6,7 @@
  * gitee: https://gitee.com/longwenjunj/jiangqie_kafei
  * Copyright © 2020-2022 www.jiangqie.com All rights reserved.
  */
+
 const Config = require("./config.js");
 
 function makeURL(module, action) {

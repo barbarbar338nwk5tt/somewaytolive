@@ -106,33 +106,6 @@ function openLink(link) {
 		return;
 	}
 	
-	// if (link.startsWith('appid:')) {
-	// 	let appid = '';
-	// 	let page = '';
-	// 	let index = link.indexOf(';page:');
-	// 	if (index < 0) {
-	// 		appid = link.substring('appid:'.length);
-	// 	} else {
-	// 		appid = link.substring('appid:'.length, index);
-	// 		page = link.substring(index + ';page:'.length);
-	// 		page = htmlRestore(page);
-	// 	}
-	// 	let params = {
-	// 		appId: appid,
-	// 		fail: res => {
-	// 			uni.setClipboardData({
-	// 				data: link
-	// 			});
-	// 		}
-	// 	};
-	// 	if (page != '') {
-	// 		params.path = page;
-	// 	}
-	
-	// 	uni.navigateToMiniProgram(params);
-	// 	return;
-	// }
-	
 	// #ifdef MP-WEIXIN
 	if (link.startsWith('finder:')) {
 		let finder = '';

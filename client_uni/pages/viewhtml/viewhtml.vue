@@ -49,8 +49,7 @@
 				uni.setNavigationBarTitle({
 					title: res.data.title
 				});
-				//WxParse.wxParse('article', 'html', res.data.content, this, 5)
-				// this.article = this.escape2Html(res.data.content);
+
 				this.article = res.data.content;
 			});
 		},
@@ -76,6 +75,7 @@
 		}
 	};
 </script>
+
 <style lang="scss" scoped>
 	.jiangqie-page-body {
 		padding: 0 30rpx 30rpx 30rpx;
