@@ -1,0 +1,106 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Main {
+    +main(String[] args)
+}
+class GUI {
+    -AStar test
+    -Timer timer
+    -JTextField textField
+    -JTable table
+    -JButton start_button
+    -JButton stop_button
+    -JButton toStart_button
+    -JButton toEnd_button
+    -JButton back_button
+    -JButton next_button
+    -JButton gen_Button
+    -JFrame frame
+    +class TextActionListener
+    +class ButtonnNextActionListener
+    +class ButtonnBackActionListener
+    +class ButtonnStartActionListener
+    +class ButtonnToEndActionListener
+    +class ButtonnToStartActionListener
+    +class ButtonnStopActionListener
+    +class ButtonnGenerateActionListener
+    +GUI()
+    +void repeatNextStep()
+}
+class Thread {
+    ...
+}
+Thread -|> GUI
+class ActionListener {
+    ...
+}
+class TextActionListener {
+    +void actionPerformed(ActionEvent)
+}
+ActionListener --|> TextActionListener
+class ButtonnNextActionListener {
+    +void actionPerformed(ActionEvent)
+}
+ActionListener --|> ButtonnNextActionListener
+class ButtonnBackActionListener {
+    +void actionPerformed(ActionEvent)
+}
+ActionListener --|> ButtonnBackActionListener
+class ButtonnStartActionListener {
+    +void actionPerformed(ActionEvent)
+}
+ActionListener --|> ButtonnStartActionListener
+class ButtonnToEndActionListener {
+    +void actionPerformed(ActionEvent)
+}
+ActionListener --|> ButtonnToEndActionListener
+class ButtonnToStartActionListener {
+    +void actionPerformed(ActionEvent)
+}
+ActionListener -|> ButtonnToStartActionListener
+class ButtonnStopActionListener {
+    +void actionPerformed(ActionEvent)
+}
+ActionListener -|> ButtonnStopActionListener
+class ButtonnGenerateActionListener {
+    +void actionPerformed(ActionEvent)
+}
+ActionListener -|> ButtonnGenerateActionListener
+class AStar {
+    -List<Pair> close
+    -List<Pair> open
+    -Map<Pair, Pair> from
+    -Map<Pair, Float> G
+    -Map<Pair, Float> F
+    -Pair currPosition
+    -Pair endPosition
+    -Pair startPosition
+    -Stack<List<Pair> > changes
+    -List<Pair> NewOpen
+    +AStar()
+    +int init(JTable)
+    -Pair minF(List<Pair>, Map<Pair, Float>)
+    -boolean inList(List<Pair>, Pair)
+    -void repaint(JTable, Pair, String)
+    -void reconstruction(JTable, Map<Pair, Pair>)
+    -void ReturnToAlgo(JTable, Map<Pair, Pair>)
+    -List<Pair> getNeighbors(JTable, Pair)
+    +int nextStep(JTable)
+    +int backStep(JTable)
+    -float heuristic(Pair)
+}
+class Pair {
+    +int x
+    +int y
+    +Pair(int, int)
+}
+class MyRenderer {
+    Component getTableCellRendererComponent(JTable, Object, boolean, boolean, int, int)
+}
+class DefaultTableCellRenderer {
+    ...
+}
+DefaultTableCellRenderer --|> MyRenderer
+
+@enduml
