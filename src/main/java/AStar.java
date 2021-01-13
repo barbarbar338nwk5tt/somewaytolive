@@ -129,8 +129,7 @@ public class AStar {
         repaint(table, startPosition, "r");
     }
 
-    private void ReturnToAlgo(JTable table, Map<Pair, Pair> _map)
-    {
+    private void ReturnToAlgo(JTable table, Map<Pair, Pair> _map) {
         Pair elem = null;
         for (Pair var : _map.keySet())
             if (var.x == endPosition.x && var.y == endPosition.y) {
@@ -257,8 +256,8 @@ public class AStar {
         NewOpen=null;
         return 1;
     }
-    public int backStep(JTable table)
-    {
+
+    public int backStep(JTable table) {
         /*  0 - in the start
          *  1 - in process
          */
@@ -307,8 +306,8 @@ public class AStar {
         return (float) Math.sqrt(Math.pow(point.x - endPosition.x, 2) + Math.pow(point.y - endPosition.y, 2));
     }
 
-    public void test(JTable table) {
-        reconstruction(table, from);
+    public Pair getCurrPosition() {
+        return currPosition;
     }
 }
 
@@ -317,4 +316,9 @@ class Pair {
     public int y = 0;
 
     public Pair(int _x, int _y) { x = _x; y = _y;}
+
+    @Override
+    public String toString() {
+        return x + " " + y;
+    }
 }
