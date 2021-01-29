@@ -1,4 +1,4 @@
-package Resource;
+package prj.Resource;
 
 import java.util.HashMap;
 

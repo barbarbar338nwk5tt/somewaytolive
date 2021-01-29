@@ -1,4 +1,4 @@
-package GUI;
+package prj.GUI;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

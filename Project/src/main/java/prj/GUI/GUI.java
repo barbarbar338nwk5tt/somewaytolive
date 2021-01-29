@@ -1,4 +1,4 @@
-package GUI;
+package prj.GUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,8 +12,14 @@ public class GUI extends JFrame {
     public GUI() {
         super("A-Star");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setMinimumSize(new Dimension(640, 480));
-        this.setResizable(true);
+
+        // получить размер экрана
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int W = (int)screenSize.getWidth(); // получить ширину экрана
+        int H = (int)screenSize.getHeight(); // получить высоту экрана
+
+        this.setMinimumSize(new Dimension(W, H));
+        this.setResizable(false);
 
         this.getContentPane().setLayout(new GridLayout(1, 2));
 

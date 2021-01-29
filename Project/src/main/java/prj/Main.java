@@ -1,25 +1,12 @@
-import Resource.*;
-import Algorithm.*;
-import GUI.*;
+package prj;
 
+import prj.Resource.*;
 import javax.swing.*;
 
 public class Main {
-
-    private AStar astar;
-    private GUI window;
-    private AStar.Iterator iterator;
-
     public static void main(String[] args) {
 
         Main app = new Main();
-    }
-
-    public Main() {
-        astar = new AStar();
-        window = new GUI();
-        window.setVisible(true);
-        iterator = astar.getIterator();
     }
 
     public static Graph JTableToGraph(JTable table) {

@@ -1,4 +1,4 @@
-package GUI;
+package prj.GUI;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -25,6 +25,7 @@ public class Left extends JPanel {
     private Button nextButton;
     private Button genButton;
     private JComboBox<String> comboBox;
+    private JTextArea textLog;
 
     public Left() {
         super();
@@ -38,8 +39,18 @@ public class Left extends JPanel {
         comboBox.addItem("S");
         comboBox.addItem("E");
 
+        JLabel instruction_label_1 = new JLabel("W - wall, S - start, E - Exit");
+        instruction_label_1.setForeground(Color.BLACK);
+        instruction_label_1.setFont(new Font("Tahoma", Font.BOLD, 11));
+        GridBagConstraints gbc_instruction_label_1 = new GridBagConstraints();
+        gbc_instruction_label_1.anchor = GridBagConstraints.WEST;
+        gbc_instruction_label_1.insets = new Insets(0, 0, 15, 20);
+        gbc_instruction_label_1.gridx = 0;
+        gbc_instruction_label_1.gridy = 0;
+        this.add(instruction_label_1, gbc_instruction_label_1);
+
         // лейбл с Heights
-        JLabel input_label1 = new JLabel("Width:");
+        JLabel input_label1 = new JLabel("Heihgt:");
         input_label1.setFont(new Font("Tahoma", Font.BOLD, 11));
         input_label1.setForeground(Color.BLACK);
         GridBagConstraints gbc_input_label = new GridBagConstraints();
@@ -49,7 +60,7 @@ public class Left extends JPanel {
         gbc_input_label.anchor = GridBagConstraints.WEST;
         // номер ячейки в сетке
         gbc_input_label.gridx = 0;
-        gbc_input_label.gridy = 0;
+        gbc_input_label.gridy = 1;
         this.add(input_label1, gbc_input_label);
         // Поле Heights
         textField1 = new JTextField();
@@ -57,34 +68,34 @@ public class Left extends JPanel {
         GridBagConstraints gbc_textField = new GridBagConstraints();
         gbc_textField.insets = new Insets(0, 0, 5, 5);
         gbc_textField.fill = GridBagConstraints.WEST;
-        gbc_textField.gridx = 1;
-        gbc_textField.gridy = 0;
+        gbc_textField.gridx = 0;
+        gbc_textField.gridy = 1;
         this.add(textField1, gbc_textField);
         textField1.setColumns(5);
         textField1.setText("5"); //base field size
 
-        // лейбл с Widths
-        JLabel input_label2 = new JLabel("Height:");
+        // лейбл с Heights
+        JLabel input_label2 = new JLabel("Width:");
         input_label2.setFont(new Font("Tahoma", Font.BOLD, 11));
         input_label2.setForeground(Color.BLACK);
-        GridBagConstraints gbc_input_label1 = new GridBagConstraints();
+        GridBagConstraints gbc_input_label2 = new GridBagConstraints();
         // отступы
-        gbc_input_label1.insets = new Insets(0, 0, 5, 5);
+        gbc_input_label2.insets = new Insets(0, 0, 5, 5);
         // прижаться к краю ячейки
-        gbc_input_label1.anchor = GridBagConstraints.WEST;
+        gbc_input_label2.anchor = GridBagConstraints.WEST;
         // номер ячейки в сетке
-        gbc_input_label1.gridx = 0;
-        gbc_input_label1.gridy = 1;
-        this.add(input_label2, gbc_input_label1);
-        // Поле Widths
+        gbc_input_label2.gridx = 0;
+        gbc_input_label2.gridy = 2;
+        this.add(input_label2, gbc_input_label2);
+        // Поле Heights
         textField2 = new JTextField();
         textField2.setBackground(new Color(255, 240, 245));
-        GridBagConstraints gbc_textField1 = new GridBagConstraints();
-        gbc_textField1.insets = new Insets(0, 0, 5, 5);
-        gbc_textField1.anchor = GridBagConstraints.WEST;
-        gbc_textField1.gridx = 1;
-        gbc_textField1.gridy = 1;
-        this.add(textField2, gbc_textField1);
+        GridBagConstraints gbc_textField2 = new GridBagConstraints();
+        gbc_textField2.insets = new Insets(0, 0, 5, 5);
+        gbc_textField2.fill = GridBagConstraints.WEST;
+        gbc_textField2.gridx = 0;
+        gbc_textField2.gridy = 2;
+        this.add(textField2, gbc_textField2);
         textField2.setColumns(5);
         textField2.setText("5"); //base field size
 
@@ -97,16 +108,16 @@ public class Left extends JPanel {
         slid = new JSlider(1, 3, 2);
         slid.setSnapToTicks(true);
         slid.setPaintTrack(true);
-
+        slid.setOrientation(SwingConstants.VERTICAL);
         slid.setPaintTicks(true);
         slid.setPaintLabels(true);
         slid.setMajorTickSpacing(1);
 
         GridBagConstraints  slid_gbc = new GridBagConstraints();
-        slid_gbc.insets = new Insets(20, 0, 5, 5);
-        slid_gbc.anchor = GridBagConstraints.WEST;
-        slid_gbc.gridx = 0;
-        slid_gbc.gridy = 8;
+        slid_gbc.insets = new Insets(20, 20, 5, 5);
+        slid_gbc.gridx = 1;
+        slid_gbc.gridy = 3;
+        slid_gbc.gridheight = 7;
         this.add(slid, slid_gbc);
 
         // Выпадающий список
@@ -116,48 +127,59 @@ public class Left extends JPanel {
         comboBox.addItem("S");
         comboBox.addItem("E");
 
-        JLabel instruction_label_1 = new JLabel("W - wall, S - start, E - Exit");
-        instruction_label_1.setForeground(Color.BLACK);
-        instruction_label_1.setFont(new Font("Tahoma", Font.BOLD, 11));
-        GridBagConstraints gbc_instruction_label_1 = new GridBagConstraints();
-        gbc_instruction_label_1.anchor = GridBagConstraints.WEST;
-        gbc_instruction_label_1.insets = new Insets(0, 0, 5, 20);
-        gbc_instruction_label_1.gridx = 0;
-        gbc_instruction_label_1.gridy = 9;
-        this.add(instruction_label_1, gbc_instruction_label_1);
-
+        // Кнопки
         loadButton = new Button("Load");
-        loadButton.attachTo(this, 0, 2);
+        loadButton.attachTo(this, 0, 3);
         loadButton.addActionListener(new ButtonLoadActionListener());
 
         genButton = new Button("Generate");
-        genButton.attachTo(this, 0, 3);
+        genButton.attachTo(this, 0, 4);
         genButton.addActionListener(new ButtonGenerateActionListener());
 
         toStartButton = new Button("ToStart");
-        toStartButton.attachTo(this, 0, 4);
+        toStartButton.attachTo(this, 0, 5);
         toStartButton.addActionListener(new ButtonToStartActionListener());
 
         toEndButton = new Button("ToEnd");
-        toEndButton.attachTo(this, 1, 4);
+        toEndButton.attachTo(this, 0, 6);
         toEndButton.addActionListener(new ButtonToEndActionListener());
 
         nextButton = new Button("Next");
-        nextButton.attachTo(this, 0, 5);
+        nextButton.attachTo(this, 0, 7);
         nextButton.addActionListener(new ButtonNextActionListener());
 
         backButton = new Button("Back");
-        backButton.attachTo(this, 1, 5);
+        backButton.attachTo(this, 0, 8);
         backButton.addActionListener(new ButtonBackActionListener());
 
         startButton = new Button("Start");
-        startButton.attachTo(this, 0, 6);
+        startButton.attachTo(this, 0, 9);
         startButton.addActionListener(new ButtonStartActionListener());
 
         stopButton = new Button("Stop");
-        stopButton.attachTo(this, 1, 6);
+        stopButton.attachTo(this, 0, 10);
         stopButton.addActionListener(new ButtonStopActionListener());
         stopButton.setEnabled(false);
+
+        // Текстовое поле
+
+        JTextArea textLog = new JTextArea(8, 10);
+        // Шрифт и табуляция
+        textLog.setFont(new Font("Dialog", Font.PLAIN, 14));
+        textLog.setTabSize(10);
+
+        //
+
+        GridBagConstraints  scroll_gbc = new GridBagConstraints();
+        scroll_gbc.insets = new Insets(30, 5, 5, 5);
+        scroll_gbc.fill = GridBagConstraints.HORIZONTAL;
+        scroll_gbc.gridx = 0;
+        scroll_gbc.gridy = 11;
+        scroll_gbc.gridwidth = 2;
+        JScrollPane a =  new JScrollPane(textLog);
+        a.setPreferredSize(new Dimension(500,100));
+        this.add(a, scroll_gbc);
+
     }
 
     public void setTable(JTable table) {
@@ -194,6 +216,8 @@ public class Left extends JPanel {
             for (int i = 0; i < table.getColumnCount(); ++i) {
                 columnModel.getColumn(i).setPreferredWidth(20);
                 columnModel.getColumn(i).setCellEditor(new DefaultCellEditor(comboBox));
+                table.getColumnModel().getColumn(i).setCellRenderer(new MyRenderer());
+                table.updateUI();
             }
         }
     }
@@ -256,7 +280,6 @@ public class Left extends JPanel {
     public class ButtonStopActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
             stopButton.setEnabled(false);
             startButton.setEnabled(true);
             toStartButton.setEnabled(true);
@@ -282,14 +305,16 @@ public class Left extends JPanel {
             dtm.setRowCount(y);
             TableColumnModel columnModel = table.getColumnModel();
             for (int i=0; i<table.getColumnCount(); ++i)
-                columnModel.getColumn(i).setPreferredWidth(15);
+                columnModel.getColumn(i).setPreferredWidth(20);
 
 
             for (int i=0; i<table.getRowCount(); i++) {
                 for (int j=0; j<table.getColumnCount(); j++) {
                     koef = random.nextInt(5);
-                    if (koef == 0) table.setValueAt("1", i, j);
-                    else table.setValueAt("", i, j);
+                    if (koef == 0)
+                        table.setValueAt("W", i, j);
+                    else
+                        table.setValueAt("", i, j);
                 }
             }
 
@@ -312,6 +337,7 @@ public class Left extends JPanel {
             table.setValueAt("E", koord_yE, koord_xE);
 
             for (int j=0; j<table.getColumnCount(); j++) {
+                columnModel.getColumn(j).setCellEditor(new DefaultCellEditor(comboBox));
                 table.getColumnModel().getColumn(j).setCellRenderer(new MyRenderer());
                 table.updateUI();
             }

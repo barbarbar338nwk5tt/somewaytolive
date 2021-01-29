@@ -1,4 +1,4 @@
-package GUI;
+package prj.GUI;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -10,7 +10,7 @@ public class MyRenderer extends DefaultTableCellRenderer {
     public Component getTableCellRendererComponent(JTable table, Object value, boolean   isSelected, boolean hasFocus, int row, int column) {
         Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-        if (table.getValueAt(row, column)!=null && table.getValueAt(row, column).equals("1")) {
+        if (table.getValueAt(row, column)!=null && table.getValueAt(row, column).equals("W")) {
             c.setBackground(Color.magenta);
             c.setForeground(Color.magenta);
         }

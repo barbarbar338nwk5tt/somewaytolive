@@ -1,6 +1,6 @@
-package Algorithm;
+package prj.Algorithm;
 
-import Resource.*;
+import prj.Resource.*;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -9,49 +9,9 @@ import java.util.PriorityQueue;
 
 public class AStar {
 
-    private Point start, end;
-    private Graph graph;
-    private ArrayList<Step> steps;
+    public static Iterator execute(Graph graph, Point start, Point end) {
 
-    public AStar() {
-        start = new Point();
-        end = new Point();
-        graph = new Graph();
-        steps = new ArrayList<>();
-    }
-
-    public void setGraph(Graph graph) {
-
-        this.graph = graph;
-        this.execute();
-    }
-    public void setStart(Point start) {
-
-        this.start = start;
-        this.execute();
-    }
-    public void setEnd(Point end) {
-
-        this.end = end;
-        this.execute();
-    }
-
-    public Graph getGraph() {
-
-        return graph;
-    }
-    public Point getStart() {
-
-        return start;
-    }
-    public Point getEnd() {
-
-        return end;
-    }
-
-    public boolean execute() {
-
-        this.steps = new ArrayList<>();
+        ArrayList<Step> steps = new ArrayList<>();
 
         PriorityQueue<QueuePair> queue = new PriorityQueue<>(new Comparator<QueuePair>() {
             @Override
@@ -92,16 +52,11 @@ public class AStar {
             steps.add(new Step(closed, opened, curr));
         }
 
-        return paths.get(end) != null;
+        return new Iterator(steps);
     }
     public static int heuristic(Point goal, Point curr) {
 
         return Math.abs(goal.getX() - curr.getX()) + Math.abs(goal.getY() - curr.getY());
-    }
-
-    public Iterator getIterator() {
-
-        return new Iterator(steps);
     }
 
     // -- Классы --
