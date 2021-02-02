@@ -82,26 +82,45 @@ public class AStar {
             index = 0;
         }
 
-        public boolean next(Step s) {
+        public Step next() {
 
-            if (index < steps.size() - 1) index++;
-            s = steps.get(index);
-            return index != steps.size() - 1;
+            if (index < steps.size() - 1)
+                return steps.get(++index);
+            return null;
         }
-        public boolean prev(Step s) {
+        public Step prev() {
 
-            if (index > 0) index--;
-            s = steps.get(index);
-            return index != 0;
+            if (index > 0)
+                return steps.get(--index);
+            return null;
         }
         public Step curr() {
 
             return steps.get(index);
         }
 
-        public boolean isEmpty() {
+        public Step toStart() {
 
-            return steps.isEmpty();
+            index = 0;
+            return steps.get(index);
+        }
+        public Step toEnd() {
+
+            index = steps.size() - 1;
+            return steps.get(index);
+        }
+        public Step toIndex(int i) {
+
+            if (index > -1 && index < steps.size()) {
+                index = i;
+                return steps.get(index);
+            }
+            return null;
+        }
+
+        public int getIndex() {
+
+            return index;
         }
     }
 

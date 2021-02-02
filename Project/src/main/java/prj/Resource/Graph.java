@@ -52,6 +52,15 @@ public class Graph {
         map.get(f).put(s, w);
     }
 
+    public boolean isIn(Point p) {
+
+        return map.containsKey(p);
+    }
+    public boolean isEmpty() {
+
+        return map.isEmpty();
+    }
+
     public HashMap<Point, HashMap<Point, Integer>> getMap() {
 
         return map;

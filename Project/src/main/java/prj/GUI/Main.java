@@ -1,15 +1,21 @@
 package prj.GUI;
 
+import prj.Resource.*;
+import prj.Algorithm.*;
+
 import javax.swing.*;
 import java.awt.*;
 
-
-public class GUI extends JFrame {
+public class Main extends JFrame {
 
     private Left leftPanel;
     private Right rightPanel;
 
-    public GUI() {
+    public static void main(String[] args) {
+        new Main();
+    }
+
+    public Main() {
         super("A-Star");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
