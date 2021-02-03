@@ -32,6 +32,15 @@ public class AStar {
         while(!queue.isEmpty()) {
 
             curr = queue.poll().point;
+
+            // Запись итератора
+            ArrayList<Point> opened = new ArrayList<>();
+            for (QueuePair i : queue) opened.add(i.point);
+            ArrayList<Point> closed = new ArrayList<>();
+            for (Point i : lengths.keySet()) closed.add(i);
+            steps.add(new Step(closed, opened, curr));
+            //
+
             if (curr.equals(end)) break;
 
             for (Point i : graph.getMap().get(curr).keySet()) {
@@ -44,12 +53,6 @@ public class AStar {
                     paths.put(i, curr);
                 }
             }
-
-            ArrayList<Point> opened = new ArrayList<>();
-            for (QueuePair i : queue) opened.add(i.point);
-            ArrayList<Point> closed = new ArrayList<>();
-            for (Point i : lengths.keySet()) closed.add(i);
-            steps.add(new Step(closed, opened, curr));
         }
 
         return new Iterator(steps);

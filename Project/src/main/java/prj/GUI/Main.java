@@ -1,6 +1,5 @@
 package prj.GUI;
 
-import prj.Resource.*;
 import prj.Algorithm.*;
 
 import javax.swing.*;
@@ -10,8 +9,10 @@ public class Main extends JFrame {
 
     private Left leftPanel;
     private Right rightPanel;
+    private Facade facade;
 
     public static void main(String[] args) {
+
         new Main();
     }
 
@@ -31,7 +32,11 @@ public class Main extends JFrame {
 
         leftPanel = new Left();
         rightPanel = new Right();
-        leftPanel.setTable(rightPanel.get_table());
+        facade = new Facade();
+
+        leftPanel.setRight(rightPanel);
+        leftPanel.setFacade(facade);
+
         this.add(leftPanel);
         this.add(rightPanel);
 
@@ -51,5 +56,9 @@ public class Main extends JFrame {
     public Right getRightPanel() {
 
         return rightPanel;
+    }
+    public Facade getFacade() {
+
+        return facade;
     }
 }

@@ -9,13 +9,13 @@ import java.awt.event.*;
 import java.util.Random;
 import java.io.File;
 
+import prj.Algorithm.Facade;
 
 public class Left extends JPanel {
 
     private JTextField textField1;
     private JTextField textField2;
     private JSlider slid;
-    private JTable table;
     private Button loadButton;
     private Button startButton;
     private Button stopButton;
@@ -27,12 +27,15 @@ public class Left extends JPanel {
     private JComboBox<String> comboBox;
     private JTextArea textLog;
 
+    private Right rightPointer;
+    private Facade facadePointer;
+
     public Left() {
         super();
         GridBagLayout layout = new GridBagLayout();
         this.setLayout(layout);
 
-        // Выпадающий список
+        // выпадающий список
         comboBox = new JComboBox<>();
         comboBox.addItem("W");
         comboBox.addItem(" ");
@@ -120,13 +123,6 @@ public class Left extends JPanel {
         slid_gbc.gridheight = 7;
         this.add(slid, slid_gbc);
 
-        // Выпадающий список
-        JComboBox<String> comboBox = new JComboBox<>();
-        comboBox.addItem("W");
-        comboBox.addItem(" ");
-        comboBox.addItem("S");
-        comboBox.addItem("E");
-
         // Кнопки
         loadButton = new Button("Load");
         loadButton.attachTo(this, 0, 3);
@@ -182,12 +178,16 @@ public class Left extends JPanel {
 
     }
 
-    public void setTable(JTable table) {
+    public void setRight(Right right) {
 
-        this.table = table;
+        this.rightPointer = right;
+    }
+    public void setFacade(Facade facade) {
+
+        this.facadePointer = facade;
     }
 
-    //
+    // -- Обработчики --
 
     public class TextActionListener implements ActionListener {
         @Override
@@ -209,15 +209,15 @@ public class Left extends JPanel {
                 return;
             }
 
-            DefaultTableModel dtm = (DefaultTableModel) table.getModel();
+            DefaultTableModel dtm = (DefaultTableModel) rightPointer.getTable().getModel();
             dtm.setColumnCount(x);
             dtm.setRowCount(y);
-            TableColumnModel columnModel = table.getColumnModel();
-            for (int i = 0; i < table.getColumnCount(); ++i) {
+            TableColumnModel columnModel = rightPointer.getTable().getColumnModel();
+            for (int i = 0; i < rightPointer.getTable().getColumnCount(); ++i) {
                 columnModel.getColumn(i).setPreferredWidth(20);
                 columnModel.getColumn(i).setCellEditor(new DefaultCellEditor(comboBox));
-                table.getColumnModel().getColumn(i).setCellRenderer(new MyRenderer());
-                table.updateUI();
+                rightPointer.getTable().getColumnModel().getColumn(i).setCellRenderer(new MyRenderer());
+                rightPointer.getTable().updateUI();
             }
         }
     }
@@ -225,26 +225,65 @@ public class Left extends JPanel {
     public class ButtonLoadActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            JFileChooser fileopen = new JFileChooser();
-            int ret = fileopen.showDialog(null, "Открыть файл");
+            JFileChooser fileOpen = new JFileChooser();
+            int ret = fileOpen.showDialog(null, "Открыть файл");
             if (ret == JFileChooser.APPROVE_OPTION) {
 
-                File file = fileopen.getSelectedFile();
+                File file = fileOpen.getSelectedFile();
             }
         }
+        // Пока просто окошко
     }
 
     public class ButtonNextActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            if (!facadePointer.isLoad() || facadePointer.isGraphEqual(rightPointer.getTable())) {
+                facadePointer.loadGraph(rightPointer.getTable());
+            }
+            if (!facadePointer.next()) {
+                // конец
+            }
+            facadePointer.drawStep(rightPointer.getTable());
+            //textLog.setText(facadePointer.getStepLog());
         }
     }
 
     public class ButtonBackActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            if (!facadePointer.isLoad() || facadePointer.isGraphEqual(rightPointer.getTable())) {
+                facadePointer.loadGraph(rightPointer.getTable());
+            }
+            if (!facadePointer.prev()) {
+                // начало
+            }
+            facadePointer.drawStep(rightPointer.getTable());
+            //textLog.setText(facadePointer.getStepLog());
+        }
+    }
 
+    public class ButtonToStartActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (!facadePointer.isLoad() || facadePointer.isGraphEqual(rightPointer.getTable())) {
+                facadePointer.loadGraph(rightPointer.getTable());
+            }
+            facadePointer.toStart();
+            facadePointer.drawStep(rightPointer.getTable());
+            //textLog.setText(facadePointer.getStepLog());
+        }
+    }
+
+    public class ButtonToEndActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (!facadePointer.isLoad() || facadePointer.isGraphEqual(rightPointer.getTable())) {
+                facadePointer.loadGraph(rightPointer.getTable());
+            }
+            facadePointer.toEnd();
+            facadePointer.drawStep(rightPointer.getTable());
+            //textLog.setText(facadePointer.getStepLog());
         }
     }
 
@@ -260,26 +299,15 @@ public class Left extends JPanel {
             nextButton.setEnabled(false);
             genButton.setEnabled(false);
             loadButton.setEnabled(false);
-        }
-    }
 
-    public class ButtonToEndActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-        }
-    }
-
-    public class ButtonToStartActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
+            // ввод таймера
         }
     }
 
     public class ButtonStopActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+
             stopButton.setEnabled(false);
             startButton.setEnabled(true);
             toStartButton.setEnabled(true);
@@ -288,6 +316,8 @@ public class Left extends JPanel {
             nextButton.setEnabled(true);
             genButton.setEnabled(true);
             loadButton.setEnabled(true);
+
+            // Остановка таймера
         }
     }
 
@@ -300,21 +330,21 @@ public class Left extends JPanel {
             y = random.nextInt(28) + 2;
             textField1.setText(x + " " + y);
 
-            DefaultTableModel dtm = (DefaultTableModel) table.getModel();
+            DefaultTableModel dtm = (DefaultTableModel) rightPointer.getTable().getModel();
             dtm.setColumnCount(x);
             dtm.setRowCount(y);
-            TableColumnModel columnModel = table.getColumnModel();
-            for (int i=0; i<table.getColumnCount(); ++i)
+            TableColumnModel columnModel = rightPointer.getTable().getColumnModel();
+            for (int i = 0; i < rightPointer.getTable().getColumnCount(); ++i)
                 columnModel.getColumn(i).setPreferredWidth(20);
 
 
-            for (int i=0; i<table.getRowCount(); i++) {
-                for (int j=0; j<table.getColumnCount(); j++) {
+            for (int i = 0; i < rightPointer.getTable().getRowCount(); i++) {
+                for (int j = 0; j < rightPointer.getTable().getColumnCount(); j++) {
                     koef = random.nextInt(5);
                     if (koef == 0)
-                        table.setValueAt("W", i, j);
+                        rightPointer.getTable().setValueAt("W", i, j);
                     else
-                        table.setValueAt("", i, j);
+                        rightPointer.getTable().setValueAt("", i, j);
                 }
             }
 
@@ -322,7 +352,7 @@ public class Left extends JPanel {
             koord_xS = random.nextInt(x - 1) + 1; //gen 2 - x
             koord_yS = random.nextInt(y - 1) + 1; //gen 2 - y
 
-            table.setValueAt("S", koord_yS, koord_xS);
+            rightPointer.getTable().setValueAt("S", koord_yS, koord_xS);
 
             int koord_xE, koord_yE;
 
@@ -334,13 +364,13 @@ public class Left extends JPanel {
                 koord_yE = random.nextInt(y - 1) + 1; //gen 2 - y
             }
 
-            table.setValueAt("E", koord_yE, koord_xE);
+            rightPointer.getTable().setValueAt("E", koord_yE, koord_xE);
 
-            for (int j=0; j<table.getColumnCount(); j++) {
+            for (int j = 0; j < rightPointer.getTable().getColumnCount(); j++) {
                 columnModel.getColumn(j).setCellEditor(new DefaultCellEditor(comboBox));
-                table.getColumnModel().getColumn(j).setCellRenderer(new MyRenderer());
-                table.updateUI();
+                rightPointer.getTable().getColumnModel().getColumn(j).setCellRenderer(new MyRenderer());
+                rightPointer.getTable().updateUI();
             }
         }
-        }
+    }
 }

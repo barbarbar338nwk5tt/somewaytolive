@@ -1,7 +1,6 @@
 package prj.Algorithm;
 
 import prj.Resource.*;
-
 import javax.swing.*;
 
 public class Facade {
@@ -11,30 +10,37 @@ public class Facade {
     private AStar.Iterator iterator;
 
     public Facade() {
-        graph = new Graph();
-        start = new Point();
-        end = new Point();
+        graph = null;
+        start = null;
+        end = null;
         iterator = null;
     }
 
-    public void clearAll() {
-        graph = new Graph();
-        start = new Point();
-        end = new Point();
-        iterator = null;
-    }
-
-    public void calculatePath() {
-
-        if (!graph.isEmpty() && graph.isIn(start) && graph.isIn(end))
-            iterator = AStar.execute(graph, start, end);
-        // throw
-    }
     public boolean isPathExist() {
 
+        if (iterator == null) return false;
         int temp = iterator.getIndex();
-        boolean result = iterator.toEnd().equals(end);
+        boolean result = iterator.toEnd().getCurrent().equals(end);
         iterator.toIndex(temp);
+        return result;
+    }
+    public boolean isLoad() {
+
+        return iterator != null;
+    }
+    public boolean isGraphEqual(JTable table) {
+
+        Graph tempG = new Graph(graph);
+        Point tempS = new Point(start);
+        Point tempE = new Point(end);
+
+        loadGraph(table);
+        boolean result =  this.graph.equals(tempG) && this.start.equals(tempS) && this.end.equals(tempE);
+
+        this.graph = tempG;
+        this.start = tempS;
+        this.end = tempE;
+
         return result;
     }
 
@@ -53,29 +59,45 @@ public class Facade {
         return true;
     }
 
+    public void toEnd() {
+
+        if (iterator == null) return; // throw
+        iterator.toEnd();
+    }
+    public void toStart() {
+
+        if (iterator == null) return; // throw
+        iterator.toStart();
+    }
+
     public void drawStep(JTable table) {
 
         // draw
     }
+    public String getStepLog() {
+
+        return "log";
+    }
 
     public void loadGraph(JTable table) {
 
+        Point s = null, e = null;
         int[][] array = new int[table.getRowCount()][table.getColumnCount()];
+
         for (int i = 0; i < table.getRowCount(); i++) {
             for (int j = 0; j < table.getColumnCount(); j++) {
 
                 array[i][j] = 1;
                 if ("W".equals((String) table.getValueAt(i, j))) array[i][j] = 0;
+                if ("S".equals((String) table.getValueAt(i, j))) s = new Point(i, j);
+                if ("E".equals((String) table.getValueAt(i, j))) e = new Point(i, j);
             }
         }
-        graph = new Graph(array);
-    }
-    public void setSE(Point s, Point e) {
 
-        if (s == null || e == null) return; // throw
-        if (s.equals(e)) return; // throw
-        if (!graph.isIn(s) || !graph.isIn(e)) return; // throw
+        if (s == null || e == null) return;
+        graph = new Graph(array);
         start = s;
         end = e;
+        iterator = AStar.execute(graph, s, e);
     }
 }
