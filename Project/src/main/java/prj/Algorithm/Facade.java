@@ -72,7 +72,15 @@ public class Facade {
 
     public void drawStep(JTable table) {
 
-        // draw
+        if (iterator == null) return; // throw
+        AStar.Step curr = iterator.curr();
+        for (Point i : curr.getClosed()) {
+            // разукраска закрытых клеток JTable
+        }
+        for (Point i : curr.getOpened()) {
+            // Разукраска открытых клеток JTable
+        }
+        // Разукраска текущей клетки ...curr.getCurrent();
     }
     public String getStepLog() {
 
