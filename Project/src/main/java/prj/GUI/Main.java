@@ -1,25 +1,42 @@
-package GUI;
+package prj.GUI;
+
+import prj.Algorithm.*;
 
 import javax.swing.*;
 import java.awt.*;
 
-
-public class GUI extends JFrame {
+public class Main extends JFrame {
 
     private Left leftPanel;
     private Right rightPanel;
+    private Facade facade;
 
-    public GUI() {
+    public static void main(String[] args) {
+
+        new Main();
+    }
+
+    public Main() {
         super("A-Star");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setMinimumSize(new Dimension(640, 480));
-        this.setResizable(true);
+
+        // получить размер экрана
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int W = (int)screenSize.getWidth(); // получить ширину экрана
+        int H = (int)screenSize.getHeight(); // получить высоту экрана
+
+        this.setMinimumSize(new Dimension(W, H));
+        this.setResizable(false);
 
         this.getContentPane().setLayout(new GridLayout(1, 2));
 
         leftPanel = new Left();
         rightPanel = new Right();
-        leftPanel.setTable(rightPanel.get_table());
+        facade = new Facade();
+
+        leftPanel.setRight(rightPanel);
+        leftPanel.setFacade(facade);
+
         this.add(leftPanel);
         this.add(rightPanel);
 
@@ -39,5 +56,9 @@ public class GUI extends JFrame {
     public Right getRightPanel() {
 
         return rightPanel;
+    }
+    public Facade getFacade() {
+
+        return facade;
     }
 }

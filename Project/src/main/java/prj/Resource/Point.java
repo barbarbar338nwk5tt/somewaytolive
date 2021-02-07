@@ -1,4 +1,4 @@
-package Resource;
+package prj.Resource;
 
 public class Point {
 

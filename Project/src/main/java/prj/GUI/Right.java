@@ -1,4 +1,4 @@
-package GUI;
+package prj.GUI;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -51,7 +51,7 @@ public class Right extends JPanel {
         this.add(table, gbc_table);
     }
 
-    public JTable get_table() {
+    public JTable getTable() {
 
         return table;
     }

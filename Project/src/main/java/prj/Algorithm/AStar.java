@@ -1,6 +1,6 @@
-package Algorithm;
+package prj.Algorithm;
 
-import Resource.*;
+import prj.Resource.*;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -9,49 +9,9 @@ import java.util.PriorityQueue;
 
 public class AStar {
 
-    private Point start, end;
-    private Graph graph;
-    private ArrayList<Step> steps;
+    public static Iterator execute(Graph graph, Point start, Point end) {
 
-    public AStar() {
-        start = new Point();
-        end = new Point();
-        graph = new Graph();
-        steps = new ArrayList<>();
-    }
-
-    public void setGraph(Graph graph) {
-
-        this.graph = graph;
-        this.execute();
-    }
-    public void setStart(Point start) {
-
-        this.start = start;
-        this.execute();
-    }
-    public void setEnd(Point end) {
-
-        this.end = end;
-        this.execute();
-    }
-
-    public Graph getGraph() {
-
-        return graph;
-    }
-    public Point getStart() {
-
-        return start;
-    }
-    public Point getEnd() {
-
-        return end;
-    }
-
-    public boolean execute() {
-
-        this.steps = new ArrayList<>();
+        ArrayList<Step> steps = new ArrayList<>();
 
         PriorityQueue<QueuePair> queue = new PriorityQueue<>(new Comparator<QueuePair>() {
             @Override
@@ -72,6 +32,15 @@ public class AStar {
         while(!queue.isEmpty()) {
 
             curr = queue.poll().point;
+
+            // Запись итератора
+            ArrayList<Point> opened = new ArrayList<>();
+            for (QueuePair i : queue) opened.add(i.point);
+            ArrayList<Point> closed = new ArrayList<>();
+            for (Point i : lengths.keySet()) closed.add(i);
+            steps.add(new Step(closed, opened, curr));
+            //
+
             if (curr.equals(end)) break;
 
             for (Point i : graph.getMap().get(curr).keySet()) {
@@ -84,24 +53,13 @@ public class AStar {
                     paths.put(i, curr);
                 }
             }
-
-            ArrayList<Point> opened = new ArrayList<>();
-            for (QueuePair i : queue) opened.add(i.point);
-            ArrayList<Point> closed = new ArrayList<>();
-            for (Point i : lengths.keySet()) closed.add(i);
-            steps.add(new Step(closed, opened, curr));
         }
 
-        return paths.get(end) != null;
+        return new Iterator(steps);
     }
     public static int heuristic(Point goal, Point curr) {
 
         return Math.abs(goal.getX() - curr.getX()) + Math.abs(goal.getY() - curr.getY());
-    }
-
-    public Iterator getIterator() {
-
-        return new Iterator(steps);
     }
 
     // -- Классы --
@@ -127,26 +85,45 @@ public class AStar {
             index = 0;
         }
 
-        public boolean next(Step s) {
+        public Step next() {
 
-            if (index < steps.size() - 1) index++;
-            s = steps.get(index);
-            return index != steps.size() - 1;
+            if (index < steps.size() - 1)
+                return steps.get(++index);
+            return null;
         }
-        public boolean prev(Step s) {
+        public Step prev() {
 
-            if (index > 0) index--;
-            s = steps.get(index);
-            return index != 0;
+            if (index > 0)
+                return steps.get(--index);
+            return null;
         }
         public Step curr() {
 
             return steps.get(index);
         }
 
-        public boolean isEmpty() {
+        public Step toStart() {
 
-            return steps.isEmpty();
+            index = 0;
+            return steps.get(index);
+        }
+        public Step toEnd() {
+
+            index = steps.size() - 1;
+            return steps.get(index);
+        }
+        public Step toIndex(int i) {
+
+            if (index > -1 && index < steps.size()) {
+                index = i;
+                return steps.get(index);
+            }
+            return null;
+        }
+
+        public int getIndex() {
+
+            return index;
         }
     }
 

@@ -1,4 +1,4 @@
-package Resource;
+package prj.Resource;
 
 import java.util.HashMap;
 
@@ -23,12 +23,12 @@ public class Graph {
 
         int max_x = array.length;
         int max_y = array[0].length;
+        this.map = new HashMap<>();
 
         for (int i = 0; i < max_x; i++) {
             for (int j = 0; j < max_y; j++) {
 
                 if (array[i][j] > 0) {
-
                     if (i > 0) this.addEdge(new Point(i - 1, j), new Point(i, j), array[i][j]);
                     if (j > 0) this.addEdge(new Point(i, j - 1), new Point(i, j), array[i][j]);
                     if (i < max_x - 1) this.addEdge(new Point(i + 1, j), new Point(i, j), array[i][j]);
@@ -50,6 +50,15 @@ public class Graph {
         this.addPoint(f);
         this.addPoint(s);
         map.get(f).put(s, w);
+    }
+
+    public boolean isIn(Point p) {
+
+        return map.containsKey(p);
+    }
+    public boolean isEmpty() {
+
+        return map.isEmpty();
     }
 
     public HashMap<Point, HashMap<Point, Integer>> getMap() {

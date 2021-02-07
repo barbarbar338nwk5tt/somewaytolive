@@ -1,4 +1,4 @@
-package GUI;
+package prj.GUI;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -9,13 +9,13 @@ import java.awt.event.*;
 import java.util.Random;
 import java.io.File;
 
+import prj.Algorithm.Facade;
 
 public class Left extends JPanel {
 
     private JTextField textField1;
     private JTextField textField2;
     private JSlider slid;
-    private JTable table;
     private Button loadButton;
     private Button startButton;
     private Button stopButton;
@@ -25,21 +25,35 @@ public class Left extends JPanel {
     private Button nextButton;
     private Button genButton;
     private JComboBox<String> comboBox;
+    private JTextArea textLog;
+
+    private Right rightPointer;
+    private Facade facadePointer;
 
     public Left() {
         super();
         GridBagLayout layout = new GridBagLayout();
         this.setLayout(layout);
 
-        // Выпадающий список
+        // выпадающий список
         comboBox = new JComboBox<>();
         comboBox.addItem("W");
         comboBox.addItem(" ");
         comboBox.addItem("S");
         comboBox.addItem("E");
 
+        JLabel instruction_label_1 = new JLabel("W - wall, S - start, E - Exit");
+        instruction_label_1.setForeground(Color.BLACK);
+        instruction_label_1.setFont(new Font("Tahoma", Font.BOLD, 11));
+        GridBagConstraints gbc_instruction_label_1 = new GridBagConstraints();
+        gbc_instruction_label_1.anchor = GridBagConstraints.WEST;
+        gbc_instruction_label_1.insets = new Insets(0, 0, 15, 20);
+        gbc_instruction_label_1.gridx = 0;
+        gbc_instruction_label_1.gridy = 0;
+        this.add(instruction_label_1, gbc_instruction_label_1);
+
         // лейбл с Heights
-        JLabel input_label1 = new JLabel("Width:");
+        JLabel input_label1 = new JLabel("Heihgt:");
         input_label1.setFont(new Font("Tahoma", Font.BOLD, 11));
         input_label1.setForeground(Color.BLACK);
         GridBagConstraints gbc_input_label = new GridBagConstraints();
@@ -49,7 +63,7 @@ public class Left extends JPanel {
         gbc_input_label.anchor = GridBagConstraints.WEST;
         // номер ячейки в сетке
         gbc_input_label.gridx = 0;
-        gbc_input_label.gridy = 0;
+        gbc_input_label.gridy = 1;
         this.add(input_label1, gbc_input_label);
         // Поле Heights
         textField1 = new JTextField();
@@ -57,34 +71,34 @@ public class Left extends JPanel {
         GridBagConstraints gbc_textField = new GridBagConstraints();
         gbc_textField.insets = new Insets(0, 0, 5, 5);
         gbc_textField.fill = GridBagConstraints.WEST;
-        gbc_textField.gridx = 1;
-        gbc_textField.gridy = 0;
+        gbc_textField.gridx = 0;
+        gbc_textField.gridy = 1;
         this.add(textField1, gbc_textField);
         textField1.setColumns(5);
         textField1.setText("5"); //base field size
 
-        // лейбл с Widths
-        JLabel input_label2 = new JLabel("Height:");
+        // лейбл с Heights
+        JLabel input_label2 = new JLabel("Width:");
         input_label2.setFont(new Font("Tahoma", Font.BOLD, 11));
         input_label2.setForeground(Color.BLACK);
-        GridBagConstraints gbc_input_label1 = new GridBagConstraints();
+        GridBagConstraints gbc_input_label2 = new GridBagConstraints();
         // отступы
-        gbc_input_label1.insets = new Insets(0, 0, 5, 5);
+        gbc_input_label2.insets = new Insets(0, 0, 5, 5);
         // прижаться к краю ячейки
-        gbc_input_label1.anchor = GridBagConstraints.WEST;
+        gbc_input_label2.anchor = GridBagConstraints.WEST;
         // номер ячейки в сетке
-        gbc_input_label1.gridx = 0;
-        gbc_input_label1.gridy = 1;
-        this.add(input_label2, gbc_input_label1);
-        // Поле Widths
+        gbc_input_label2.gridx = 0;
+        gbc_input_label2.gridy = 2;
+        this.add(input_label2, gbc_input_label2);
+        // Поле Heights
         textField2 = new JTextField();
         textField2.setBackground(new Color(255, 240, 245));
-        GridBagConstraints gbc_textField1 = new GridBagConstraints();
-        gbc_textField1.insets = new Insets(0, 0, 5, 5);
-        gbc_textField1.anchor = GridBagConstraints.WEST;
-        gbc_textField1.gridx = 1;
-        gbc_textField1.gridy = 1;
-        this.add(textField2, gbc_textField1);
+        GridBagConstraints gbc_textField2 = new GridBagConstraints();
+        gbc_textField2.insets = new Insets(0, 0, 5, 5);
+        gbc_textField2.fill = GridBagConstraints.WEST;
+        gbc_textField2.gridx = 0;
+        gbc_textField2.gridy = 2;
+        this.add(textField2, gbc_textField2);
         textField2.setColumns(5);
         textField2.setText("5"); //base field size
 
@@ -97,75 +111,83 @@ public class Left extends JPanel {
         slid = new JSlider(1, 3, 2);
         slid.setSnapToTicks(true);
         slid.setPaintTrack(true);
-
+        slid.setOrientation(SwingConstants.VERTICAL);
         slid.setPaintTicks(true);
         slid.setPaintLabels(true);
         slid.setMajorTickSpacing(1);
 
         GridBagConstraints  slid_gbc = new GridBagConstraints();
-        slid_gbc.insets = new Insets(20, 0, 5, 5);
-        slid_gbc.anchor = GridBagConstraints.WEST;
-        slid_gbc.gridx = 0;
-        slid_gbc.gridy = 8;
+        slid_gbc.insets = new Insets(20, 20, 5, 5);
+        slid_gbc.gridx = 1;
+        slid_gbc.gridy = 3;
+        slid_gbc.gridheight = 7;
         this.add(slid, slid_gbc);
 
-        // Выпадающий список
-        JComboBox<String> comboBox = new JComboBox<>();
-        comboBox.addItem("W");
-        comboBox.addItem(" ");
-        comboBox.addItem("S");
-        comboBox.addItem("E");
-
-        JLabel instruction_label_1 = new JLabel("W - wall, S - start, E - Exit");
-        instruction_label_1.setForeground(Color.BLACK);
-        instruction_label_1.setFont(new Font("Tahoma", Font.BOLD, 11));
-        GridBagConstraints gbc_instruction_label_1 = new GridBagConstraints();
-        gbc_instruction_label_1.anchor = GridBagConstraints.WEST;
-        gbc_instruction_label_1.insets = new Insets(0, 0, 5, 20);
-        gbc_instruction_label_1.gridx = 0;
-        gbc_instruction_label_1.gridy = 9;
-        this.add(instruction_label_1, gbc_instruction_label_1);
-
+        // Кнопки
         loadButton = new Button("Load");
-        loadButton.attachTo(this, 0, 2);
+        loadButton.attachTo(this, 0, 3);
         loadButton.addActionListener(new ButtonLoadActionListener());
 
         genButton = new Button("Generate");
-        genButton.attachTo(this, 0, 3);
+        genButton.attachTo(this, 0, 4);
         genButton.addActionListener(new ButtonGenerateActionListener());
 
         toStartButton = new Button("ToStart");
-        toStartButton.attachTo(this, 0, 4);
+        toStartButton.attachTo(this, 0, 5);
         toStartButton.addActionListener(new ButtonToStartActionListener());
 
         toEndButton = new Button("ToEnd");
-        toEndButton.attachTo(this, 1, 4);
+        toEndButton.attachTo(this, 0, 6);
         toEndButton.addActionListener(new ButtonToEndActionListener());
 
         nextButton = new Button("Next");
-        nextButton.attachTo(this, 0, 5);
+        nextButton.attachTo(this, 0, 7);
         nextButton.addActionListener(new ButtonNextActionListener());
 
         backButton = new Button("Back");
-        backButton.attachTo(this, 1, 5);
+        backButton.attachTo(this, 0, 8);
         backButton.addActionListener(new ButtonBackActionListener());
 
         startButton = new Button("Start");
-        startButton.attachTo(this, 0, 6);
+        startButton.attachTo(this, 0, 9);
         startButton.addActionListener(new ButtonStartActionListener());
 
         stopButton = new Button("Stop");
-        stopButton.attachTo(this, 1, 6);
+        stopButton.attachTo(this, 0, 10);
         stopButton.addActionListener(new ButtonStopActionListener());
         stopButton.setEnabled(false);
+
+        // Текстовое поле
+
+        JTextArea textLog = new JTextArea(8, 10);
+        // Шрифт и табуляция
+        textLog.setFont(new Font("Dialog", Font.PLAIN, 14));
+        textLog.setTabSize(10);
+
+        //
+
+        GridBagConstraints  scroll_gbc = new GridBagConstraints();
+        scroll_gbc.insets = new Insets(30, 5, 5, 5);
+        scroll_gbc.fill = GridBagConstraints.HORIZONTAL;
+        scroll_gbc.gridx = 0;
+        scroll_gbc.gridy = 11;
+        scroll_gbc.gridwidth = 2;
+        JScrollPane a =  new JScrollPane(textLog);
+        a.setPreferredSize(new Dimension(500,100));
+        this.add(a, scroll_gbc);
+
     }
 
-    public void setTable(JTable table) {
+    public void setRight(Right right) {
 
-        this.table = table;
+        this.rightPointer = right;
+    }
+    public void setFacade(Facade facade) {
+
+        this.facadePointer = facade;
     }
 
-    //
+    // -- Обработчики --
 
     public class TextActionListener implements ActionListener {
         @Override
@@ -187,13 +209,15 @@ public class Left extends JPanel {
                 return;
             }
 
-            DefaultTableModel dtm = (DefaultTableModel) table.getModel();
+            DefaultTableModel dtm = (DefaultTableModel) rightPointer.getTable().getModel();
             dtm.setColumnCount(x);
             dtm.setRowCount(y);
-            TableColumnModel columnModel = table.getColumnModel();
-            for (int i = 0; i < table.getColumnCount(); ++i) {
+            TableColumnModel columnModel = rightPointer.getTable().getColumnModel();
+            for (int i = 0; i < rightPointer.getTable().getColumnCount(); ++i) {
                 columnModel.getColumn(i).setPreferredWidth(20);
                 columnModel.getColumn(i).setCellEditor(new DefaultCellEditor(comboBox));
+                rightPointer.getTable().getColumnModel().getColumn(i).setCellRenderer(new MyRenderer());
+                rightPointer.getTable().updateUI();
             }
         }
     }
@@ -201,26 +225,65 @@ public class Left extends JPanel {
     public class ButtonLoadActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            JFileChooser fileopen = new JFileChooser();
-            int ret = fileopen.showDialog(null, "Открыть файл");
+            JFileChooser fileOpen = new JFileChooser();
+            int ret = fileOpen.showDialog(null, "Открыть файл");
             if (ret == JFileChooser.APPROVE_OPTION) {
 
-                File file = fileopen.getSelectedFile();
+                File file = fileOpen.getSelectedFile();
             }
         }
+        // Пока просто окошко
     }
 
     public class ButtonNextActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            if (!facadePointer.isLoad() || facadePointer.isGraphEqual(rightPointer.getTable())) {
+                facadePointer.loadGraph(rightPointer.getTable());
+            }
+            if (!facadePointer.next()) {
+                // конец
+            }
+            facadePointer.drawStep(rightPointer.getTable());
+            //textLog.setText(facadePointer.getStepLog());
         }
     }
 
     public class ButtonBackActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            if (!facadePointer.isLoad() || facadePointer.isGraphEqual(rightPointer.getTable())) {
+                facadePointer.loadGraph(rightPointer.getTable());
+            }
+            if (!facadePointer.prev()) {
+                // начало
+            }
+            facadePointer.drawStep(rightPointer.getTable());
+            //textLog.setText(facadePointer.getStepLog());
+        }
+    }
 
+    public class ButtonToStartActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (!facadePointer.isLoad() || facadePointer.isGraphEqual(rightPointer.getTable())) {
+                facadePointer.loadGraph(rightPointer.getTable());
+            }
+            facadePointer.toStart();
+            facadePointer.drawStep(rightPointer.getTable());
+            //textLog.setText(facadePointer.getStepLog());
+        }
+    }
+
+    public class ButtonToEndActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (!facadePointer.isLoad() || facadePointer.isGraphEqual(rightPointer.getTable())) {
+                facadePointer.loadGraph(rightPointer.getTable());
+            }
+            facadePointer.toEnd();
+            facadePointer.drawStep(rightPointer.getTable());
+            //textLog.setText(facadePointer.getStepLog());
         }
     }
 
@@ -236,20 +299,8 @@ public class Left extends JPanel {
             nextButton.setEnabled(false);
             genButton.setEnabled(false);
             loadButton.setEnabled(false);
-        }
-    }
 
-    public class ButtonToEndActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-        }
-    }
-
-    public class ButtonToStartActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
+            // ввод таймера
         }
     }
 
@@ -265,6 +316,8 @@ public class Left extends JPanel {
             nextButton.setEnabled(true);
             genButton.setEnabled(true);
             loadButton.setEnabled(true);
+
+            // Остановка таймера
         }
     }
 
@@ -277,19 +330,21 @@ public class Left extends JPanel {
             y = random.nextInt(28) + 2;
             textField1.setText(x + " " + y);
 
-            DefaultTableModel dtm = (DefaultTableModel) table.getModel();
+            DefaultTableModel dtm = (DefaultTableModel) rightPointer.getTable().getModel();
             dtm.setColumnCount(x);
             dtm.setRowCount(y);
-            TableColumnModel columnModel = table.getColumnModel();
-            for (int i=0; i<table.getColumnCount(); ++i)
-                columnModel.getColumn(i).setPreferredWidth(15);
+            TableColumnModel columnModel = rightPointer.getTable().getColumnModel();
+            for (int i = 0; i < rightPointer.getTable().getColumnCount(); ++i)
+                columnModel.getColumn(i).setPreferredWidth(20);
 
 
-            for (int i=0; i<table.getRowCount(); i++) {
-                for (int j=0; j<table.getColumnCount(); j++) {
+            for (int i = 0; i < rightPointer.getTable().getRowCount(); i++) {
+                for (int j = 0; j < rightPointer.getTable().getColumnCount(); j++) {
                     koef = random.nextInt(5);
-                    if (koef == 0) table.setValueAt("1", i, j);
-                    else table.setValueAt("", i, j);
+                    if (koef == 0)
+                        rightPointer.getTable().setValueAt("W", i, j);
+                    else
+                        rightPointer.getTable().setValueAt("", i, j);
                 }
             }
 
@@ -297,7 +352,7 @@ public class Left extends JPanel {
             koord_xS = random.nextInt(x - 1) + 1; //gen 2 - x
             koord_yS = random.nextInt(y - 1) + 1; //gen 2 - y
 
-            table.setValueAt("S", koord_yS, koord_xS);
+            rightPointer.getTable().setValueAt("S", koord_yS, koord_xS);
 
             int koord_xE, koord_yE;
 
@@ -309,12 +364,13 @@ public class Left extends JPanel {
                 koord_yE = random.nextInt(y - 1) + 1; //gen 2 - y
             }
 
-            table.setValueAt("E", koord_yE, koord_xE);
+            rightPointer.getTable().setValueAt("E", koord_yE, koord_xE);
 
-            for (int j=0; j<table.getColumnCount(); j++) {
-                table.getColumnModel().getColumn(j).setCellRenderer(new MyRenderer());
-                table.updateUI();
+            for (int j = 0; j < rightPointer.getTable().getColumnCount(); j++) {
+                columnModel.getColumn(j).setCellEditor(new DefaultCellEditor(comboBox));
+                rightPointer.getTable().getColumnModel().getColumn(j).setCellRenderer(new MyRenderer());
+                rightPointer.getTable().updateUI();
             }
         }
-        }
+    }
 }
