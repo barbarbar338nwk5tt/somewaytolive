@@ -158,13 +158,9 @@ public class Left extends JPanel {
         stopButton.setEnabled(false);
 
         // Текстовое поле
-
         JTextArea textLog = new JTextArea(8, 10);
-        // Шрифт и табуляция
         textLog.setFont(new Font("Dialog", Font.PLAIN, 14));
         textLog.setTabSize(10);
-
-        //
 
         GridBagConstraints  scroll_gbc = new GridBagConstraints();
         scroll_gbc.insets = new Insets(30, 5, 5, 5);
@@ -175,7 +171,6 @@ public class Left extends JPanel {
         JScrollPane a =  new JScrollPane(textLog);
         a.setPreferredSize(new Dimension(500,100));
         this.add(a, scroll_gbc);
-
     }
 
     public void setRight(Right right) {
@@ -245,7 +240,7 @@ public class Left extends JPanel {
                 // конец
             }
             facadePointer.drawStep(rightPointer.getTable());
-            //textLog.setText(facadePointer.getStepLog());
+            textLog.setText(facadePointer.getStepLog());
         }
     }
 
