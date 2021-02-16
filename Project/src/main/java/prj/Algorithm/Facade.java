@@ -1,7 +1,10 @@
 package prj.Algorithm;
 
 import prj.Resource.*;
+import prj.GUI.*;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 public class Facade {
 
@@ -74,13 +77,31 @@ public class Facade {
 
         if (iterator == null) return; // throw
         AStar.Step curr = iterator.curr();
+        DefaultTableModel dtm = (DefaultTableModel) table.getModel();
+        TableColumnModel columnModel = table.getColumnModel();
+        // убираем старое
+        for (int i = 0; i < table.getRowCount(); i++) {
+            for (int j = 0; j < table.getColumnCount(); j++) {
+                if (!table.getValueAt(i, j).equals("W"))
+                    table.setValueAt("", i, j);
+            }
+        }
+        // закрытые - красный
         for (Point i : curr.getClosed()) {
-            // разукраска закрытых клеток JTable
+            table.setValueAt("c", i.getX(), i.getY());
         }
+        // открытые - зеленый
         for (Point i : curr.getOpened()) {
-            // Разукраска открытых клеток JTable
+            table.setValueAt("o", i.getX(), i.getY());
         }
-        // Разукраска текущей клетки ...curr.getCurrent();
+        // текущая клетка
+        table.setValueAt("с", curr.getCurrent().getX(), curr.getCurrent().getY());
+        // отрисовка
+        for (int i = 0; i < table.getColumnCount(); ++i) {
+            columnModel.getColumn(i).setPreferredWidth(20);
+            table.getColumnModel().getColumn(i).setCellRenderer(new MyRenderer());
+            table.updateUI();
+        }
     }
     public String getStepLog() {
 
