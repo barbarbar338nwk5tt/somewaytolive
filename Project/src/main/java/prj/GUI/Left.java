@@ -187,8 +187,8 @@ public class Left extends JPanel {
     public class TextActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent evt) {
-            String textX = textField1.getText();
-            String textY = textField2.getText();
+            String textY = textField1.getText();
+            String textX = textField2.getText();
             textField1.selectAll();
             int x, y;
             try {
@@ -240,7 +240,7 @@ public class Left extends JPanel {
                 // конец
             }
             facadePointer.drawStep(rightPointer.getTable());
-            textLog.setText(facadePointer.getStepLog());
+            //textLog.setText(facadePointer.getStepLog());
         }
     }
 
@@ -323,7 +323,8 @@ public class Left extends JPanel {
             Random random = new Random();
             x = random.nextInt(28) + 2;
             y = random.nextInt(28) + 2;
-            textField1.setText(x + " " + y);
+            textField1.setText(y + "");
+            textField2.setText(x + "");
 
             DefaultTableModel dtm = (DefaultTableModel) rightPointer.getTable().getModel();
             dtm.setColumnCount(x);
