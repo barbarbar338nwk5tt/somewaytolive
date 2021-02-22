@@ -43,9 +43,9 @@ public class AStar {
 
             if (curr.equals(end)) break;
 
-            for (Point i : graph.getMap().get(curr).keySet()) {
+            for (Point i : graph.getNeighbors(curr)) {
 
-                Integer newlen = lengths.get(curr) + graph.getMap().get(curr).get(i);
+                Integer newlen = lengths.get(curr) + graph.getEdgeLen(curr, i);
                 if (!lengths.containsKey(i) || newlen < lengths.get(i)) {
 
                     lengths.put(i, newlen);
@@ -87,12 +87,14 @@ public class AStar {
 
         public Step next() {
 
+            System.out.println("Iterator: step = " + steps.get(index).getCurrent() + " len = " + steps.size() + " index = " + index);
             if (index < steps.size() - 1)
                 return steps.get(++index);
             return null;
         }
         public Step prev() {
 
+            System.out.println("Iterator: step = " + steps.get(index).getCurrent() + " len = " + steps.size() + " index = " + index);
             if (index > 0)
                 return steps.get(--index);
             return null;

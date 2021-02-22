@@ -29,13 +29,13 @@ public class Right extends JPanel {
         table.setBorder(new LineBorder(new Color(0, 0, 0)));
         table.setBackground(new Color(255, 240, 245));
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        table.setRowHeight(18);
+        table.setRowHeight(20);
         DefaultTableModel dtm = (DefaultTableModel) table.getModel();
         dtm.setColumnCount(5);
         dtm.setRowCount(5);
         TableColumnModel columnModel = table.getColumnModel();
         for (int i = 0; i < table.getColumnCount(); ++i) {
-            columnModel.getColumn(i).setPreferredWidth(18);
+            columnModel.getColumn(i).setPreferredWidth(20);
             columnModel.getColumn(i).setCellEditor(new DefaultCellEditor(comboBox));
         }
 
