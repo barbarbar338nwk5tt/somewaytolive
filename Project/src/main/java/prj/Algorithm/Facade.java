@@ -5,6 +5,7 @@ import prj.GUI.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import java.util.ArrayList;
 
 public class Facade {
 
@@ -33,12 +34,15 @@ public class Facade {
     }
     public boolean isGraphEqual(JTable table) {
 
+        if (graph == null || start == null || end == null) return false;
         Graph tempG = new Graph(graph);
         Point tempS = new Point(start);
         Point tempE = new Point(end);
 
+        boolean result = false;
         loadGraph(table);
-        boolean result =  this.graph.equals(tempG) && this.start.equals(tempS) && this.end.equals(tempE);
+        if (graph != null && start != null && end != null)
+            result = graph.equals(tempG) && start.equals(tempS) && end.equals(tempE);
 
         this.graph = tempG;
         this.start = tempS;
@@ -73,17 +77,31 @@ public class Facade {
         iterator.toStart();
     }
 
+    public ArrayList<Point> getWalls() {
+
+        ArrayList<Point> walls = new ArrayList<>();
+        ArrayList<Point> points = graph.getPoints();
+        int x = points.get(points.size() - 1).getX();
+        int y = points.get(points.size() - 1).getY();
+        for (int i = 0; i <= x; i++) {
+            for (int j = 0; j <= y; j++) {
+                if (!points.contains(new Point(i, j)))
+                    walls.add(new Point(i, j));
+            }
+        }
+        return walls;
+    }
+
     public void drawStep(JTable table) {
 
         if (iterator == null) return; // throw
         AStar.Step curr = iterator.curr();
         DefaultTableModel dtm = (DefaultTableModel) table.getModel();
         TableColumnModel columnModel = table.getColumnModel();
-        // убираем старое
+        // очистка поля
         for (int i = 0; i < table.getRowCount(); i++) {
             for (int j = 0; j < table.getColumnCount(); j++) {
-                if (!table.getValueAt(i, j).equals("W"))
-                    table.setValueAt("", i, j);
+                table.setValueAt("", i, j);
             }
         }
         // закрытые - красный
@@ -94,14 +112,21 @@ public class Facade {
         for (Point i : curr.getOpened()) {
             table.setValueAt("o", i.getX(), i.getY());
         }
-        // текущая клетка
-        table.setValueAt("с", curr.getCurrent().getX(), curr.getCurrent().getY());
+        // стены - розовый
+        for (Point i : this.getWalls()) {
+            table.setValueAt("W", i.getX(), i.getY());
+        }
+        // текущая клетка - черный
+        table.setValueAt("p", curr.getCurrent().getX(), curr.getCurrent().getY());
+        table.setValueAt("S", start.getX(), start.getY());
+        table.setValueAt("E", end.getX(), end.getY());
         // отрисовка
         for (int i = 0; i < table.getColumnCount(); ++i) {
             columnModel.getColumn(i).setPreferredWidth(20);
             table.getColumnModel().getColumn(i).setCellRenderer(new MyRenderer());
             table.updateUI();
         }
+        System.out.println("Facade: walls count = " + this.getWalls().size());
     }
     public String getStepLog() {
 
@@ -123,10 +148,17 @@ public class Facade {
             }
         }
 
-        if (s == null || e == null) return;
-        graph = new Graph(array);
-        start = s;
-        end = e;
-        iterator = AStar.execute(graph, s, e);
+        if (s == null || e == null) {
+            graph = null;
+            start = null;
+            end = null;
+            iterator = null;
+        }
+        else {
+            graph = new Graph(array);
+            start = s;
+            end = e;
+            iterator = AStar.execute(graph, s, e);
+        }
     }
 }

@@ -26,14 +26,18 @@ public class MyRenderer extends DefaultTableCellRenderer {
             c.setBackground(Color.yellow);
             c.setForeground(Color.yellow);
         }
+        else if (table.getValueAt(row, column)!=null && table.getValueAt(row, column).equals("p")) {
+            c.setBackground(Color.black);
+            c.setForeground(Color.black);
+        }
         else if (table.getValueAt(row, column)!=null && (table.getValueAt(row, column).equals("E") ||
                 table.getValueAt(row, column).equals("e"))) {
-            c.setBackground(new Color(255, 240, 245));
+            c.setBackground(Color.yellow);
             c.setForeground(Color.black);
         }
         else if (table.getValueAt(row, column)!=null && (table.getValueAt(row, column).equals("S") ||
                 table.getValueAt(row, column).equals("s"))) {
-            c.setBackground(new Color(255, 240, 245));
+            c.setBackground(Color.yellow);
             c.setForeground(Color.black);
         }
         else

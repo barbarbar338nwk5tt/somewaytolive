@@ -1,6 +1,8 @@
 package prj.GUI;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
@@ -122,6 +124,7 @@ public class Left extends JPanel {
         slid_gbc.gridy = 3;
         slid_gbc.gridheight = 7;
         this.add(slid, slid_gbc);
+        slid.addChangeListener(new SliderChangeListener());
 
         // Кнопки
         loadButton = new Button("Load");
@@ -168,9 +171,9 @@ public class Left extends JPanel {
         scroll_gbc.gridx = 0;
         scroll_gbc.gridy = 11;
         scroll_gbc.gridwidth = 2;
-        JScrollPane a =  new JScrollPane(textLog);
-        a.setPreferredSize(new Dimension(500,100));
-        this.add(a, scroll_gbc);
+        JScrollPane sr_panel =  new JScrollPane(textLog);
+        sr_panel.setPreferredSize(new Dimension(500,100));
+        this.add(sr_panel, scroll_gbc);
     }
 
     public void setRight(Right right) {
@@ -183,6 +186,13 @@ public class Left extends JPanel {
     }
 
     // -- Обработчики --
+
+    public class SliderChangeListener implements ChangeListener {
+        @Override
+        public void stateChanged(ChangeEvent evt) {
+            // slid.getValue();
+        }
+    }
 
     public class TextActionListener implements ActionListener {
         @Override
@@ -233,52 +243,52 @@ public class Left extends JPanel {
     public class ButtonNextActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (!facadePointer.isLoad() || facadePointer.isGraphEqual(rightPointer.getTable())) {
+            if (!facadePointer.isLoad()) {
                 facadePointer.loadGraph(rightPointer.getTable());
+                System.out.println("Not Load or New Graph");
             }
-            if (!facadePointer.next()) {
-                // конец
+            if (facadePointer.isLoad()) {
+                if (!facadePointer.next()) {
+                    // конец
+                    System.out.println("Come to End");
+                }
+                facadePointer.drawStep(rightPointer.getTable());
+                System.out.println("Draw now");
+                //textLog.setText(facadePointer.getStepLog());
             }
-            facadePointer.drawStep(rightPointer.getTable());
-            //textLog.setText(facadePointer.getStepLog());
         }
     }
 
     public class ButtonBackActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (!facadePointer.isLoad() || facadePointer.isGraphEqual(rightPointer.getTable())) {
+            if (!facadePointer.isLoad()) {
                 facadePointer.loadGraph(rightPointer.getTable());
+                System.out.println("Not Load or New Graph");
             }
-            if (!facadePointer.prev()) {
-                // начало
+            if (facadePointer.isLoad()) {
+                if (!facadePointer.prev()) {
+                    // конец
+                    System.out.println("Come to Start");
+                }
+                facadePointer.drawStep(rightPointer.getTable());
+                System.out.println("Draw now");
+                //textLog.setText(facadePointer.getStepLog());
             }
-            facadePointer.drawStep(rightPointer.getTable());
-            //textLog.setText(facadePointer.getStepLog());
         }
     }
 
     public class ButtonToStartActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (!facadePointer.isLoad() || facadePointer.isGraphEqual(rightPointer.getTable())) {
-                facadePointer.loadGraph(rightPointer.getTable());
-            }
-            facadePointer.toStart();
-            facadePointer.drawStep(rightPointer.getTable());
-            //textLog.setText(facadePointer.getStepLog());
+
         }
     }
 
     public class ButtonToEndActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (!facadePointer.isLoad() || facadePointer.isGraphEqual(rightPointer.getTable())) {
-                facadePointer.loadGraph(rightPointer.getTable());
-            }
-            facadePointer.toEnd();
-            facadePointer.drawStep(rightPointer.getTable());
-            //textLog.setText(facadePointer.getStepLog());
+
         }
     }
 
@@ -333,7 +343,6 @@ public class Left extends JPanel {
             for (int i = 0; i < rightPointer.getTable().getColumnCount(); ++i)
                 columnModel.getColumn(i).setPreferredWidth(20);
 
-
             for (int i = 0; i < rightPointer.getTable().getRowCount(); i++) {
                 for (int j = 0; j < rightPointer.getTable().getColumnCount(); j++) {
                     koef = random.nextInt(5);
@@ -367,6 +376,8 @@ public class Left extends JPanel {
                 rightPointer.getTable().getColumnModel().getColumn(j).setCellRenderer(new MyRenderer());
                 rightPointer.getTable().updateUI();
             }
+
+            facadePointer.loadGraph(rightPointer.getTable());
         }
     }
 }

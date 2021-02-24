@@ -13,8 +13,14 @@ public class Point {
         this.y = y;
     }
     public Point(Point point) {
-        this.x = point.getX();
-        this.y = point.getY();
+        if (point != null) {
+            this.x = point.getX();
+            this.y = point.getY();
+        }
+        else {
+            this.x = 0;
+            this.y = 0;
+        }
     }
 
     public int getX() {
