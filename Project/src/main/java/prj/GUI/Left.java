@@ -26,6 +26,7 @@ public class Left extends JPanel {
     private Button backButton;
     private Button nextButton;
     private Button genButton;
+    private Button changeButton;
     private JComboBox<String> comboBox;
     private JTextArea textLog;
 
@@ -127,6 +128,11 @@ public class Left extends JPanel {
         slid.addChangeListener(new SliderChangeListener());
 
         // Кнопки
+        changeButton = new Button("Change state");
+        changeButton.attachTo(this, 0, 11);
+        changeButton.addActionListener(new ButtonChangeActionListener());
+        changeButton.setEnabled(false);
+
         loadButton = new Button("Load");
         loadButton.attachTo(this, 0, 3);
         loadButton.addActionListener(new ButtonLoadActionListener());
@@ -169,7 +175,7 @@ public class Left extends JPanel {
         scroll_gbc.insets = new Insets(30, 5, 5, 5);
         scroll_gbc.fill = GridBagConstraints.HORIZONTAL;
         scroll_gbc.gridx = 0;
-        scroll_gbc.gridy = 11;
+        scroll_gbc.gridy = 12;
         scroll_gbc.gridwidth = 2;
         JScrollPane sr_panel =  new JScrollPane(textLog);
         sr_panel.setPreferredSize(new Dimension(500,100));
@@ -186,6 +192,18 @@ public class Left extends JPanel {
     }
 
     // -- Обработчики --
+
+    public class ButtonChangeActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            genButton.setEnabled(true);
+            changeButton.setEnabled(false);
+
+            facadePointer.toStart();
+            facadePointer.drawStep(rightPointer.getTable());
+            facadePointer.clear();
+        }
+    }
 
     public class SliderChangeListener implements ChangeListener {
         @Override
@@ -248,6 +266,9 @@ public class Left extends JPanel {
                 System.out.println("Not Load or New Graph");
             }
             if (facadePointer.isLoad()) {
+                genButton.setEnabled(false);
+                changeButton.setEnabled(true);
+
                 if (!facadePointer.next()) {
                     // конец
                     System.out.println("Come to End");
@@ -267,6 +288,9 @@ public class Left extends JPanel {
                 System.out.println("Not Load or New Graph");
             }
             if (facadePointer.isLoad()) {
+                genButton.setEnabled(false);
+                changeButton.setEnabled(true);
+
                 if (!facadePointer.prev()) {
                     // конец
                     System.out.println("Come to Start");
@@ -281,14 +305,38 @@ public class Left extends JPanel {
     public class ButtonToStartActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            if (!facadePointer.isLoad()) {
+                facadePointer.loadGraph(rightPointer.getTable());
+                System.out.println("Not Load or New Graph");
+            }
+            if (facadePointer.isLoad()) {
+                genButton.setEnabled(false);
+                changeButton.setEnabled(true);
 
+                facadePointer.toStart();
+                facadePointer.drawStep(rightPointer.getTable());
+                System.out.println("Draw now");
+                //textLog.setText(facadePointer.getStepLog());
+            }
         }
     }
 
     public class ButtonToEndActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            if (!facadePointer.isLoad()) {
+                facadePointer.loadGraph(rightPointer.getTable());
+                System.out.println("Not Load or New Graph");
+            }
+            if (facadePointer.isLoad()) {
+                genButton.setEnabled(false);
+                changeButton.setEnabled(true);
 
+                facadePointer.toEnd();
+                facadePointer.drawStep(rightPointer.getTable());
+                System.out.println("Draw now");
+                //textLog.setText(facadePointer.getStepLog());
+            }
         }
     }
 
@@ -376,8 +424,6 @@ public class Left extends JPanel {
                 rightPointer.getTable().getColumnModel().getColumn(j).setCellRenderer(new MyRenderer());
                 rightPointer.getTable().updateUI();
             }
-
-            facadePointer.loadGraph(rightPointer.getTable());
         }
     }
 }
