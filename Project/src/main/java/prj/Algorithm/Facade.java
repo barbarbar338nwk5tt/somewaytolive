@@ -20,6 +20,14 @@ public class Facade {
         iterator = null;
     }
 
+    public void clear() {
+
+        graph = null;
+        start = null;
+        end = null;
+        iterator = null;
+    }
+
     public boolean isPathExist() {
 
         if (iterator == null) return false;
