@@ -5,6 +5,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import javax.swing.Timer;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -29,6 +30,7 @@ public class Left extends JPanel {
     private Button changeButton;
     private JComboBox<String> comboBox;
     private JTextArea textLog;
+    private Timer timer;
 
     private Right rightPointer;
     private Facade facadePointer;
@@ -37,6 +39,9 @@ public class Left extends JPanel {
         super();
         GridBagLayout layout = new GridBagLayout();
         this.setLayout(layout);
+
+        // Таймер
+        timer = new Timer(600, new ButtonNextActionListener());
 
         // выпадающий список
         comboBox = new JComboBox<>();
@@ -208,7 +213,8 @@ public class Left extends JPanel {
     public class SliderChangeListener implements ChangeListener {
         @Override
         public void stateChanged(ChangeEvent evt) {
-            // slid.getValue();
+            timer.setDelay((4 - slid.getValue()) * 300);
+            System.out.println("Slider: value = " + slid.getValue());
         }
     }
 
@@ -344,6 +350,7 @@ public class Left extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
 
+            timer.start();
             stopButton.setEnabled(true);
             startButton.setEnabled(false);
             toStartButton.setEnabled(false);
@@ -361,13 +368,14 @@ public class Left extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
 
+            timer.restart();
+            timer.stop();
             stopButton.setEnabled(false);
             startButton.setEnabled(true);
             toStartButton.setEnabled(true);
             toEndButton.setEnabled(true);
             backButton.setEnabled(true);
             nextButton.setEnabled(true);
-            genButton.setEnabled(true);
             loadButton.setEnabled(true);
 
             // Остановка таймера
