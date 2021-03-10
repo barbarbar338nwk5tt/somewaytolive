@@ -233,8 +233,8 @@ public class Left extends JPanel {
                 JOptionPane.showInternalMessageDialog(null, "Error! Wrong number format.");
                 return;
             }
-            if (x < 2 || x > 30) {
-                JOptionPane.showInternalMessageDialog(null, "Error! Enter size of the field in range [2, 30].");
+            if ((x < 2 || x > 30) || (y < 2 || y > 30)) {
+                JOptionPane.showInternalMessageDialog(null, "Error! Enter size of the field in range [3, 30].");
                 return;
             }
 
@@ -384,14 +384,24 @@ public class Left extends JPanel {
 
     public class ButtonGenerateActionListener implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent evt) {
             int x, y, koef;
             Random random = new Random();
-            x = random.nextInt(28) + 2;
-            y = random.nextInt(28) + 2;
-            textField1.setText(y + "");
-            textField2.setText(x + "");
-
+            String textY = textField1.getText();
+            String textX = textField2.getText();
+            textField1.selectAll();
+            try {
+                x = Integer.parseInt(textX);
+                y = Integer.parseInt(textY);
+            }
+            catch (NumberFormatException e) {
+                JOptionPane.showInternalMessageDialog(null, "Error! Wrong number format.");
+                return;
+            }
+            if ((x < 2 || x > 30) || (y < 2 || y > 30)) {
+                JOptionPane.showInternalMessageDialog(null, "Error! Enter size of the field in range [3, 30].");
+                return;
+            }
             DefaultTableModel dtm = (DefaultTableModel) rightPointer.getTable().getModel();
             dtm.setColumnCount(x);
             dtm.setRowCount(y);
@@ -401,7 +411,7 @@ public class Left extends JPanel {
 
             for (int i = 0; i < rightPointer.getTable().getRowCount(); i++) {
                 for (int j = 0; j < rightPointer.getTable().getColumnCount(); j++) {
-                    koef = random.nextInt(5);
+                    koef = random.nextInt(5) ;
                     if (koef == 0)
                         rightPointer.getTable().setValueAt("W", i, j);
                     else
@@ -410,8 +420,8 @@ public class Left extends JPanel {
             }
 
             int koord_xS, koord_yS;
-            koord_xS = random.nextInt(x - 1) + 1; //gen 2 - x
-            koord_yS = random.nextInt(y - 1) + 1; //gen 2 - y
+            koord_xS = random.nextInt(x - 1); //gen 2 - x
+            koord_yS = random.nextInt(y - 1); //gen 2 - y
 
             rightPointer.getTable().setValueAt("S", koord_yS, koord_xS);
 
