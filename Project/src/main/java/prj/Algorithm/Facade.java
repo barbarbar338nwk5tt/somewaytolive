@@ -144,15 +144,15 @@ public class Facade {
     public void loadGraph(JTable table) {
 
         Point s = null, e = null;
-        int[][] array = new int[table.getRowCount()][table.getColumnCount()];
+        int[][] array = new int[table.getColumnCount()][table.getRowCount()];
 
-        for (int i = 0; i < table.getRowCount(); i++) {
-            for (int j = 0; j < table.getColumnCount(); j++) {
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            for (int j = 0; j < table.getRowCount(); j++) {
 
                 array[i][j] = 1;
-                if ("W".equals((String) table.getValueAt(i, j))) array[i][j] = 0;
-                if ("S".equals((String) table.getValueAt(i, j))) s = new Point(i, j);
-                if ("E".equals((String) table.getValueAt(i, j))) e = new Point(i, j);
+                if ("W".equals((String) table.getValueAt(j, i))) array[i][j] = 0;
+                if ("S".equals((String) table.getValueAt(j, i))) s = new Point(j, i);
+                if ("E".equals((String) table.getValueAt(j, i))) e = new Point(j, i);
             }
         }
 
