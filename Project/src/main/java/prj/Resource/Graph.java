@@ -22,20 +22,19 @@ public class Graph {
         }
     }
     public Graph(int[][] array) {
-
         this.map = new HashMap<>();
         if (array == null) return; // throw
-        int max_x = array.length;
-        int max_y = array[0].length;
+        int max_y = array.length;
+        int max_x = array[0].length;
 
-        for (int i = 0; i < max_x; i++) {
-            for (int j = 0; j < max_y; j++) {
-
+        for (int i = 0; i < max_y; i++) {
+            for (int j = 0; j < max_x; j++) {
                 if (array[i][j] > 0) {
-                    if (i > 0 && array[i - 1][j] != 0) this.addEdge(new Point(i - 1, j), new Point(i, j), array[i][j]);
-                    if (j > 0 && array[i][j - 1] != 0) this.addEdge(new Point(i, j - 1), new Point(i, j), array[i][j]);
-                    if (i < max_x - 1 && array[i + 1][j] != 0) this.addEdge(new Point(i + 1, j), new Point(i, j), array[i][j]);
-                    if (j < max_y - 1 && array[i][j + 1] != 0) this.addEdge(new Point(i, j + 1), new Point(i, j), array[i][j]);
+                    this.addPoint(new Point(j, i));
+                    if (i > 0 && array[i - 1][j] != 0) this.addEdge(new Point(j, i - 1), new Point(j, i), array[i][j]);
+                    if (j > 0 && array[i][j - 1] != 0) this.addEdge(new Point(j - 1, i), new Point(j, i), array[i][j]);
+                    if (i < max_y - 1 && array[i + 1][j] != 0) this.addEdge(new Point(j, i + 1), new Point(j, i), array[i][j]);
+                    if (j < max_x - 1 && array[i][j + 1] != 0) this.addEdge(new Point(j + 1, i), new Point(j, i), array[i][j]);
                 }
             }
         }
@@ -69,10 +68,14 @@ public class Graph {
         return map;
     }
     public ArrayList<Point> getPoints() {
-
         ArrayList<Point> points = new ArrayList<>();
         for (Point i : map.keySet())
             points.add(new Point(i));
+        points.sort((o1, o2) -> {
+            if (o1.getY() < o2.getY()) return -1;
+            if (o1.getY() == o2.getY()) return o1.getX() - o2.getX();
+            return 1;
+        });
         return points;
     }
     public ArrayList<Point> getNeighbors(Point p) {
@@ -102,14 +105,7 @@ public class Graph {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Graph graph = (Graph) o;
-        for (Point i : graph.getMap().keySet()) {
-            for (Point j : graph.getMap().get(i).keySet()) {
-                if (!map.containsKey(i) || !map.get(i).containsKey(j) || !map.get(i).get(j).equals(graph.getMap().get(i).get(j)))
-                    return false;
-            }
-        }
-        return true;
+        return o.toString().equals(this.toString());
     }
 
     @Override

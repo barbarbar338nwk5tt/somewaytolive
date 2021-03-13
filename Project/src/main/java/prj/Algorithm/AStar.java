@@ -10,7 +10,6 @@ import java.util.PriorityQueue;
 public class AStar {
 
     public static Iterator execute(Graph graph, Point start, Point end) {
-
         ArrayList<Step> steps = new ArrayList<>();
 
         PriorityQueue<QueuePair> queue = new PriorityQueue<>(new Comparator<QueuePair>() {
@@ -32,6 +31,7 @@ public class AStar {
         while(!queue.isEmpty()) {
 
             curr = queue.poll().point;
+            System.out.println(curr);
 
             // Запись итератора
             ArrayList<Point> opened = new ArrayList<>();

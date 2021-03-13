@@ -172,7 +172,7 @@ public class Left extends JPanel {
         stopButton.setEnabled(false);
 
         // Текстовое поле
-        JTextArea textLog = new JTextArea(8, 10);
+        textLog = new JTextArea(8, 10);
         textLog.setFont(new Font("Dialog", Font.PLAIN, 14));
         textLog.setTabSize(10);
 
@@ -203,6 +203,7 @@ public class Left extends JPanel {
         public void actionPerformed(ActionEvent e) {
             genButton.setEnabled(true);
             changeButton.setEnabled(false);
+            loadButton.setEnabled(true);
 
             facadePointer.toStart();
             facadePointer.drawStep(rightPointer.getTable());
@@ -274,6 +275,7 @@ public class Left extends JPanel {
             if (facadePointer.isLoad()) {
                 genButton.setEnabled(false);
                 changeButton.setEnabled(true);
+                loadButton.setEnabled(false);
 
                 if (!facadePointer.next()) {
                     // конец
@@ -281,7 +283,7 @@ public class Left extends JPanel {
                 }
                 facadePointer.drawStep(rightPointer.getTable());
                 System.out.println("Draw now");
-                //textLog.setText(facadePointer.getStepLog());
+                textLog.setText(facadePointer.getStepLog());
             }
         }
     }
@@ -296,6 +298,7 @@ public class Left extends JPanel {
             if (facadePointer.isLoad()) {
                 genButton.setEnabled(false);
                 changeButton.setEnabled(true);
+                loadButton.setEnabled(false);
 
                 if (!facadePointer.prev()) {
                     // конец
@@ -303,7 +306,7 @@ public class Left extends JPanel {
                 }
                 facadePointer.drawStep(rightPointer.getTable());
                 System.out.println("Draw now");
-                //textLog.setText(facadePointer.getStepLog());
+                textLog.setText(facadePointer.getStepLog());
             }
         }
     }
@@ -318,11 +321,12 @@ public class Left extends JPanel {
             if (facadePointer.isLoad()) {
                 genButton.setEnabled(false);
                 changeButton.setEnabled(true);
+                loadButton.setEnabled(false);
 
                 facadePointer.toStart();
                 facadePointer.drawStep(rightPointer.getTable());
                 System.out.println("Draw now");
-                //textLog.setText(facadePointer.getStepLog());
+                textLog.setText(facadePointer.getStepLog());
             }
         }
     }
@@ -337,11 +341,12 @@ public class Left extends JPanel {
             if (facadePointer.isLoad()) {
                 genButton.setEnabled(false);
                 changeButton.setEnabled(true);
+                loadButton.setEnabled(false);
 
                 facadePointer.toEnd();
                 facadePointer.drawStep(rightPointer.getTable());
                 System.out.println("Draw now");
-                //textLog.setText(facadePointer.getStepLog());
+                textLog.setText(facadePointer.getStepLog());
             }
         }
     }
@@ -376,7 +381,6 @@ public class Left extends JPanel {
             toEndButton.setEnabled(true);
             backButton.setEnabled(true);
             nextButton.setEnabled(true);
-            loadButton.setEnabled(true);
 
             // Остановка таймера
         }
