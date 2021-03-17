@@ -31,7 +31,6 @@ public class AStar {
         while(!queue.isEmpty()) {
 
             curr = queue.poll().point;
-            System.out.println(curr);
 
             // Запись итератора
             ArrayList<Point> opened = new ArrayList<>();
@@ -58,14 +57,12 @@ public class AStar {
         return new Iterator(steps);
     }
     public static int heuristic(Point goal, Point curr) {
-
         return Math.abs(goal.getX() - curr.getX()) + Math.abs(goal.getY() - curr.getY());
     }
 
     // -- Классы --
 
     private static class QueuePair {
-
         public int priority;
         public Point point;
 
@@ -76,7 +73,6 @@ public class AStar {
     }
 
     public static class Iterator {
-
         private ArrayList<Step> steps;
         private int index;
 
@@ -86,37 +82,31 @@ public class AStar {
         }
 
         public Step next() {
-
             System.out.println("Iterator: step = " + steps.get(index).getCurrent() + " len = " + steps.size() + " index = " + index);
             if (index < steps.size() - 1)
                 return steps.get(++index);
             return null;
         }
         public Step prev() {
-
             System.out.println("Iterator: step = " + steps.get(index).getCurrent() + " len = " + steps.size() + " index = " + index);
             if (index > 0)
                 return steps.get(--index);
             return null;
         }
         public Step curr() {
-
             return steps.get(index);
         }
 
         public Step toStart() {
-
             index = 0;
             return steps.get(index);
         }
         public Step toEnd() {
-
             index = steps.size() - 1;
             return steps.get(index);
         }
         public Step toIndex(int i) {
-
-            if (index > -1 && index < steps.size()) {
+            if (i > -1 && i < steps.size()) {
                 index = i;
                 return steps.get(index);
             }
@@ -124,13 +114,11 @@ public class AStar {
         }
 
         public int getIndex() {
-
             return index;
         }
     }
 
     public static class Step {
-
         private ArrayList<Point> closed;
         private ArrayList<Point> opened;
         private Point current;

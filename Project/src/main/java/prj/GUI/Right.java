@@ -52,7 +52,6 @@ public class Right extends JPanel {
     }
 
     public JTable getTable() {
-
         return table;
     }
 }

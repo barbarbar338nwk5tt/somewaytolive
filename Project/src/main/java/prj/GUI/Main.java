@@ -50,15 +50,12 @@ public class Main extends JFrame {
     }
 
     public Left getLeftPanel() {
-
         return leftPanel;
     }
     public Right getRightPanel() {
-
         return rightPanel;
     }
     public Facade getFacade() {
-
         return facade;
     }
 }

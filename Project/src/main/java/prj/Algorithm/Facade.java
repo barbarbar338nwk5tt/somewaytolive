@@ -21,7 +21,6 @@ public class Facade {
     }
 
     public void clear() {
-
         graph = null;
         start = null;
         end = null;
@@ -29,7 +28,6 @@ public class Facade {
     }
 
     public boolean isPathExist() {
-
         if (iterator == null) return false;
         int temp = iterator.getIndex();
         boolean result = iterator.toEnd().getCurrent().equals(end);
@@ -37,11 +35,9 @@ public class Facade {
         return result;
     }
     public boolean isLoad() {
-
         return iterator != null;
     }
     public boolean isGraphEqual(JTable table) {
-
         if (graph == null || start == null || end == null) return false;
         Graph tempG = new Graph(graph);
         Point tempS = new Point(start);
@@ -60,14 +56,12 @@ public class Facade {
     }
 
     public boolean next() {
-
         if (iterator == null) return false; // throw
         AStar.Step curr = iterator.next();
         if (curr == null) return false;
         return true;
     }
     public boolean prev() {
-
         if (iterator == null) return false; // throw
         AStar.Step curr = iterator.prev();
         if (curr == null) return false;
@@ -75,18 +69,15 @@ public class Facade {
     }
 
     public void toEnd() {
-
         if (iterator == null) return; // throw
         iterator.toEnd();
     }
     public void toStart() {
-
         if (iterator == null) return; // throw
         iterator.toStart();
     }
 
     public ArrayList<Point> getWalls() {
-
         ArrayList<Point> walls = new ArrayList<>();
         ArrayList<Point> points = graph.getPoints();
         int x = points.get(points.size() - 1).getX();
@@ -101,7 +92,6 @@ public class Facade {
     }
 
     public void drawStep(JTable table) {
-
         if (iterator == null) return; // throw
         AStar.Step curr = iterator.curr();
         DefaultTableModel dtm = (DefaultTableModel) table.getModel();
@@ -134,15 +124,12 @@ public class Facade {
             table.getColumnModel().getColumn(i).setCellRenderer(new MyRenderer());
             table.updateUI();
         }
-        System.out.println("Facade: walls count = " + this.getWalls().size());
     }
     public String getStepLog() {
-
-        return "log";
+        return iterator.curr().getCurrent().toString() + "\n";
     }
 
     public void loadGraph(JTable table) {
-
         Point s = null, e = null;
         int[][] array = new int[table.getColumnCount()][table.getRowCount()];
 

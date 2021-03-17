@@ -8,11 +8,9 @@ public class Graph {
     private HashMap<Point, HashMap<Point, Integer>> map;
 
     public Graph() {
-
         this.map = new HashMap<>();
     }
     public Graph(Graph graph) {
-
         this.map = new HashMap<>();
         if (graph == null) return; // throw
         for (Point i : graph.getMap().keySet()) {
@@ -41,13 +39,11 @@ public class Graph {
     }
 
     public void addPoint(Point p) {
-
         if (p == null) return;
         if (!map.containsKey(p))
             map.put(p, new HashMap<>());
     }
     public void addEdge(Point f, Point s, int w) {
-
         if (f == null || s == null || w <= 0) return;
         this.addPoint(f);
         this.addPoint(s);
@@ -64,7 +60,6 @@ public class Graph {
     }
 
     private HashMap<Point, HashMap<Point, Integer>> getMap() {
-
         return map;
     }
     public ArrayList<Point> getPoints() {
@@ -79,7 +74,6 @@ public class Graph {
         return points;
     }
     public ArrayList<Point> getNeighbors(Point p) {
-
         if (map.containsKey(p)) {
             ArrayList<Point> points = new ArrayList<>();
             for (Point i : map.get(p).keySet())
@@ -89,7 +83,6 @@ public class Graph {
         return null;
     }
     public int getEdgeLen(Point f, Point s) {
-
         if (map.containsKey(f) && map.get(f).containsKey(s))
             return map.get(f).get(s);
         return 0;
@@ -97,7 +90,6 @@ public class Graph {
 
     @Override
     public String toString() {
-
         return map.toString();
     }
 
@@ -110,7 +102,6 @@ public class Graph {
 
     @Override
     public int hashCode() {
-
         return this.toString().hashCode();
     }
 }
