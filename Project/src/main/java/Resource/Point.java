@@ -1,4 +1,4 @@
-package prj.Resource;
+package Resource;
 
 public class Point {
 
@@ -12,15 +12,10 @@ public class Point {
         this.x = x;
         this.y = y;
     }
-    public Point(Point point) {
-        if (point != null) {
-            this.x = point.getX();
-            this.y = point.getY();
-        }
-        else {
-            this.x = 0;
-            this.y = 0;
-        }
+    public Point(Point point) throws Exception {
+        if (point == null) throw new IllegalArgumentException(); //
+        this.x = point.getX();
+        this.y = point.getY();
     }
 
     public int getX() {

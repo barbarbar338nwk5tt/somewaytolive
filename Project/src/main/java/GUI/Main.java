@@ -1,7 +1,6 @@
-package prj.GUI;
+package GUI;
 
-import prj.Algorithm.*;
-
+import Algorithm.Facade;
 import javax.swing.*;
 import java.awt.*;
 
