@@ -1,4 +1,4 @@
-package prj.GUI;
+package GUI;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -12,7 +12,7 @@ import java.awt.event.*;
 import java.util.Random;
 import java.io.File;
 
-import prj.Algorithm.Facade;
+import Algorithm.Facade;
 
 public class Left extends JPanel {
 

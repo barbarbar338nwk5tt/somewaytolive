@@ -1,4 +1,4 @@
-package prj.Resource;
+package Resource;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,18 +10,18 @@ public class Graph {
     public Graph() {
         this.map = new HashMap<>();
     }
-    public Graph(Graph graph) {
+    public Graph(Graph graph) throws Exception {
         this.map = new HashMap<>();
-        if (graph == null) return; // throw
+        if (graph == null) throw new IllegalArgumentException(); //
         for (Point i : graph.getMap().keySet()) {
             this.map.put(new Point(i), new HashMap<>());
             for (Point j : graph.getMap().get(i).keySet())
                 this.map.get(i).put(new Point(j), graph.getMap().get(i).get(j));
         }
     }
-    public Graph(int[][] array) {
+    public Graph(int[][] array) throws Exception {
         this.map = new HashMap<>();
-        if (array == null) return; // throw
+        if (array == null) throw new IllegalArgumentException(); //
         int max_y = array.length;
         int max_x = array[0].length;
 
@@ -38,31 +38,30 @@ public class Graph {
         }
     }
 
-    public void addPoint(Point p) {
-        if (p == null) return;
+    public void addPoint(Point p) throws Exception {
+        if (p == null) throw new IllegalArgumentException(); //
         if (!map.containsKey(p))
             map.put(p, new HashMap<>());
     }
-    public void addEdge(Point f, Point s, int w) {
-        if (f == null || s == null || w <= 0) return;
+    public void addEdge(Point f, Point s, int w) throws Exception {
+        if (f == null || s == null || w <= 0) throw new IllegalArgumentException();
         this.addPoint(f);
         this.addPoint(s);
         map.get(f).put(s, w);
     }
 
-    public boolean isIn(Point p) {
-
+    public boolean isIn(Point p) throws Exception {
+        if (p == null) throw new IllegalArgumentException(); //
         return map.containsKey(p);
     }
     public boolean isEmpty() {
-
         return map.isEmpty();
     }
 
     private HashMap<Point, HashMap<Point, Integer>> getMap() {
         return map;
     }
-    public ArrayList<Point> getPoints() {
+    public ArrayList<Point> getPoints() throws Exception {
         ArrayList<Point> points = new ArrayList<>();
         for (Point i : map.keySet())
             points.add(new Point(i));
@@ -73,7 +72,8 @@ public class Graph {
         });
         return points;
     }
-    public ArrayList<Point> getNeighbors(Point p) {
+    public ArrayList<Point> getNeighbors(Point p) throws Exception {
+        if (p == null) throw new IllegalArgumentException(); //
         if (map.containsKey(p)) {
             ArrayList<Point> points = new ArrayList<>();
             for (Point i : map.get(p).keySet())
@@ -83,6 +83,7 @@ public class Graph {
         return null;
     }
     public int getEdgeLen(Point f, Point s) {
+        if (f == null || s == null) throw new IllegalArgumentException(); //
         if (map.containsKey(f) && map.get(f).containsKey(s))
             return map.get(f).get(s);
         return 0;

@@ -1,6 +1,6 @@
-package prj.Algorithm;
+package Algorithm;
 
-import prj.Resource.*;
+import Resource.*;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.PriorityQueue;
 
 public class AStar {
-
-    public static Iterator execute(Graph graph, Point start, Point end) {
+    public static Iterator execute(Graph graph, Point start, Point end) throws Exception {
+        if (graph == null || start == null || end == null) throw new IllegalArgumentException();
         ArrayList<Step> steps = new ArrayList<>();
 
         PriorityQueue<QueuePair> queue = new PriorityQueue<>(new Comparator<QueuePair>() {
@@ -56,7 +56,8 @@ public class AStar {
 
         return new Iterator(steps);
     }
-    public static int heuristic(Point goal, Point curr) {
+    public static int heuristic(Point goal, Point curr) throws Exception {
+        if (goal == null || curr == null) throw new IllegalArgumentException();
         return Math.abs(goal.getX() - curr.getX()) + Math.abs(goal.getY() - curr.getY());
     }
 
@@ -66,7 +67,8 @@ public class AStar {
         public int priority;
         public Point point;
 
-        public QueuePair(int priority, Point point) {
+        public QueuePair(int priority, Point point) throws Exception {
+            if (point == null) throw new IllegalArgumentException();
             this.priority = priority;
             this.point = point;
         }
@@ -76,19 +78,18 @@ public class AStar {
         private ArrayList<Step> steps;
         private int index;
 
-        private Iterator(ArrayList<Step> steps) {
+        private Iterator(ArrayList<Step> steps) throws Exception {
+            if (steps == null) throw new IllegalArgumentException();
             this.steps = steps;
             index = 0;
         }
 
         public Step next() {
-            System.out.println("Iterator: step = " + steps.get(index).getCurrent() + " len = " + steps.size() + " index = " + index);
             if (index < steps.size() - 1)
                 return steps.get(++index);
             return null;
         }
         public Step prev() {
-            System.out.println("Iterator: step = " + steps.get(index).getCurrent() + " len = " + steps.size() + " index = " + index);
             if (index > 0)
                 return steps.get(--index);
             return null;
@@ -105,12 +106,10 @@ public class AStar {
             index = steps.size() - 1;
             return steps.get(index);
         }
-        public Step toIndex(int i) {
-            if (i > -1 && i < steps.size()) {
-                index = i;
-                return steps.get(index);
-            }
-            return null;
+        public Step toIndex(int i) throws Exception {
+            if (i < 0 || i > steps.size() - 1) throw new IllegalArgumentException();
+            index = i;
+            return steps.get(index);
         }
 
         public int getIndex() {
@@ -128,7 +127,8 @@ public class AStar {
             this.opened = new ArrayList<>();
             this.current = new Point();
         }
-        public Step(ArrayList<Point> closed, ArrayList<Point> opened, Point current) {
+        public Step(ArrayList<Point> closed, ArrayList<Point> opened, Point current) throws Exception {
+            if (closed == null || opened == null || current == null) throw new IllegalArgumentException();
             this.closed = closed;
             this.opened = opened;
             this.current = current;
