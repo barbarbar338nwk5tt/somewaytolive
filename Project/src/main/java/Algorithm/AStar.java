@@ -27,7 +27,6 @@ public class AStar {
         paths.put(end, null);
 
         // Основная часть
-
         while(!queue.isEmpty()) {
 
             curr = queue.poll().point;
@@ -53,7 +52,6 @@ public class AStar {
                 }
             }
         }
-
         return new Iterator(steps);
     }
     public static int heuristic(Point goal, Point curr) throws Exception {

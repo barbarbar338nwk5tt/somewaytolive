@@ -6,24 +6,28 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import java.util.ArrayList;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 public class Facade {
     private Graph graph;
     private Point start, end;
     private AStar.Iterator iterator;
+    private ArrayList<Point> walls;
 
     public Facade() {
         graph = null;
         start = null;
         end = null;
         iterator = null;
+        walls = null;
     }
-
     public void clear() {
         graph = null;
         start = null;
         end = null;
         iterator = null;
+        walls = null;
     }
 
     public boolean isLoad() {
@@ -33,22 +37,22 @@ public class Facade {
     public boolean next() {
         try {
             AStar.Step curr = iterator.next();
-            if (curr == null) return false;
-            return true;
+            return curr != null;
         }
         catch (NullPointerException exp) {
-            System.out.println("log4j2: Facade not upload!");
+            Logger logger = LogManager.getLogger(Facade.class);
+            logger.error("Facade was not loaded or loaded incorrectly.");
             return false; // maybe throw
         }
     }
     public boolean prev() {
         try {
             AStar.Step curr = iterator.prev();
-            if (curr == null) return false;
-            return true;
+            return curr != null;
         }
         catch (NullPointerException exp) {
-            System.out.println("log4j2: Facade not upload!");
+            Logger logger = LogManager.getLogger(Facade.class);
+            logger.error("Facade was not loaded or loaded incorrectly.");
             return false; // maybe throw
         }
     }
@@ -58,7 +62,8 @@ public class Facade {
             iterator.toStart();
         }
         catch (NullPointerException exp) {
-            System.out.println("log4j2: Facade not upload!");
+            Logger logger = LogManager.getLogger(Facade.class);
+            logger.error("Facade was not loaded or loaded incorrectly.");
             // maybe throw
         }
     }
@@ -67,32 +72,9 @@ public class Facade {
             iterator.toEnd();
         }
         catch (NullPointerException exp) {
-            System.out.println("log4j2: Facade not upload!");
+            Logger logger = LogManager.getLogger(Facade.class);
+            logger.error("Facade was not loaded or loaded incorrectly.");
             // maybe throw
-        }
-    }
-
-    public ArrayList<Point> getWalls() {
-        try {
-            ArrayList<Point> walls = new ArrayList<>();
-            ArrayList<Point> points = graph.getPoints();
-            int x = points.get(points.size() - 1).getX();
-            int y = points.get(points.size() - 1).getY();
-            for (int i = 0; i <= x; i++) {
-                for (int j = 0; j <= y; j++) {
-                    if (!points.contains(new Point(i, j)))
-                        walls.add(new Point(i, j));
-                }
-            }
-            return walls;
-        }
-        catch (NullPointerException exp) {
-            System.out.println("log4j2: Facade not upload!");
-            return new ArrayList<>(); // maybe throw
-        }
-        catch (Exception exp) {
-            exp.printStackTrace();
-            return new ArrayList<>(); // maybe throw
         }
     }
 
@@ -116,7 +98,7 @@ public class Facade {
                 table.setValueAt("o", i.getX(), i.getY());
             }
             // стены - розовый
-            for (Point i : this.getWalls()) {
+            for (Point i : walls) {
                 table.setValueAt("W", i.getX(), i.getY());
             }
             // текущая клетка - черный
@@ -131,36 +113,46 @@ public class Facade {
             }
         }
         catch (NullPointerException exp) {
-            System.out.println("log4j2: Facade not upload!");
+            Logger logger = LogManager.getLogger(Facade.class);
+            logger.error("Facade was not loaded or loaded incorrectly.");
             // maybe throw
         }
     }
     public String getStepLog() {
-        if (iterator == null) throw new NullPointerException(); //
-        return iterator.curr().getCurrent().toString() + "\n";
+        try {
+            return iterator.curr().getCurrent().toString() + "\n";
+        }
+        catch (NullPointerException exp) {
+            Logger logger = LogManager.getLogger(Facade.class);
+            logger.error("Facade was not loaded or loaded incorrectly.");
+            return "error";
+        }
     }
 
     public void loadGraph(JTable table) {
         clear();
+        walls = new ArrayList<>();
         int[][] array = new int[table.getColumnCount()][table.getRowCount()];
-
         for (int i = 0; i < table.getColumnCount(); i++) {
             for (int j = 0; j < table.getRowCount(); j++) {
-
                 array[i][j] = 1;
-                if ("W".equals((String) table.getValueAt(j, i))) array[i][j] = 0;
+                if ("W".equals((String) table.getValueAt(j, i))) {
+                    array[i][j] = 0;
+                    walls.add(new Point(j ,i));
+                }
                 if ("S".equals((String) table.getValueAt(j, i))) start = new Point(j, i);
                 if ("E".equals((String) table.getValueAt(j, i))) end = new Point(j, i);
             }
         }
 
-        // check to unnecessary
         try {
             graph = new Graph(array);
             iterator = AStar.execute(graph, start, end);
         }
         catch (Exception exp) {
-            exp.printStackTrace();
+            clear(); //?
+            Logger logger = LogManager.getLogger(Facade.class);
+            logger.error("Facade load went incorrectly in " + exp.getStackTrace()[0].getClassName() + ".");
             // maybe throw
         }
     }
