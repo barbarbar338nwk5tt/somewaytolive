@@ -9,8 +9,8 @@ import javax.swing.Timer;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.*;
 import java.util.Random;
-import java.io.File;
 
 import Algorithm.Facade;
 
@@ -20,6 +20,7 @@ public class Left extends JPanel {
     private JTextField textField2;
     private JSlider slid;
     private Button loadButton;
+    private Button saveButton;
     private Button startButton;
     private Button stopButton;
     private Button toStartButton;
@@ -134,7 +135,7 @@ public class Left extends JPanel {
 
         // Кнопки
         changeButton = new Button("Change state");
-        changeButton.attachTo(this, 0, 11);
+        changeButton.attachTo(this, 0, 12);
         changeButton.addActionListener(new ButtonChangeActionListener());
         changeButton.setEnabled(false);
 
@@ -142,32 +143,36 @@ public class Left extends JPanel {
         loadButton.attachTo(this, 0, 3);
         loadButton.addActionListener(new ButtonLoadActionListener());
 
+        saveButton = new Button("Save");
+        saveButton.attachTo(this, 0, 4);
+        saveButton.addActionListener(new ButtonSaveActionListener());
+
         genButton = new Button("Generate");
-        genButton.attachTo(this, 0, 4);
+        genButton.attachTo(this, 0, 5);
         genButton.addActionListener(new ButtonGenerateActionListener());
 
         toStartButton = new Button("ToStart");
-        toStartButton.attachTo(this, 0, 5);
+        toStartButton.attachTo(this, 0, 6);
         toStartButton.addActionListener(new ButtonToStartActionListener());
 
         toEndButton = new Button("ToEnd");
-        toEndButton.attachTo(this, 0, 6);
+        toEndButton.attachTo(this, 0, 7);
         toEndButton.addActionListener(new ButtonToEndActionListener());
 
         nextButton = new Button("Next");
-        nextButton.attachTo(this, 0, 7);
+        nextButton.attachTo(this, 0, 8);
         nextButton.addActionListener(new ButtonNextActionListener());
 
         backButton = new Button("Back");
-        backButton.attachTo(this, 0, 8);
+        backButton.attachTo(this, 0, 9);
         backButton.addActionListener(new ButtonBackActionListener());
 
         startButton = new Button("Start");
-        startButton.attachTo(this, 0, 9);
+        startButton.attachTo(this, 0, 10);
         startButton.addActionListener(new ButtonStartActionListener());
 
         stopButton = new Button("Stop");
-        stopButton.attachTo(this, 0, 10);
+        stopButton.attachTo(this, 0, 11);
         stopButton.addActionListener(new ButtonStopActionListener());
         stopButton.setEnabled(false);
 
@@ -180,7 +185,7 @@ public class Left extends JPanel {
         scroll_gbc.insets = new Insets(30, 5, 5, 5);
         scroll_gbc.fill = GridBagConstraints.HORIZONTAL;
         scroll_gbc.gridx = 0;
-        scroll_gbc.gridy = 12;
+        scroll_gbc.gridy = 13;
         scroll_gbc.gridwidth = 2;
         JScrollPane sr_panel =  new JScrollPane(textLog);
         sr_panel.setPreferredSize(new Dimension(500,100));
@@ -196,12 +201,58 @@ public class Left extends JPanel {
 
     // -- Обработчики --
 
+    public class ButtonSaveActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setSelectedFile(new File("save.json"));
+            if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+                try (FileWriter fw = new FileWriter(fileChooser.getSelectedFile())) {
+                    JOptionPane.showMessageDialog(null, "File has been saved","File Saved",JOptionPane.INFORMATION_MESSAGE);
+                    // метод который вернет лабиринт ?
+                    fw.write("3 3\nw w w s w e 1 1 1");
+                }
+                catch (IOException e) {
+                    JOptionPane.showMessageDialog(null, "Please, choose file of .json format!","File Save went wrong",JOptionPane.INFORMATION_MESSAGE);
+                }
+        }
+        }
+    }
+
+    public class ButtonLoadActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            BufferedReader reader;
+            String file_input;
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            if(fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
+                File file1 = fileChooser.getSelectedFile();
+                if (file1.getAbsolutePath().contains(".json")) {
+                    try {
+                        reader = new BufferedReader(new FileReader(file1));
+                        while ((file_input = reader.readLine()) != null)
+                            System.out.println(file_input);
+
+                    } catch (IOException fileNotFoundException) {
+                        fileNotFoundException.printStackTrace();
+                    }
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Please, choose file of .json format!","File load went wrong",JOptionPane.INFORMATION_MESSAGE);
+                }
+
+            }
+        }
+    }
+
     public class ButtonChangeActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             genButton.setEnabled(true);
             changeButton.setEnabled(false);
             loadButton.setEnabled(true);
+            saveButton.setEnabled(true);
             textField1.setEnabled(true);
             textField2.setEnabled(true);
 
@@ -215,7 +266,6 @@ public class Left extends JPanel {
         @Override
         public void stateChanged(ChangeEvent evt) {
             timer.setDelay((4 - slid.getValue()) * 300);
-            System.out.println("Slider: value = " + slid.getValue());
         }
     }
 
@@ -252,19 +302,6 @@ public class Left extends JPanel {
         }
     }
 
-    public class ButtonLoadActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            JFileChooser fileOpen = new JFileChooser();
-            int ret = fileOpen.showDialog(null, "Открыть файл");
-            if (ret == JFileChooser.APPROVE_OPTION) {
-
-                File file = fileOpen.getSelectedFile();
-            }
-        }
-        // Пока просто окошко
-    }
-
     public class ButtonNextActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -284,7 +321,7 @@ public class Left extends JPanel {
                     System.out.println("Come to End");
                 }
                 facadePointer.drawStep(rightPointer.getTable());
-                textLog.setText(textLog.getText() + facadePointer.getStepLog());
+                textLog.setText(textLog.getText() + "\n" + facadePointer.getStepLog());
             }
         }
     }
@@ -308,7 +345,7 @@ public class Left extends JPanel {
                     System.out.println("Come to Start");
                 }
                 facadePointer.drawStep(rightPointer.getTable());
-                textLog.setText(textLog.getText() + facadePointer.getStepLog());
+                textLog.setText(textLog.getText() + "\n" + facadePointer.getStepLog());
             }
         }
     }
@@ -329,7 +366,7 @@ public class Left extends JPanel {
 
                 facadePointer.toStart();
                 facadePointer.drawStep(rightPointer.getTable());
-                textLog.setText(textLog.getText() + facadePointer.getStepLog());
+                textLog.setText(textLog.getText() + "\n" + facadePointer.getStepLog());
             }
         }
     }
@@ -350,7 +387,7 @@ public class Left extends JPanel {
 
                 facadePointer.toEnd();
                 facadePointer.drawStep(rightPointer.getTable());
-                textLog.setText(textLog.getText() + facadePointer.getStepLog());
+                textLog.setText(textLog.getText() + "\n" + facadePointer.getStepLog());
             }
         }
     }
@@ -368,6 +405,7 @@ public class Left extends JPanel {
             nextButton.setEnabled(false);
             genButton.setEnabled(false);
             loadButton.setEnabled(false);
+            saveButton.setEnabled(false);
             textField1.setEnabled(false);
             textField2.setEnabled(false);
 
