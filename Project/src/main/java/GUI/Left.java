@@ -204,13 +204,26 @@ public class Left extends JPanel {
     public class ButtonSaveActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent evt) {
+            String save_board = "";
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setSelectedFile(new File("save.json"));
             if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
                 try (FileWriter fw = new FileWriter(fileChooser.getSelectedFile())) {
                     JOptionPane.showMessageDialog(null, "File has been saved","File Saved",JOptionPane.INFORMATION_MESSAGE);
                     // метод который вернет лабиринт ?
-                    fw.write("3 3\nw w w s w e 1 1 1");
+                    fw.write(Integer.toString(rightPointer.getTable().getRowCount()) + " " + Integer.toString(rightPointer.getTable().getColumnCount()) + "\n");
+                    for (int i = 0; i < rightPointer.getTable().getRowCount(); i++) {
+                        for (int j = 0; j < rightPointer.getTable().getColumnCount(); j++) {
+                            if(rightPointer.getTable().getValueAt(i, j) == ""){
+                                save_board = save_board + "Q";
+                            }
+                            else {
+                                save_board = save_board + rightPointer.getTable().getValueAt(i, j);
+                            }
+                        }
+                    }
+                    fw.write(save_board);
+
                 }
                 catch (IOException e) {
                     JOptionPane.showMessageDialog(null, "Please, choose file of .json format!","File Save went wrong",JOptionPane.INFORMATION_MESSAGE);
@@ -221,7 +234,7 @@ public class Left extends JPanel {
 
     public class ButtonLoadActionListener implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent evt) {
             BufferedReader reader;
             String file_input;
             JFileChooser fileChooser = new JFileChooser();
@@ -231,9 +244,33 @@ public class Left extends JPanel {
                 if (file1.getAbsolutePath().contains(".json")) {
                     try {
                         reader = new BufferedReader(new FileReader(file1));
-                        while ((file_input = reader.readLine()) != null)
-                            System.out.println(file_input);
+                        String[] words = (file_input = reader.readLine()).split(" ");
+                        char[] a = reader.readLine().toCharArray();
+                        int x, y;
+                        x = Integer.parseInt(words[1]);
+                        y = Integer.parseInt(words[0]);
+                        DefaultTableModel dtm = (DefaultTableModel) rightPointer.getTable().getModel();
+                        dtm.setColumnCount(x);
+                        dtm.setRowCount(y);
+                        TableColumnModel columnModel = rightPointer.getTable().getColumnModel();
+                        for (int i = 0; i < rightPointer.getTable().getColumnCount(); ++i)
+                            columnModel.getColumn(i).setPreferredWidth(20);
 
+                        for (int i = 0; i < rightPointer.getTable().getRowCount(); i++) {
+                            for (int j = 0; j < rightPointer.getTable().getColumnCount(); j++) {
+                                if(a[i*x + j] == 'W') {
+                                    rightPointer.getTable().setValueAt("W", i, j);
+                                }
+                                else if(a[i*x + j] == 'E') {
+                                    rightPointer.getTable().setValueAt("E", i, j);
+                                }
+                                else if(a[i*x + j] == 'S') {
+                                    rightPointer.getTable().setValueAt("S", i, j);
+                                }
+                                rightPointer.getTable().getColumnModel().getColumn(j).setCellRenderer(new MyRenderer());
+                                rightPointer.getTable().updateUI();
+                            }
+                        }
                     } catch (IOException fileNotFoundException) {
                         fileNotFoundException.printStackTrace();
                     }
@@ -241,7 +278,6 @@ public class Left extends JPanel {
                 else {
                     JOptionPane.showMessageDialog(null, "Please, choose file of .json format!","File load went wrong",JOptionPane.INFORMATION_MESSAGE);
                 }
-
             }
         }
     }
@@ -255,6 +291,15 @@ public class Left extends JPanel {
             saveButton.setEnabled(true);
             textField1.setEnabled(true);
             textField2.setEnabled(true);
+
+            timer.restart();
+            timer.stop();
+            stopButton.setEnabled(false);
+            startButton.setEnabled(true);
+            toStartButton.setEnabled(true);
+            toEndButton.setEnabled(true);
+            backButton.setEnabled(true);
+            nextButton.setEnabled(true);
 
             facadePointer.toStart();
             facadePointer.drawStep(rightPointer.getTable());
@@ -313,6 +358,7 @@ public class Left extends JPanel {
                 genButton.setEnabled(false);
                 changeButton.setEnabled(true);
                 loadButton.setEnabled(false);
+                saveButton.setEnabled(false);
                 textField1.setEnabled(false);
                 textField2.setEnabled(false);
 
@@ -337,6 +383,7 @@ public class Left extends JPanel {
                 genButton.setEnabled(false);
                 changeButton.setEnabled(true);
                 loadButton.setEnabled(false);
+                saveButton.setEnabled(false);
                 textField1.setEnabled(false);
                 textField2.setEnabled(false);
 
@@ -361,6 +408,7 @@ public class Left extends JPanel {
                 genButton.setEnabled(false);
                 changeButton.setEnabled(true);
                 loadButton.setEnabled(false);
+                saveButton.setEnabled(false);
                 textField1.setEnabled(false);
                 textField2.setEnabled(false);
 
@@ -382,6 +430,7 @@ public class Left extends JPanel {
                 genButton.setEnabled(false);
                 changeButton.setEnabled(true);
                 loadButton.setEnabled(false);
+                saveButton.setEnabled(false);
                 textField1.setEnabled(false);
                 textField2.setEnabled(false);
 
@@ -406,6 +455,7 @@ public class Left extends JPanel {
             genButton.setEnabled(false);
             loadButton.setEnabled(false);
             saveButton.setEnabled(false);
+            changeButton.setEnabled(false);
             textField1.setEnabled(false);
             textField2.setEnabled(false);
 
@@ -425,6 +475,7 @@ public class Left extends JPanel {
             toEndButton.setEnabled(true);
             backButton.setEnabled(true);
             nextButton.setEnabled(true);
+            changeButton.setEnabled(true);
 
             // Остановка таймера
         }
