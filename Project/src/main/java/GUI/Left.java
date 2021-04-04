@@ -264,6 +264,9 @@ public class Left extends JPanel {
                                 else if(a[i*x + j] == 'E') {
                                     rightPointer.getTable().setValueAt("E", i, j);
                                 }
+                                else if(a[i*x + j] == 'Q') {
+                                    rightPointer.getTable().setValueAt("", i, j);
+                                }
                                 else if(a[i*x + j] == 'S') {
                                     rightPointer.getTable().setValueAt("S", i, j);
                                 }
