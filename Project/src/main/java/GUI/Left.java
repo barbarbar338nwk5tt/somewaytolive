@@ -253,9 +253,9 @@ public class Left extends JPanel {
                         dtm.setColumnCount(x);
                         dtm.setRowCount(y);
                         TableColumnModel columnModel = rightPointer.getTable().getColumnModel();
-                        for (int i = 0; i < rightPointer.getTable().getColumnCount(); ++i)
+                        for (int i = 0; i < rightPointer.getTable().getColumnCount(); ++i) {
                             columnModel.getColumn(i).setPreferredWidth(20);
-
+                        }
                         for (int i = 0; i < rightPointer.getTable().getRowCount(); i++) {
                             for (int j = 0; j < rightPointer.getTable().getColumnCount(); j++) {
                                 if(a[i*x + j] == 'W') {
@@ -274,6 +274,8 @@ public class Left extends JPanel {
                                 rightPointer.getTable().updateUI();
                             }
                         }
+                        textField1.setText(Integer.toString(rightPointer.getTable().getRowCount()));
+                        textField2.setText(Integer.toString(rightPointer.getTable().getColumnCount()));
                     } catch (IOException fileNotFoundException) {
                         fileNotFoundException.printStackTrace();
                     }
