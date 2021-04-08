@@ -3,7 +3,6 @@ package Algorithm;
 import GUI.MyRenderer;
 import Resource.*;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import java.util.ArrayList;
 import org.apache.logging.log4j.Logger;
@@ -14,6 +13,7 @@ public class Facade {
     private Point start, end;
     private AStar.Iterator iterator;
     private ArrayList<Point> walls;
+    private final Logger logger;
 
     public Facade() {
         graph = null;
@@ -21,6 +21,7 @@ public class Facade {
         end = null;
         iterator = null;
         walls = null;
+        logger = LogManager.getLogger(Facade.class);
     }
     public void clear() {
         graph = null;
@@ -40,7 +41,6 @@ public class Facade {
             return curr != null;
         }
         catch (NullPointerException exp) {
-            Logger logger = LogManager.getLogger(Facade.class);
             logger.error("Facade was not loaded or loaded incorrectly.");
             return false; // maybe throw
         }
@@ -51,7 +51,6 @@ public class Facade {
             return curr != null;
         }
         catch (NullPointerException exp) {
-            Logger logger = LogManager.getLogger(Facade.class);
             logger.error("Facade was not loaded or loaded incorrectly.");
             return false; // maybe throw
         }
@@ -62,7 +61,6 @@ public class Facade {
             iterator.toStart();
         }
         catch (NullPointerException exp) {
-            Logger logger = LogManager.getLogger(Facade.class);
             logger.error("Facade was not loaded or loaded incorrectly.");
             // maybe throw
         }
@@ -72,7 +70,6 @@ public class Facade {
             iterator.toEnd();
         }
         catch (NullPointerException exp) {
-            Logger logger = LogManager.getLogger(Facade.class);
             logger.error("Facade was not loaded or loaded incorrectly.");
             // maybe throw
         }
@@ -81,7 +78,6 @@ public class Facade {
     public void drawStep(JTable table) {
         try {
             AStar.Step curr = iterator.curr();
-            DefaultTableModel dtm = (DefaultTableModel) table.getModel();
             TableColumnModel columnModel = table.getColumnModel();
             // очистка поля
             for (int i = 0; i < table.getRowCount(); i++) {
@@ -113,7 +109,6 @@ public class Facade {
             }
         }
         catch (NullPointerException exp) {
-            Logger logger = LogManager.getLogger(Facade.class);
             logger.error("Facade was not loaded or loaded incorrectly.");
             // maybe throw
         }
@@ -123,7 +118,6 @@ public class Facade {
             return iterator.curr().getCurrent().toString() + "\n";
         }
         catch (NullPointerException exp) {
-            Logger logger = LogManager.getLogger(Facade.class);
             logger.error("Facade was not loaded or loaded incorrectly.");
             return "error";
         }
@@ -140,8 +134,12 @@ public class Facade {
                     array[i][j] = 0;
                     walls.add(new Point(j ,i));
                 }
-                if ("S".equals((String) table.getValueAt(j, i))) start = new Point(j, i);
-                if ("E".equals((String) table.getValueAt(j, i))) end = new Point(j, i);
+                if ("S".equals((String) table.getValueAt(j, i))) {
+                    start = new Point(j, i);
+                }
+                if ("E".equals((String) table.getValueAt(j, i))) {
+                    end = new Point(j, i);
+                }
             }
         }
 
@@ -151,7 +149,6 @@ public class Facade {
         }
         catch (Exception exp) {
             clear(); //?
-            Logger logger = LogManager.getLogger(Facade.class);
             logger.error("Facade load went incorrectly in " + exp.getStackTrace()[0].getClassName() + ".");
             // maybe throw
         }

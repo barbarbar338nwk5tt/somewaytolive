@@ -236,7 +236,6 @@ public class Left extends JPanel {
         @Override
         public void actionPerformed(ActionEvent evt) {
             BufferedReader reader;
-            String file_input;
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
             if(fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
@@ -244,7 +243,7 @@ public class Left extends JPanel {
                 if (file1.getAbsolutePath().contains(".json")) {
                     try {
                         reader = new BufferedReader(new FileReader(file1));
-                        String[] words = (file_input = reader.readLine()).split(" ");
+                        String[] words = (reader.readLine()).split(" ");
                         char[] a = reader.readLine().toCharArray();
                         int x, y;
                         x = Integer.parseInt(words[1]);
@@ -368,7 +367,8 @@ public class Left extends JPanel {
                 textField2.setEnabled(false);
 
                 if (!facadePointer.next()) {
-                    // конец
+                    timer.restart();
+                    timer.stop();
                     System.out.println("Come to End");
                 }
                 facadePointer.drawStep(rightPointer.getTable());
@@ -449,29 +449,31 @@ public class Left extends JPanel {
     public class ButtonStartActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
-            timer.start();
-            stopButton.setEnabled(true);
-            startButton.setEnabled(false);
-            toStartButton.setEnabled(false);
-            toEndButton.setEnabled(false);
-            backButton.setEnabled(false);
-            nextButton.setEnabled(false);
-            genButton.setEnabled(false);
-            loadButton.setEnabled(false);
-            saveButton.setEnabled(false);
-            changeButton.setEnabled(false);
-            textField1.setEnabled(false);
-            textField2.setEnabled(false);
-
-            // ввод таймера
+            if (!facadePointer.isLoad()) {
+                facadePointer.loadGraph(rightPointer.getTable());
+                System.out.println("Not Load or New Graph");
+            }
+            if (facadePointer.isLoad()) {
+                timer.start();
+                stopButton.setEnabled(true);
+                changeButton.setEnabled(true);
+                startButton.setEnabled(false);
+                toStartButton.setEnabled(false);
+                toEndButton.setEnabled(false);
+                backButton.setEnabled(false);
+                nextButton.setEnabled(false);
+                genButton.setEnabled(false);
+                loadButton.setEnabled(false);
+                saveButton.setEnabled(false);
+                textField1.setEnabled(false);
+                textField2.setEnabled(false);
+            }
         }
     }
 
     public class ButtonStopActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
             timer.restart();
             timer.stop();
             stopButton.setEnabled(false);
@@ -481,8 +483,6 @@ public class Left extends JPanel {
             backButton.setEnabled(true);
             nextButton.setEnabled(true);
             changeButton.setEnabled(true);
-
-            // Остановка таймера
         }
     }
 

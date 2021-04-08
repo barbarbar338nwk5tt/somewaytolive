@@ -1,7 +1,6 @@
 package Resource;
 
 public class Point {
-
     private final int x, y;
 
     public Point() {
@@ -13,7 +12,9 @@ public class Point {
         this.y = y;
     }
     public Point(Point point) throws Exception {
-        if (point == null) throw new IllegalArgumentException(); //
+        if (point == null) {
+            throw new IllegalArgumentException("Point \"null\" argument");
+        }
         this.x = point.getX();
         this.y = point.getY();
     }

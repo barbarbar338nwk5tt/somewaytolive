@@ -9,15 +9,12 @@ import java.util.PriorityQueue;
 
 public class AStar {
     public static Iterator execute(Graph graph, Point start, Point end) throws Exception {
-        if (graph == null || start == null || end == null) throw new IllegalArgumentException();
+        if (graph == null || start == null || end == null) {
+            throw new IllegalArgumentException("------");
+        }
         ArrayList<Step> steps = new ArrayList<>();
 
-        PriorityQueue<QueuePair> queue = new PriorityQueue<>(new Comparator<QueuePair>() {
-            @Override
-            public int compare(QueuePair o1, QueuePair o2) {
-                return o1.priority - o2.priority;
-            }
-        });
+        PriorityQueue<QueuePair> queue = new PriorityQueue<>(Comparator.comparingInt(o -> o.priority));
         HashMap<Point, Integer> lengths = new HashMap<>();
         HashMap<Point, Point> paths = new HashMap<>();
         Point curr;
@@ -42,10 +39,8 @@ public class AStar {
             if (curr.equals(end)) break;
 
             for (Point i : graph.getNeighbors(curr)) {
-
                 Integer newlen = lengths.get(curr) + graph.getEdgeLen(curr, i);
                 if (!lengths.containsKey(i) || newlen < lengths.get(i)) {
-
                     lengths.put(i, newlen);
                     queue.add(new QueuePair(newlen + heuristic(end, i), i));
                     paths.put(i, curr);
@@ -55,7 +50,9 @@ public class AStar {
         return new Iterator(steps);
     }
     public static int heuristic(Point goal, Point curr) throws Exception {
-        if (goal == null || curr == null) throw new IllegalArgumentException();
+        if (goal == null || curr == null) {
+            throw new IllegalArgumentException();
+        }
         return Math.abs(goal.getX() - curr.getX()) + Math.abs(goal.getY() - curr.getY());
     }
 
@@ -66,7 +63,9 @@ public class AStar {
         public Point point;
 
         public QueuePair(int priority, Point point) throws Exception {
-            if (point == null) throw new IllegalArgumentException();
+            if (point == null) {
+                throw new IllegalArgumentException();
+            }
             this.priority = priority;
             this.point = point;
         }
@@ -77,7 +76,9 @@ public class AStar {
         private int index;
 
         private Iterator(ArrayList<Step> steps) throws Exception {
-            if (steps == null) throw new IllegalArgumentException();
+            if (steps == null) {
+                throw new IllegalArgumentException();
+            }
             this.steps = steps;
             index = 0;
         }
@@ -105,7 +106,9 @@ public class AStar {
             return steps.get(index);
         }
         public Step toIndex(int i) throws Exception {
-            if (i < 0 || i > steps.size() - 1) throw new IllegalArgumentException();
+            if (i < 0 || i > steps.size() - 1) {
+                throw new IllegalArgumentException();
+            }
             index = i;
             return steps.get(index);
         }
@@ -126,22 +129,21 @@ public class AStar {
             this.current = new Point();
         }
         public Step(ArrayList<Point> closed, ArrayList<Point> opened, Point current) throws Exception {
-            if (closed == null || opened == null || current == null) throw new IllegalArgumentException();
+            if (closed == null || opened == null || current == null) {
+                throw new IllegalArgumentException();
+            }
             this.closed = closed;
             this.opened = opened;
             this.current = current;
         }
 
         public ArrayList<Point> getOpened() {
-
             return opened;
         }
         public ArrayList<Point> getClosed() {
-
             return closed;
         }
         public Point getCurrent() {
-
             return current;
         }
     }
