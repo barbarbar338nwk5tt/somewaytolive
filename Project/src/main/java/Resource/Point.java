@@ -7,13 +7,16 @@ public class Point {
         x = 0;
         y = 0;
     }
-    public Point(int x, int y) {
+    public Point(int x, int y) throws IllegalArgumentException {
+        if (x < 0 || y < 0) {
+            throw new IllegalArgumentException("Arguments must be positive");
+        }
         this.x = x;
         this.y = y;
     }
-    public Point(Point point) throws Exception {
+    public Point(Point point) throws IllegalArgumentException {
         if (point == null) {
-            throw new IllegalArgumentException("Point \"null\" argument");
+            throw new IllegalArgumentException("Argument can't be null");
         }
         this.x = point.getX();
         this.y = point.getY();

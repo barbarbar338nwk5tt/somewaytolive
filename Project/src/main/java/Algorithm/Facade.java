@@ -35,24 +35,32 @@ public class Facade {
         return iterator != null;
     }
 
-    public boolean next() {
+    public int next() {
         try {
             AStar.Step curr = iterator.next();
-            return curr != null;
+            return curr != null ? 1 : 0;
         }
         catch (NullPointerException exp) {
             logger.error("Facade was not loaded or loaded incorrectly.");
-            return false; // maybe throw
+            return -1; // error
+        }
+        catch (IllegalArgumentException exp) {
+            logger.error("\"" + exp.getMessage() + "\" from" + exp.getStackTrace()[0].toString());
+            return -1; // error
         }
     }
-    public boolean prev() {
+    public int prev() {
         try {
             AStar.Step curr = iterator.prev();
-            return curr != null;
+            return curr != null ? 1 : 0;
         }
         catch (NullPointerException exp) {
             logger.error("Facade was not loaded or loaded incorrectly.");
-            return false; // maybe throw
+            return -1; // error
+        }
+        catch (IllegalArgumentException exp) {
+            logger.error("\"" + exp.getMessage() + "\" from" + exp.getStackTrace()[0].toString());
+            return -1; // error
         }
     }
 
@@ -62,7 +70,9 @@ public class Facade {
         }
         catch (NullPointerException exp) {
             logger.error("Facade was not loaded or loaded incorrectly.");
-            // maybe throw
+        }
+        catch (IllegalArgumentException exp) {
+            logger.error("\"" + exp.getMessage() + "\" from" + exp.getStackTrace()[0].toString());
         }
     }
     public void toEnd() {
@@ -71,7 +81,9 @@ public class Facade {
         }
         catch (NullPointerException exp) {
             logger.error("Facade was not loaded or loaded incorrectly.");
-            // maybe throw
+        }
+        catch (IllegalArgumentException exp) {
+            logger.error("\"" + exp.getMessage() + "\" from" + exp.getStackTrace()[0].toString());
         }
     }
 
@@ -110,7 +122,9 @@ public class Facade {
         }
         catch (NullPointerException exp) {
             logger.error("Facade was not loaded or loaded incorrectly.");
-            // maybe throw
+        }
+        catch (IllegalArgumentException exp) {
+            logger.error("\"" + exp.getMessage() + "\" from" + exp.getStackTrace()[0].toString());
         }
     }
     public String getStepLog() {
@@ -119,7 +133,11 @@ public class Facade {
         }
         catch (NullPointerException exp) {
             logger.error("Facade was not loaded or loaded incorrectly.");
-            return "error";
+            return "error\n";
+        }
+        catch (IllegalArgumentException exp) {
+            logger.error("\"" + exp.getMessage() + "\" from" + exp.getStackTrace()[0].toString());
+            return "error\n";
         }
     }
 
@@ -147,10 +165,9 @@ public class Facade {
             graph = new Graph(array);
             iterator = AStar.execute(graph, start, end);
         }
-        catch (Exception exp) {
-            clear(); //?
-            logger.error("Facade load went incorrectly in " + exp.getStackTrace()[0].getClassName() + ".");
-            // maybe throw
+        catch (IllegalArgumentException exp) {
+            clear();
+            logger.warn("Facade doesn't load: \"" + exp.getMessage() + "\" from " + exp.getStackTrace()[0].getClassName());
         }
     }
 }

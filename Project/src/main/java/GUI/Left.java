@@ -356,7 +356,6 @@ public class Left extends JPanel {
         public void actionPerformed(ActionEvent e) {
             if (!facadePointer.isLoad()) {
                 facadePointer.loadGraph(rightPointer.getTable());
-                System.out.println("Not Load or New Graph");
             }
             if (facadePointer.isLoad()) {
                 genButton.setEnabled(false);
@@ -366,13 +365,19 @@ public class Left extends JPanel {
                 textField1.setEnabled(false);
                 textField2.setEnabled(false);
 
-                if (!facadePointer.next()) {
+                int temp = facadePointer.next();
+                if (temp == 0) {
                     timer.restart();
                     timer.stop();
-                    System.out.println("Come to End");
+                    // сообщение о конце
+                }
+                if (temp == -1) {
+                    timer.restart();
+                    timer.stop();
+                    // сообщение о ошибке
                 }
                 facadePointer.drawStep(rightPointer.getTable());
-                textLog.setText(textLog.getText() + "\n" + facadePointer.getStepLog());
+                textLog.setText(textLog.getText() + facadePointer.getStepLog());
             }
         }
     }
@@ -382,7 +387,6 @@ public class Left extends JPanel {
         public void actionPerformed(ActionEvent e) {
             if (!facadePointer.isLoad()) {
                 facadePointer.loadGraph(rightPointer.getTable());
-                System.out.println("Not Load or New Graph");
             }
             if (facadePointer.isLoad()) {
                 genButton.setEnabled(false);
@@ -392,12 +396,15 @@ public class Left extends JPanel {
                 textField1.setEnabled(false);
                 textField2.setEnabled(false);
 
-                if (!facadePointer.prev()) {
-                    // конец
-                    System.out.println("Come to Start");
+                int temp = facadePointer.prev();
+                if (temp == 0) {
+                    // сообщение о старте
+                }
+                if (temp == -1) {
+                    // сообщение о ошибке
                 }
                 facadePointer.drawStep(rightPointer.getTable());
-                textLog.setText(textLog.getText() + "\n" + facadePointer.getStepLog());
+                textLog.setText(textLog.getText() + facadePointer.getStepLog());
             }
         }
     }
@@ -407,7 +414,6 @@ public class Left extends JPanel {
         public void actionPerformed(ActionEvent e) {
             if (!facadePointer.isLoad()) {
                 facadePointer.loadGraph(rightPointer.getTable());
-                System.out.println("Not Load or New Graph");
             }
             if (facadePointer.isLoad()) {
                 genButton.setEnabled(false);
@@ -419,7 +425,7 @@ public class Left extends JPanel {
 
                 facadePointer.toStart();
                 facadePointer.drawStep(rightPointer.getTable());
-                textLog.setText(textLog.getText() + "\n" + facadePointer.getStepLog());
+                textLog.setText(textLog.getText() + facadePointer.getStepLog());
             }
         }
     }
@@ -429,7 +435,6 @@ public class Left extends JPanel {
         public void actionPerformed(ActionEvent e) {
             if (!facadePointer.isLoad()) {
                 facadePointer.loadGraph(rightPointer.getTable());
-                System.out.println("Not Load or New Graph");
             }
             if (facadePointer.isLoad()) {
                 genButton.setEnabled(false);
@@ -441,7 +446,7 @@ public class Left extends JPanel {
 
                 facadePointer.toEnd();
                 facadePointer.drawStep(rightPointer.getTable());
-                textLog.setText(textLog.getText() + "\n" + facadePointer.getStepLog());
+                textLog.setText(textLog.getText() + facadePointer.getStepLog());
             }
         }
     }
@@ -451,7 +456,6 @@ public class Left extends JPanel {
         public void actionPerformed(ActionEvent e) {
             if (!facadePointer.isLoad()) {
                 facadePointer.loadGraph(rightPointer.getTable());
-                System.out.println("Not Load or New Graph");
             }
             if (facadePointer.isLoad()) {
                 timer.start();

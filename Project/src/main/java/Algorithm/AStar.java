@@ -8,9 +8,9 @@ import java.util.HashMap;
 import java.util.PriorityQueue;
 
 public class AStar {
-    public static Iterator execute(Graph graph, Point start, Point end) throws Exception {
+    public static Iterator execute(Graph graph, Point start, Point end) throws IllegalArgumentException {
         if (graph == null || start == null || end == null) {
-            throw new IllegalArgumentException("------");
+            throw new IllegalArgumentException("Argument can't be null");
         }
         ArrayList<Step> steps = new ArrayList<>();
 
@@ -49,7 +49,7 @@ public class AStar {
         }
         return new Iterator(steps);
     }
-    public static int heuristic(Point goal, Point curr) throws Exception {
+    public static int heuristic(Point goal, Point curr) throws IllegalArgumentException {
         if (goal == null || curr == null) {
             throw new IllegalArgumentException();
         }
@@ -62,9 +62,9 @@ public class AStar {
         public int priority;
         public Point point;
 
-        public QueuePair(int priority, Point point) throws Exception {
+        public QueuePair(int priority, Point point) throws IllegalArgumentException {
             if (point == null) {
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("Argument can't be null");
             }
             this.priority = priority;
             this.point = point;
@@ -75,9 +75,9 @@ public class AStar {
         private ArrayList<Step> steps;
         private int index;
 
-        private Iterator(ArrayList<Step> steps) throws Exception {
+        private Iterator(ArrayList<Step> steps) throws IllegalArgumentException {
             if (steps == null) {
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("Argument can't be null");
             }
             this.steps = steps;
             index = 0;
@@ -105,9 +105,9 @@ public class AStar {
             index = steps.size() - 1;
             return steps.get(index);
         }
-        public Step toIndex(int i) throws Exception {
+        public Step toIndex(int i) throws IllegalArgumentException {
             if (i < 0 || i > steps.size() - 1) {
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("Index is out of range");
             }
             index = i;
             return steps.get(index);
@@ -123,14 +123,9 @@ public class AStar {
         private ArrayList<Point> opened;
         private Point current;
 
-        public Step() {
-            this.closed = new ArrayList<>();
-            this.opened = new ArrayList<>();
-            this.current = new Point();
-        }
-        public Step(ArrayList<Point> closed, ArrayList<Point> opened, Point current) throws Exception {
+        public Step(ArrayList<Point> closed, ArrayList<Point> opened, Point current) throws IllegalArgumentException {
             if (closed == null || opened == null || current == null) {
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("Argument can't be null");
             }
             this.closed = closed;
             this.opened = opened;
