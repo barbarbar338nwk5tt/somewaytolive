@@ -257,6 +257,7 @@ public class Left extends JPanel {
                         }
                         for (int i = 0; i < rightPointer.getTable().getRowCount(); i++) {
                             for (int j = 0; j < rightPointer.getTable().getColumnCount(); j++) {
+                                columnModel.getColumn(j).setCellEditor(new DefaultCellEditor(comboBox));
                                 if(a[i*x + j] == 'W') {
                                     rightPointer.getTable().setValueAt("W", i, j);
                                 }
@@ -369,12 +370,12 @@ public class Left extends JPanel {
                 if (temp == 0) {
                     timer.restart();
                     timer.stop();
-                    // сообщение о конце
+                    JOptionPane.showMessageDialog(null, "Finish!","Finish",JOptionPane.INFORMATION_MESSAGE);
                 }
                 if (temp == -1) {
                     timer.restart();
                     timer.stop();
-                    // сообщение о ошибке
+                    JOptionPane.showMessageDialog(null, "Error!","Error",JOptionPane.INFORMATION_MESSAGE);
                 }
                 facadePointer.drawStep(rightPointer.getTable());
                 textLog.setText(textLog.getText() + facadePointer.getStepLog());
@@ -398,10 +399,10 @@ public class Left extends JPanel {
 
                 int temp = facadePointer.prev();
                 if (temp == 0) {
-                    // сообщение о старте
+                    JOptionPane.showMessageDialog(null, "Start!","Start",JOptionPane.INFORMATION_MESSAGE);
                 }
                 if (temp == -1) {
-                    // сообщение о ошибке
+                    JOptionPane.showMessageDialog(null, "Error!","Error",JOptionPane.INFORMATION_MESSAGE);
                 }
                 facadePointer.drawStep(rightPointer.getTable());
                 textLog.setText(textLog.getText() + facadePointer.getStepLog());
