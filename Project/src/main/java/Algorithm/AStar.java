@@ -12,8 +12,6 @@ public class AStar {
         if (graph == null || start == null || end == null) {
             throw new IllegalArgumentException("Argument can't be null");
         }
-        ArrayList<Step> steps = new ArrayList<>();
-
         PriorityQueue<QueuePair> queue = new PriorityQueue<>(Comparator.comparingInt(o -> o.priority));
         HashMap<Point, Integer> lengths = new HashMap<>();
         HashMap<Point, Point> paths = new HashMap<>();
@@ -23,18 +21,19 @@ public class AStar {
         lengths.put(start, 0);
         paths.put(end, null);
 
-        // Основная часть
+        ArrayList<Step> steps = new ArrayList<>();
         while(!queue.isEmpty()) {
-
             curr = queue.poll().point;
 
-            // Запись итератора
-            ArrayList<Point> opened = new ArrayList<>();
-            for (QueuePair i : queue) opened.add(i.point);
-            ArrayList<Point> closed = new ArrayList<>();
-            for (Point i : lengths.keySet()) closed.add(i);
-            steps.add(new Step(closed, opened, curr));
-            //
+            Step step = new Step();
+            step.closed.addAll(lengths.keySet());
+            for (QueuePair i : queue) step.opened.add(i.point);
+            for (Point i = curr; !i.equals(start); i = paths.get(i)) step.path.add(i);
+            step.current = curr;
+            step.previous = paths.get(curr);
+            step.pathLen = lengths.get(curr);
+            step.heuristic = heuristic(end, curr);
+            steps.add(step);
 
             if (curr.equals(end)) break;
 
@@ -75,7 +74,7 @@ public class AStar {
         private ArrayList<Step> steps;
         private int index;
 
-        private Iterator(ArrayList<Step> steps) throws IllegalArgumentException {
+        public Iterator(ArrayList<Step> steps) throws IllegalArgumentException {
             if (steps == null) {
                 throw new IllegalArgumentException("Argument can't be null");
             }
@@ -88,11 +87,13 @@ public class AStar {
                 return steps.get(++index);
             return null;
         }
+
         public Step prev() {
             if (index > 0)
                 return steps.get(--index);
             return null;
         }
+
         public Step curr() {
             return steps.get(index);
         }
@@ -101,10 +102,12 @@ public class AStar {
             index = 0;
             return steps.get(index);
         }
+
         public Step toEnd() {
             index = steps.size() - 1;
             return steps.get(index);
         }
+
         public Step toIndex(int i) throws IllegalArgumentException {
             if (i < 0 || i > steps.size() - 1) {
                 throw new IllegalArgumentException("Index is out of range");
@@ -121,15 +124,18 @@ public class AStar {
     public static class Step {
         private ArrayList<Point> closed;
         private ArrayList<Point> opened;
-        private Point current;
+        private ArrayList<Point> path;
+        private Point current, previous;
+        private int pathLen, heuristic;
 
-        public Step(ArrayList<Point> closed, ArrayList<Point> opened, Point current) throws IllegalArgumentException {
-            if (closed == null || opened == null || current == null) {
-                throw new IllegalArgumentException("Argument can't be null");
-            }
-            this.closed = closed;
-            this.opened = opened;
-            this.current = current;
+        private Step() {
+            closed = new ArrayList<>();
+            opened = new ArrayList<>();
+            path = new ArrayList<>();
+            current = new Point();
+            previous = new Point();
+            pathLen = 0;
+            heuristic = 0;
         }
 
         public ArrayList<Point> getOpened() {
@@ -138,8 +144,27 @@ public class AStar {
         public ArrayList<Point> getClosed() {
             return closed;
         }
+        public ArrayList<Point> getPath() {
+            return path;
+        }
         public Point getCurrent() {
             return current;
+        }
+        public Point getPrevious() {
+            return previous;
+        }
+        public int getPathLen() {
+            return pathLen;
+        }
+        public int getHeuristic() {
+            return heuristic;
+        }
+
+        @Override
+        public String toString() {
+            return "current point: " + current + " get from point: " + previous +
+                    "\n    path length: " + pathLen +
+                    "\n    heuristic: " + heuristic;
         }
     }
 }

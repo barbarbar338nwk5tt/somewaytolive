@@ -105,6 +105,10 @@ public class Facade {
             for (Point i : curr.getOpened()) {
                 table.setValueAt("o", i.getX(), i.getY());
             }
+            // путь до текущей клетки - желтый
+            for (Point i : curr.getPath()) {
+                table.setValueAt("r", i.getX(), i.getY());
+            }
             // стены - розовый
             for (Point i : walls) {
                 table.setValueAt("W", i.getX(), i.getY());
@@ -129,7 +133,7 @@ public class Facade {
     }
     public String getStepLog() {
         try {
-            return iterator.curr().getCurrent().toString() + "\n";
+            return iterator.curr().toString() + "\n";
         }
         catch (NullPointerException exp) {
             logger.error("Facade was not loaded or loaded incorrectly.");

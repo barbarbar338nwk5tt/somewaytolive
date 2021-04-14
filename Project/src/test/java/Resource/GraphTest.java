@@ -26,13 +26,13 @@ public class GraphTest {
 
     @Test
     public void testInitialize1() {
-        String test = "{0 1={1 1=1, 0 2=1}, 2 0={2 1=1}, 0 2={0 1=1}, 1 1={0 1=1, 2 1=1}, 2 1={2 0=1, 1 1=1}}";
+        String test = "{[2 1]={[2 0]=1, [1 1]=1}, [0 2]={[0 1]=1}, [2 0]={[2 1]=1}, [0 1]={[0 2]=1, [1 1]=1}, [1 1]={[2 1]=1, [0 1]=1}}";
         assertEquals(test, graph1.toString());
     }
 
     @Test
     public void testInitialize2() {
-        String test = "{0 0={}, 2 0={}, 1 1={}, 0 2={}, 2 2={}}";
+        String test = "{[0 0]={}, [2 2]={}, [0 2]={}, [2 0]={}, [1 1]={}}";
         assertEquals(test, graph2.toString());
     }
 
