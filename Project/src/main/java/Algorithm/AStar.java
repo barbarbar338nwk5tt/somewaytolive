@@ -107,18 +107,6 @@ public class AStar {
             index = steps.size() - 1;
             return steps.get(index);
         }
-
-        public Step toIndex(int i) throws IllegalArgumentException {
-            if (i < 0 || i > steps.size() - 1) {
-                throw new IllegalArgumentException("Index is out of range");
-            }
-            index = i;
-            return steps.get(index);
-        }
-
-        public int getIndex() {
-            return index;
-        }
     }
 
     public static class Step {
