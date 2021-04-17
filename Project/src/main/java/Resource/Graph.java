@@ -60,7 +60,7 @@ public class Graph {
         map.get(f).put(s, w);
     }
 
-    public boolean isIn(Point p) throws Exception {
+    public boolean isIn(Point p) throws IllegalArgumentException {
         if (p == null) {
             throw new IllegalArgumentException("Argument can't be null");
         }
