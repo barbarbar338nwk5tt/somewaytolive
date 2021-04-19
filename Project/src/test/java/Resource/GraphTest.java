@@ -61,12 +61,12 @@ public class GraphTest {
     }
 
     @Test
-    public void isEmptyTest_1() {
+    public void isEmptyTest_1g() {
         assertFalse(graph1.isEmpty());
     }
 
     @Test
-    public void isEmptyTest_2() {
+    public void isEmptyTest_3g() {
         assertTrue(graph3.isEmpty());
     }
 
@@ -96,5 +96,24 @@ public class GraphTest {
         Point a = new Point(1, 1);
         Point b = new Point(0, 1);
         assertEquals(test, graph1.getEdgeLen(a, b));
+    }
+
+    @Test
+    public void getNeighborsTest_1() {
+        ArrayList<Point> exp = new ArrayList<>();
+        exp.add(new Point(2, 1));
+        exp.add(new Point(0, 1));
+        assertEquals(exp.toString(), graph1.getNeighbors(new Point(1, 1)).toString());
+    }
+
+    @Test
+    public void getNeighborsTest_2() {
+        ArrayList<Point> exp = new ArrayList<>();
+        assertEquals(exp.toString(), graph2.getNeighbors(new Point(1, 1)).toString());
+    }
+
+    @Test
+    public void getNeighborsTest_0() {
+        assertNull(graph2.getNeighbors(new Point(0, 1)));
     }
 }
