@@ -13,7 +13,7 @@ class JiangQie_API
 {
 	//分页 每页数量
 	const POSTS_PER_PAGE = 10;
-	
+
 	protected $loader;
 
 	protected $jiangqie_api;
@@ -29,20 +29,35 @@ class JiangQie_API
 	/**
 	 * 获取配置
 	 */
-	public static function option_value($key)
-    {
+	public static function option_value($key, $default = '')
+	{
 		static $options = false;
 		if (!$options) {
 			$options = get_option('jiangqie-api');
 		}
-		
 		if (isset($options[$key]) && !empty($options[$key])) {
 			return $options[$key];
 		}
 
-		return false;
+		return $default;
 	}
-	
+
+	/**
+	 * 图片配置项url
+	 */
+	public static function option_image_url($image, $default = '')
+	{
+		if ($image && isset($image['url']) && $image['url']) {
+			return $image['url'];
+		} else {
+			if ($default) {
+				return esc_url(plugins_url("public/images/$default", dirname(__FILE__)));
+			} else {
+				return $default;
+			}
+		}
+	}
+
 	/**
 	 * 微信token
 	 */
@@ -56,7 +71,7 @@ class JiangQie_API
 				return $access_token;
 			}
 		}
-		
+
 		$app_id = JiangQie_API::option_value('app_id');
 		$app_secret = JiangQie_API::option_value('app_secret');
 		if (!$app_id || !$app_secret) {
@@ -69,7 +84,7 @@ class JiangQie_API
 			return false;
 		}
 		$access_token = json_decode($body['body'], TRUE);
-		
+
 		$access_token['expires_in'] = $access_token['expires_in'] + time() - 200;
 		file_put_contents($path_token, json_encode($access_token));
 
@@ -174,11 +189,9 @@ class JiangQie_API
 		require_once plugin_dir_path(dirname(__FILE__)) . 'public/rest/class-jiangqie-api-user-controller.php';
 
 		/**
-		 * AJAX
+		 * 后台管理
 		 */
-		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-jiangqie-api-ajax.php';
-
-		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/exopite-simple-options/exopite-simple-options-framework-class.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/codestar-framework/codestar-framework.php';
 
 		$this->loader = new JiangQie_API_Loader();
 	}
@@ -195,13 +208,13 @@ class JiangQie_API
 		if (!is_admin()) {
 			return;
 		}
-		
+
 		$this->admin = new JiangQie_API_Admin($this->get_jiangqie_api(), $this->get_version(), $this->main);
 
 		$this->loader->add_action('admin_enqueue_scripts', $this->admin, 'enqueue_styles');
 		$this->loader->add_action('admin_enqueue_scripts', $this->admin, 'enqueue_scripts');
 
-		$this->loader->add_action('init', $this->admin, 'create_menu');
+		$this->loader->add_action('init', $this->admin, 'create_menu', 0);
 		$this->loader->add_action('admin_init', $this->admin, 'admin_init');
 		$this->loader->add_action('admin_menu', $this->admin, 'admin_menu', 20);
 	}

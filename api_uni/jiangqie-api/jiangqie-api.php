@@ -21,10 +21,6 @@ define('JIANG_QIE_API_PLUGIN_NAME', 'jiangqie-api');
 define('JIANG_QIE_API_BASE_DIR', plugin_dir_path(__FILE__));
 define('JIANG_QIE_API_BASE_NAME', plugin_basename(__FILE__));
 
-if (!class_exists('Exopite_Template')) {
-	require_once plugin_dir_path(__FILE__) . 'includes/libraries/class-exopite-template.php';
-}
-
 function activate_jiangqie_api()
 {
 	require_once plugin_dir_path(__FILE__) . 'includes/class-jiangqie-api-activator.php';
