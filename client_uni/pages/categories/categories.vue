@@ -77,15 +77,34 @@
 						title: res.data.title ? res.data.title : that.default.title,
 						description: res.data.description ? res.data.description : that.default
 							.description
-					}
+					},
 				});
-			}); //获取一级分类
+				
+				// #ifdef MP-BAIDU
+				swan.setPageInfo({
+					title: this.setting.title,
+					description: this.setting.description,
+					keywords: '文章分类',
+				});
+				// #endif
+			}); 
 
+			//获取一级分类
 			Rest.get(Api.JIANGQIE_CATEGORY_INDEX).then(res => {
 				that.setData({
 					categories: res.data
 				});
 			});
+		},
+		
+		onShow() {
+			// #ifdef MP-BAIDU
+			swan.setPageInfo({
+				title: this.setting.title,
+				description: this.setting.description,
+				keywords: '文章分类',
+			});
+			// #endif
 		},
 
 		onShareAppMessage: function() {

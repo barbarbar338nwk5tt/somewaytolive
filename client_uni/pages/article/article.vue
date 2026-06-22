@@ -278,6 +278,18 @@
 					like_list: res.data.like_list
 				});
 				that.article = that.escape2Html(res.data.content);
+				
+				// #ifdef MP-BAIDU
+				let keywords = [];
+				this.post.tags.forEach(tag => {
+					keywords.push(tag.name)
+				})
+				swan.setPageInfo({
+					title: this.post.title,
+					keywords: keywords.join(','),
+					description: this.post.excerpt,
+				});
+				// #endif
 			});
 			this.loadComments(true);
 		},

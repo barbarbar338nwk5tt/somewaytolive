@@ -65,6 +65,12 @@ class JiangQie_API_Setting_Controller extends JiangQie_API_Base_Controller
 
 		//小程序名称
 		$data['title'] = JiangQie_API::option_value('title');
+		
+		//描述
+		$data['description'] = JiangQie_API::option_value('description');
+		
+		//关键字
+		$data['keywords'] = JiangQie_API::option_value('keywords');
 
 		//顶部分类
 		$cat_ids = JiangQie_API::option_value('home_top_nav');

@@ -24,6 +24,20 @@ CSF::createSection($prefix, array(
         ),
 
         array(
+            'id'          => 'description',
+            'type'        => 'text',
+            'title'       => '描述',
+            'placeholder' => '描述'
+        ),
+
+        array(
+            'id'          => 'keywords',
+            'type'        => 'text',
+            'title'       => '关键字',
+            'placeholder' => '关键字，英文逗号分隔'
+        ),
+
+        array(
             'id'      => 'logo',
             'type'    => 'media',
             'title'   => 'LOGO',

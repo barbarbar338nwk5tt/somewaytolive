@@ -243,6 +243,10 @@
 	export default {
 		data() {
 			return {
+				bd_title: undefined,
+				bd_description: undefined,
+				bd_keywords: undefined,
+				
 				statusBarH: this.statusBar,
 				customBarH: 50,
 
@@ -325,10 +329,33 @@
 
 				if (res.data.title && res.data.title.length > 0) {
 					getApp().appName = res.data.title;
+					
+					// #ifdef MP-BAIDU
+					this.bd_title = res.data.title;
+					this.bd_description = res.data.description;
+					this.bd_keywords = res.data.keywords;
+					swan.setPageInfo({
+						title: this.bd_title,
+						description: this.bd_description,
+						keywords: this.bd_keywords,
+					});
+					// #endif
 				}
 			}); //加载文章
 
 			this.loadPostLast(true);
+		},
+		
+		onShow() {
+			// #ifdef MP-BAIDU
+			if (this.bd_title) {
+				swan.setPageInfo({
+					title: this.bd_title,
+					description: this.bd_description,
+					keywords: this.bd_keywords,
+				});
+			}
+			// #endif
 		},
 
 		onReachBottom: function() {

@@ -84,6 +84,8 @@
 	export default {
 		data() {
 			return {
+				title: undefined,
+				
 				posts: [],
 				loadding: false,
 				pullUpOn: true,
@@ -111,20 +113,23 @@
 		onLoad: function(options) {
 			if (options.cat_id) {
 				//分类
+				this.title = options.title;
 				uni.setNavigationBarTitle({
 					title: options.title
 				});
 				this.cat_id = options.cat_id;
 			} else if (options.tag_id) {
 				//标签
+				this.title = options.title;
 				uni.setNavigationBarTitle({
 					title: options.title
 				});
 				this.tag_id = options.tag_id;
 			} else if (options.search) {
 				//搜索
+				this.title = '搜索【' + options.search + '】';
 				uni.setNavigationBarTitle({
-					title: '搜索【' + options.search + '】'
+					title: this.title
 				});
 				this.search = options.search;
 			} else if (options.track) {
@@ -139,12 +144,14 @@
 					title = '我的评论';
 				}
 
+				this.title = title;
 				uni.setNavigationBarTitle({
 					title: title
 				});
 				this.track = options.track;
 			} else {
 				//最新
+				this.title = '最新文章';
 				uni.setNavigationBarTitle({
 					title: '最新文章'
 				});
@@ -152,6 +159,14 @@
 		},
 
 		onShow: function() {
+			// #ifdef MP-BAIDU
+			swan.setPageInfo({
+				title: this.title,
+				description: this.title + '相关的文章',
+				keywords: this.title,
+			});
+			// #endif
+			
 			this.loadPost(true);
 		},
 

@@ -141,8 +141,26 @@
 					},
 					tl_background: res.data.tl_background
 				});
+				
+				// #ifdef MP-BAIDU
+				swan.setPageInfo({
+					title: this.setting.title,
+					description: this.setting.description,
+					keywords: '热榜',
+				});
+				// #endif
 			});
 			this.loadPosts(true);
+		},
+		
+		onShow() {
+			// #ifdef MP-BAIDU
+			swan.setPageInfo({
+				title: this.setting.title,
+				description: this.setting.description,
+				keywords: '热榜',
+			});
+			// #endif
 		},
 
 		onReachBottom: function() {
