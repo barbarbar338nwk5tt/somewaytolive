@@ -44,6 +44,8 @@ class JiangQie_API_Admin
 			'menu_title' => '酱茄Free小程序',
 			'menu_slug'  => 'jiangqie-api',
 			'menu_position' => 2,
+            'show_bar_menu' => false,
+            'show_sub_menu' => false,
             'footer_credit' => 'Thank you for creating with <a href="https://www.jiangqie.com/" target="_blank">酱茄</a>'
 		));
 
