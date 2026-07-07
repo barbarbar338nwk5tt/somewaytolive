@@ -79,6 +79,13 @@ CSF::createSection($prefix, array(
         ),
 
         array(
+            'id'    => 'home_active_switch',
+            'type'  => 'switcher',
+            'title' => '活动区域图',
+            'subtitle' => '是否显示活动区域图?',
+        ),
+
+        array(
             'id'         => 'home_active',
             'type'       => 'accordion',
             'title'      => '活动区域图',
@@ -102,6 +109,7 @@ CSF::createSection($prefix, array(
                             'id'    => 'left_link',
                             'type'  => 'text',
                             'title' => '链接',
+                            'after' => '<a href="https://www.jiangqie.com/ky/4673.html" target="_blank" title="页面路径怎么写？">页面路径</a>或小程序appid'
                         ),
                     )
                 ),
@@ -124,6 +132,7 @@ CSF::createSection($prefix, array(
                             'id'    => 'right_top_link',
                             'type'  => 'text',
                             'title' => '链接',
+                            'after' => '<a href="https://www.jiangqie.com/ky/4673.html" target="_blank" title="页面路径怎么写？">页面路径</a>或小程序appid'
                         ),
                     )
                 ),
@@ -146,6 +155,7 @@ CSF::createSection($prefix, array(
                             'id'    => 'right_down_link',
                             'type'  => 'text',
                             'title' => '链接',
+                            'after' => '<a href="https://www.jiangqie.com/ky/4673.html" target="_blank" title="页面路径怎么写？">页面路径</a>或小程序appid'
                         ),
                     )
                 ),

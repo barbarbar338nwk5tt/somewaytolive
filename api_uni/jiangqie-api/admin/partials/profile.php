@@ -71,6 +71,7 @@ CSF::createSection($prefix, array(
                     'type'  => 'text',
                     'title' => '链接',
                     'dependency' => array('tp', '==', 'link'),
+                    'after' => '<a href="https://www.jiangqie.com/ky/4673.html" target="_blank" title="页面路径怎么写？">页面路径</a>或小程序appid'
                 ),
 
                 array(

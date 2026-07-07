@@ -2,10 +2,10 @@
 
 Contributors: jiangqie
 Donate link: https://www.jiangqie.com/
-Tags: 酱茄,小程序
+Tags: 追格,酱茄,小程序
 Requires at least: 5.4
-Tested up to: 5.8
-Stable tag: 1.5.5
+Tested up to: 5.8.1
+Stable tag: 1.6.0
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -82,6 +82,18 @@ gitee下载（优先更新）：https://gitee.com/longwenjunj/jiangqie_kafei
 
 
 == Changelog ==
+
+= 1.6.0 =
+
+1. 优化：支持百度小程序TDK
+
+2. 优化：删除后台冗余二级菜单
+
+= 1.5.6 =
+
+1. 新增：活动图关闭功能
+
+2. 优化：链接填写帮助
 
 = 1.5.5 =
 

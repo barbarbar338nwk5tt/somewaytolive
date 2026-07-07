@@ -133,7 +133,11 @@ class JiangQie_API_Setting_Controller extends JiangQie_API_Base_Controller
 
 		//活动区域
 		$home_active = JiangQie_API::option_value('home_active');
-		if (!empty($home_active) && !empty($home_active['left_image']) && !empty($home_active['right_top_image']) && !empty($home_active['right_down_image'])) {
+		if (JiangQie_API::option_value('home_active_switch')
+			&& !empty($home_active) 
+			&& !empty($home_active['left_image']) 
+			&& !empty($home_active['right_top_image']) 
+			&& !empty($home_active['right_down_image'])) {
 			$data['actives'] = [
 				'left' => [
 					'image' => JiangQie_API::option_image_url($home_active['left_image']),
