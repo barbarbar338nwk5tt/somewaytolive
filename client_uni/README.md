@@ -11,7 +11,7 @@ Hi，欢迎使用“酱茄小程序开源版 – 酱茄Free”。
 
 **下载安装：https://www.jiangqie.com/ky**
 
-Copyright © 2020-2021 酱茄 jiangqie.com
+Copyright © 2020-2022 酱茄 jiangqie.com
 
 在此对提供开源及创意表示致谢，开源声明关注酱茄官网。
 
