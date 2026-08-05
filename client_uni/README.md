@@ -24,6 +24,13 @@ Copyright © 2020-2022 酱茄 jiangqie.com
 **最近github老是连不上，最新代码请到gitee下载。**
 
 
+## 特别声明
+
+黑灰产请绕行！
+
+如果发现有人使用本程序从事违法活动，将即可向公安机关举报，并协助破案！
+
+
 ## 演示
 
 ![酱茄小程序二维码](https://gitee.com/longwenjunj/jiangqie_kafei/raw/master/screenshot/jiangqie.png) 

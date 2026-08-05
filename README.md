@@ -16,6 +16,13 @@ Hi，欢迎使用“酱茄小程序开源版 – 酱茄Free”。
 **在此对提供开源及创意表示致谢，开源声明关注酱茄官网。**
 
 
+## 特别声明
+
+黑灰产请绕行！
+
+如果发现有人使用本程序从事违法活动，将即可向公安机关举报，并协助破案！
+
+
 ## 演示
 
 ![酱茄小程序二维码](https://gitee.com/longwenjunj/jiangqie_kafei/raw/master/screenshot/jiangqie.png) 
