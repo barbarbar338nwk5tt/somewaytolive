@@ -13,7 +13,7 @@
 CSF::createSection($prefix, array(
     'id'    => 'basic',
     'title' => '基础设置',
-    'icon'  => 'fas fa-plus-circle',
+    'icon'  => 'fas fa-cubes',
     'fields' => array(
 
         array(

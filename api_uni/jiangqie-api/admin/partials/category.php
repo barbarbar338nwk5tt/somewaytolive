@@ -13,7 +13,7 @@
 CSF::createSection($prefix, array(
     'id'    => 'category',
     'title' => '分类设置',
-    'icon'  => 'fas fa-plus-circle',
+    'icon'  => 'fas fa-coins',
     'fields' => array(
         
         array(

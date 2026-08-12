@@ -41,6 +41,13 @@ Hi，欢迎使用“酱茄小程序开源版 – 酱茄Free”。
 ![后台截图5](https://gitee.com/longwenjunj/jiangqie_kafei/raw/master/screenshot/15.png)
 
 
+## 代码说明
+
+推荐使用api_uni（uniapp前端）和client_uni（WordPress插件）搭配使用。uniapp+WordPress开发，支持多端（微信小程序、百度小程序、QQ小程序等）。
+
+api和client是之前的老版本，后续可能不再维护。
+
+
 ————————————【功能清单】————————————
 
 ### 酱茄小程序开源版插件功能清单：

@@ -13,7 +13,7 @@
 CSF::createSection($prefix, array(
     'id'    => 'profile',
     'title' => '我的设置',
-    'icon'  => 'fas fa-plus-circle',
+    'icon'  => 'fas fa-user',
     'fields' => array(
 
         array(
