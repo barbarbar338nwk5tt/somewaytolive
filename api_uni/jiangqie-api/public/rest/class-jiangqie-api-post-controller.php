@@ -342,17 +342,17 @@ class JiangQie_API_Post_Controller extends JiangQie_API_Base_Controller
 	public function get_post_page($request)
 	{
 		$page_id = $this->param_value($request, 'page_id');
+		$page_id = (int)$page_id;
 		if (!$page_id) {
 			return $this->make_error('缺少参数');
 		}
 
-		$args = [
-			'p' => $page_id
-		];
-
 		global $wpdb;
 		$table_post = $wpdb->prefix . 'posts';
-		$result = $wpdb->get_row("SELECT post_title, post_content FROM `$table_post` WHERE ID=$page_id");
+		$result = $wpdb->get_row($wpdb->prepare("SELECT post_title, post_content FROM `$table_post` WHERE ID=%d", $page_id));
+		if (!$result) {
+			return $this->make_error('未找到文章');
+		}
 		$page['title'] = $result->post_title;
 		$page['content'] = apply_filters('the_content', $result->post_content);
 
