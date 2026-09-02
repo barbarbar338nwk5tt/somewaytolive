@@ -90,7 +90,7 @@ class JiangQie_API_Base_Controller extends WP_REST_Controller
 		} else if ($dur < 604800) { //7天内
 			return floor($dur / 86400) . '天前';
 		} else {
-			return date("Y-m-d", $origin_time);
+			return wp_date("Y-m-d", $origin_time);
 		}
 	}
 
