@@ -23,24 +23,6 @@
 						</view>
 					</template>
 				</view>
-				<view class="jiangqie-countinfo">
-					<view class="jiangqie-countblock">
-						<view class="jiangqie-countnumber">39</view>
-						<view class="jiangqie-counttype">帖子</view>
-					</view>
-					<view class="jiangqie-countblock">
-						<view class="jiangqie-countnumber">56</view>
-						<view class="jiangqie-counttype">文章</view>
-					</view>
-					<view class="jiangqie-countblock">
-						<view class="jiangqie-countnumber">72</view>
-						<view class="jiangqie-counttype">粉丝</view>
-					</view>
-					<view class="jiangqie-countblock">
-						<view class="jiangqie-countnumber">18</view>
-						<view class="jiangqie-counttype">关注</view>
-					</view>
-				</view>
 			</view>
 			<view class="jiangqie-listbox jiangqie-postcount">
 				<template v-for="(item, index) in menu">
@@ -428,39 +410,6 @@
 		font-size: 24rpx;
 		font-weight: 300;
 		color: #9B9B9B;
-	}
-
-	.jiangqie-countinfo {
-		display: none;
-		padding: 25rpx;
-		text-align: center;
-		overflow: hidden;
-	}
-
-	.jiangqie-countblock {
-		float: left;
-		width: 24.6%;
-		border-right: 1rpx solid #F3F3F3;
-	}
-
-	.jiangqie-countblock:last-child {
-		border: none;
-	}
-
-	.jiangqie-countnumber {
-		height: 40rpx;
-		line-height: 40rpx;
-		color: #333;
-		font-weight: 500;
-		font-size: 36rpx;
-	}
-
-	.jiangqie-counttype {
-		height: 40rpx;
-		line-height: 40rpx;
-		color: #999;
-		font-weight: 200;
-		font-size: 24rpx;
 	}
 
 	.jiangqie-listbox {

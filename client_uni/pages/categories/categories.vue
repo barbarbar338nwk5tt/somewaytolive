@@ -9,6 +9,13 @@
 				<image v-if="setting.background && setting.background.length>0" :src="setting.background"
 					mode="aspectFill"></image>
 			</view>
+			
+			<!-- #ifdef MP-WEIXIN -->
+			<template v-if="wx_ad">
+				<ad :unit-id="wx_ad"></ad>
+			</template>
+			<!-- #endif -->
+			
 			<view class="right-box">
 
 				<view v-for="(item, index) in categories" :key="index" class="sortbox" :data-id="item.id"
@@ -52,6 +59,7 @@
 					description: "",
 					background: ""
 				},
+				wx_ad: undefined,
 				categories: [],
 				default: {
 					title: '分类标题，请在后台修改',
@@ -69,16 +77,13 @@
 
 		onLoad: function(options) {
 			//获取配置
-			let that = this;
 			Rest.get(Api.JIANGQIE_SETTING_CATEGORY).then(res => {
-				that.setData({
-					setting: {
-						background: res.data.background,
-						title: res.data.title ? res.data.title : that.default.title,
-						description: res.data.description ? res.data.description : that.default
-							.description
-					},
-				});
+				this.setting = {
+					background: res.data.background,
+					title: res.data.title ? res.data.title : this.default.title,
+					description: res.data.description ? res.data.description : this.default.description
+				};
+				this.wx_ad = res.data.wx_ad;
 				
 				// #ifdef MP-BAIDU
 				swan.setPageInfo({
@@ -91,9 +96,7 @@
 
 			//获取一级分类
 			Rest.get(Api.JIANGQIE_CATEGORY_INDEX).then(res => {
-				that.setData({
-					categories: res.data
-				});
+				this.categories = res.data
 			});
 		},
 		

@@ -18,8 +18,8 @@
 						data-text="https://github.com/longwenjunjie/jiangqie_kafei">GitHub</text>上下载，欢迎Watch & Star ★。
 				</view>
 				<view class="jiangqie-content">项目可能存在缺陷或者bug，如果您在使用过程中发现问题或者有更好的建议，可反馈给我们。</view>
-				<view class="jiangqie-content jiangqie-content-email" @tap="copy" data-text="www.jiangqie.com">
-					技术支持：www.jiangqie.com</view>
+				<view class="jiangqie-content jiangqie-content-email" @tap="copy" data-text="www.zhuige.com">
+					技术支持：www.zhuige.com</view>
 				<view class="jiangqie-footer">
 					<image src="/static/images/qrcode.jpg" class="jiangqie-applets" mode="widthFix"></image>
 					<view class="jiangqie-footer-text">扫描二维码，体验酱茄开源小程序！</view>

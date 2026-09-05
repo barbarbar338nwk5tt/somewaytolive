@@ -333,6 +333,21 @@ class JiangQie_API_Post_Controller extends JiangQie_API_Base_Controller
 		}
 		$post['user'] = $user;
 
+		//广告设置
+		$wx_ad_top = JiangQie_API::option_value('wx_ad_article_top');
+		if ($wx_ad_top && $wx_ad_top['switch'] && $wx_ad_top['adid']) {
+			$post['wx_ad_top'] = $wx_ad_top['adid'];
+		} else {
+			$post['wx_ad_top'] = false;
+		}
+
+		$wx_ad_bottom = JiangQie_API::option_value('wx_ad_article_bottom');
+		if ($wx_ad_bottom && $wx_ad_bottom['switch'] && $wx_ad_bottom['adid']) {
+			$post['wx_ad_bottom'] = $wx_ad_bottom['adid'];
+		} else {
+			$post['wx_ad_bottom'] = false;
+		}
+
 		return $this->make_success($post);
 	}
 

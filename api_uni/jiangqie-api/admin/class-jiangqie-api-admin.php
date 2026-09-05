@@ -57,7 +57,21 @@ class JiangQie_API_Admin
 		require_once $base_dir . 'partials/home.php';
         require_once $base_dir . 'partials/category.php';
         require_once $base_dir . 'partials/hot.php';
+        require_once $base_dir . 'partials/ad.php';
 		require_once $base_dir . 'partials/profile.php';
+
+        //
+        // 备份
+        //
+        CSF::createSection($prefix, array(
+            'title'       => '备份',
+            'icon'        => 'fas fa-shield-alt',
+            'fields'      => array(
+                array(
+                    'type' => 'backup',
+                ),
+            )
+        ));
 	}
 
     public function admin_init()

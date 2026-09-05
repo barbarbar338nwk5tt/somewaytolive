@@ -286,14 +286,11 @@
 				scrollLeft: "",
 				current: "",
 				undefined: "",
-				actives: {
-					left: {
-						image: ""
-					},
-					right_top: "",
-					right_down: ""
-				},
+				actives: undefined,
 				loading: false,
+				
+				interstitialAd: undefined,
+				wx_ad: undefined,
 			};
 		},
 
@@ -341,6 +338,27 @@
 					});
 					// #endif
 				}
+				
+				//插屏广告
+				// #ifdef MP-WEIXIN
+				if(res.data.wx_ad && wx.createInterstitialAd) {
+					setTimeout(() => {
+						this.interstitialAd = wx.createInterstitialAd({ adUnitId: res.data.wx_ad })
+						this.interstitialAd.onLoad(() => {
+							// console.log('onLoad event emit')
+							this.interstitialAd.show().catch((err) => {
+								console.error(err)
+							})
+						})
+						this.interstitialAd.onError((err) => {
+							// console.log('onError event emit', err)
+						})
+						this.interstitialAd.onClose((res) => {
+							// console.log('onClose event emit', res)
+						})
+					}, 1000 * parseInt(res.data.wx_ad_delay))
+				}
+				// #endif
 			}); //加载文章
 
 			this.loadPostLast(true);
@@ -663,7 +681,7 @@
 	.jiangqie-news-lightbox-main {
 		height: 300rpx;
 		width: 320rpx;
-		background: linear-gradient(to right bottom, #7FD3FF, #2BB1F2);
+		// background: linear-gradient(to right bottom, #7FD3FF, #2BB1F2);
 		box-shadow: 5rpx 5rpx 20rpx rgba(0, 0, 0, 0.2);
 	}
 
@@ -673,12 +691,12 @@
 		width: 350rpx;
 		text-align: left;
 		margin-left: 20rpx;
-		background: linear-gradient(to right bottom, #9788FF, #735CFF);
+		// background: linear-gradient(to right bottom, #9788FF, #735CFF);
 		box-shadow: 5rpx 5rpx 20rpx rgba(0, 0, 0, 0.2);
 	}
 
 	.jiangqie-news-lightbox-side2 {
-		background: linear-gradient(to right bottom, #FF91C2, #FF539E);
+		// background: linear-gradient(to right bottom, #FF91C2, #FF539E);
 	}
 
 	.jiangqie-news-lightimg {

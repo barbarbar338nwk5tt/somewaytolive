@@ -19,10 +19,13 @@
 			<view v-if="official" class="jiangqie-official-mod">
 				<official-account></official-account>
 			</view>
+			
+			<template v-if="wx_ad_top">
+				<ad :unit-id="wx_ad_top"></ad>
+			</template>
 			<!-- #endif -->
 
 			<view class="jiangqie-page-body">
-
 				<mp-html :content="article"></mp-html>
 
 				<view class="jiangqie-page-body-end">
@@ -56,6 +59,13 @@
 					</view>
 				</view>
 			</view>
+			
+			<!-- #ifdef MP-WEIXIN -->
+			<template v-if="wx_ad_bottom">
+				<ad :unit-id="wx_ad_bottom"></ad>
+			</template>
+			<!-- #endif -->
+			
 			<view class="jiangqie-page-cmtbox">
 				<view class="jiangqie-page-cmt-title">
 					评论<text>{{comment_count + comment_count_change}}</text>
@@ -211,6 +221,9 @@
 				comment_count_change: 0,
 				post_id: 0,
 				comment_id: 0,
+				
+				wx_ad_top: undefined,
+				wx_ad_bottom: undefined,
 
 				//小程序码
 				acode: '',
@@ -278,6 +291,9 @@
 					like_list: res.data.like_list
 				});
 				that.article = that.escape2Html(res.data.content);
+				
+				this.wx_ad_top = res.data.wx_ad_top;
+				this.wx_ad_bottom = res.data.wx_ad_bottom;
 				
 				// #ifdef MP-BAIDU
 				let keywords = [];

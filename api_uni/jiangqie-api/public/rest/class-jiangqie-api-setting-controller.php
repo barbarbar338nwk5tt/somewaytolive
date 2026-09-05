@@ -191,6 +191,15 @@ class JiangQie_API_Setting_Controller extends JiangQie_API_Base_Controller
 
 		$data['background'] = plugins_url("images/id_bg.png", dirname(__FILE__));
 
+		// 广告设置
+		$wx_ad = JiangQie_API::option_value('wx_ad_home');
+		if ($wx_ad && $wx_ad['switch'] && $wx_ad['adid']) {
+			$data['wx_ad'] = $wx_ad['adid'];
+			$data['wx_ad_delay'] = $wx_ad['delay'];
+		} else {
+			$data['wx_ad'] = false;
+		}
+
 		return $this->make_success($data);
 	}
 
@@ -219,6 +228,14 @@ class JiangQie_API_Setting_Controller extends JiangQie_API_Base_Controller
 			'title' => JiangQie_API::option_value('category_title'),
 			'description' => JiangQie_API::option_value('category_description'),
 		];
+
+		// 广告设置
+		$wx_ad = JiangQie_API::option_value('wx_ad_category');
+		if ($wx_ad && $wx_ad['switch'] && $wx_ad['adid']) {
+			$data['wx_ad'] = $wx_ad['adid'];
+		} else {
+			$data['wx_ad'] = false;
+		}
 
 		return $this->make_success($data);
 	}
