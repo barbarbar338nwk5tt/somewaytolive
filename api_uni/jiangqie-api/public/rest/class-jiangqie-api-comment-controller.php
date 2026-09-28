@@ -179,19 +179,21 @@ class JiangQie_API_Comment_Controller extends JiangQie_API_Base_Controller
 		$per_page_count = JiangQie_API::POSTS_PER_PAGE;
 		$table_comments = $wpdb->prefix . 'comments';
 		$fields = 'comment_ID, comment_author, comment_date, comment_content, comment_approved, user_id';
-		$where = "comment_post_ID=$post_id AND comment_parent=$parent";
+		$where = $wpdb->prepare("comment_post_ID=%d AND comment_parent=%d", $post_id, $parent);
 		if ($my_user_id) {
-			$where = $where . " AND (comment_approved=1 OR user_id=$my_user_id)";
+			$where = $where . $wpdb->prepare(" AND (comment_approved=1 OR user_id=%d)", $my_user_id);
 		} else {
 			$where = $where . " AND comment_approved=1";
 		}
 
 		$limit = '';
 		if ($offset !== null) {
-			$limit = "LIMIT $offset, $per_page_count";
+			$limit = $wpdb->prepare("LIMIT %d, %d", $offset, $per_page_count);
 		}
 
-		$result = $wpdb->get_results("SELECT $fields FROM `$table_comments` WHERE $where ORDER BY comment_ID DESC $limit");
+		$result = $wpdb->get_results(
+			"SELECT $fields FROM `$table_comments` WHERE $where ORDER BY comment_ID DESC $limit"
+		);
 		$comments = [];
 		foreach ($result as $comment) {
 			$name = get_user_meta($comment->user_id, 'nickname', true);

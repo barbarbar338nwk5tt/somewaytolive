@@ -189,7 +189,11 @@ class JiangQie_API_Post_Controller extends JiangQie_API_Base_Controller
 
 		global $wpdb;
 		$table_post_search = $wpdb->prefix . 'jiangqie_post_search';
-		$times = $wpdb->get_var($wpdb->prepare("SELECT times FROM `$table_post_search` WHERE search=%s", $search));
+		$times = $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT times FROM `$table_post_search` WHERE search=%s", $search
+			)
+		);
 		if (empty($times)) {
 			$wpdb->insert($table_post_search, [
 				'search' => $search,
@@ -226,7 +230,11 @@ class JiangQie_API_Post_Controller extends JiangQie_API_Base_Controller
 		if (!$home_hot_search) {
 			global $wpdb;
 			$table_post_search = $wpdb->prefix . 'jiangqie_post_search';
-			$result = $wpdb->get_results($wpdb->prepare("SELECT search FROM `$table_post_search` ORDER BY times DESC LIMIT 0, 10"));
+			$result = $wpdb->get_results(
+				$wpdb->prepare(
+					"SELECT search FROM `$table_post_search` ORDER BY times DESC LIMIT %d, %d", 0, 10
+				)
+			);
 			$searchs = array_column($result, 'search');
 		} else {
 			$searchs = explode(',', $home_hot_search);
@@ -295,7 +303,11 @@ class JiangQie_API_Post_Controller extends JiangQie_API_Base_Controller
 		//点赞列表
 		global $wpdb;
 		$table_post_like = $wpdb->prefix . 'jiangqie_post_like';
-		$users = $wpdb->get_results("SELECT user_id FROM `$table_post_like` WHERE post_id=$post_id ORDER BY id DESC");
+		$users = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT user_id FROM `$table_post_like` WHERE post_id=%d ORDER BY id DESC", $post_id
+			)
+		);
 		$post['like_list'] = [];
 		if (!empty($users)) {
 			foreach ($users as $user) {
@@ -314,16 +326,28 @@ class JiangQie_API_Post_Controller extends JiangQie_API_Base_Controller
 		$user_id = $this->check_login($request);
 		if ($user_id) {
 			$table_post_like = $wpdb->prefix . 'jiangqie_post_like';
-			$post_like_id = $wpdb->get_var($wpdb->prepare("SELECT id FROM `$table_post_like` WHERE user_id=%d AND post_id=%d", $user_id, $post_id));
+			$post_like_id = $wpdb->get_var(
+				$wpdb->prepare(
+					"SELECT id FROM `$table_post_like` WHERE user_id=%d AND post_id=%d", $user_id, $post_id
+				)
+			);
 			$user['islike'] = $post_like_id ? 1 : 0;
 
 			$table_post_favorite = $wpdb->prefix . 'jiangqie_post_favorite';
-			$post_favorite_id = $wpdb->get_var($wpdb->prepare("SELECT id FROM `$table_post_favorite` WHERE user_id=%d AND post_id=%d", $user_id, $post_id));
+			$post_favorite_id = $wpdb->get_var(
+				$wpdb->prepare(
+					"SELECT id FROM `$table_post_favorite` WHERE user_id=%d AND post_id=%d", $user_id, $post_id
+				)
+			);
 			$user['isfavorite'] = $post_favorite_id ? 1 : 0;
 
 			//添加文章浏览记录
 			$table_post_view = $wpdb->prefix . 'jiangqie_post_view';
-			$post_view_id = $wpdb->get_var($wpdb->prepare("SELECT id FROM `$table_post_view` WHERE user_id=%d AND post_id=%d", $user_id, $post_id));
+			$post_view_id = $wpdb->get_var(
+				$wpdb->prepare(
+					"SELECT id FROM `$table_post_view` WHERE user_id=%d AND post_id=%d", $user_id, $post_id
+				)
+			);
 			if (!$post_view_id) {
 				$wpdb->insert($table_post_view, [
 					'user_id' => $user_id,
@@ -364,7 +388,11 @@ class JiangQie_API_Post_Controller extends JiangQie_API_Base_Controller
 
 		global $wpdb;
 		$table_post = $wpdb->prefix . 'posts';
-		$result = $wpdb->get_row($wpdb->prepare("SELECT post_title, post_content FROM `$table_post` WHERE ID=%d", $page_id));
+		$result = $wpdb->get_row(
+			$wpdb->prepare(
+				"SELECT post_title, post_content FROM `$table_post` WHERE ID=%d", $page_id
+			)
+		);
 		if (!$result) {
 			return $this->make_error('未找到文章');
 		}
@@ -502,7 +530,12 @@ class JiangQie_API_Post_Controller extends JiangQie_API_Base_Controller
 		}
 		
 		$per_page_count = JiangQie_API::POSTS_PER_PAGE;
-		$post_ids = $wpdb->get_results("SELECT distinct $field FROM `$table_name` WHERE user_id=$user_id ORDER BY $orderby DESC LIMIT $offset, $per_page_count");
+		$post_ids = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT distinct $field FROM `$table_name` WHERE user_id=%d ORDER BY $orderby DESC LIMIT %d, %d",
+				$user_id, $offset, $per_page_count
+			)
+		);
 		if (empty($post_ids)) {
 			return $this->make_success([]);
 		}
