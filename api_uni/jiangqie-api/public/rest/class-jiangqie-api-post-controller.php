@@ -604,12 +604,15 @@ class JiangQie_API_Post_Controller extends JiangQie_API_Base_Controller
 	 */
 	public function get_wxacode($request)
 	{
-		$post_id = $this->param_value($request, 'post_id', 0);
+		$post_id = (int)($this->param_value($request, 'post_id', 0));
 		if (!$post_id) {
 			return $this->make_error('缺少参数');
 		}
 
 		$post_type = get_post_type($post_id);
+		if ($post_type != 'post') {
+			return $this->make_error('暂不支持');
+		}
 
 		$uploads = wp_upload_dir();
 		$qrcode_path = $uploads['basedir'] . '/jiangqie_wxacode/';
@@ -684,12 +687,15 @@ class JiangQie_API_Post_Controller extends JiangQie_API_Base_Controller
 	 */
 	public function get_bdacode($request)
 	{
-		$post_id = $this->param_value($request, 'post_id', 0);
+		$post_id = (int)($this->param_value($request, 'post_id', 0));
 		if (!$post_id) {
 			return $this->make_error('缺少参数');
 		}
 
 		$post_type = get_post_type($post_id);
+		if ($post_type != 'post') {
+			return $this->make_error('暂不支持');
+		}
 
 		$uploads = wp_upload_dir();
 		$qrcode_path = $uploads['basedir'] . '/jiangqie_bdacode/';
@@ -751,12 +757,15 @@ class JiangQie_API_Post_Controller extends JiangQie_API_Base_Controller
 	 */
 	public function get_qqacode($request)
 	{
-		$post_id = $this->param_value($request, 'post_id', 0);
+		$post_id = (int)($this->param_value($request, 'post_id', 0));
 		if (!$post_id) {
 			return $this->make_error('缺少参数');
 		}
 
 		$post_type = get_post_type($post_id);
+		if ($post_type != 'post') {
+			return $this->make_error('暂不支持');
+		}
 
 		$uploads = wp_upload_dir();
 		$qrcode_path = $uploads['basedir'] . '/jiangqie_qqacode/';
