@@ -676,7 +676,7 @@ class JiangQie_API_Post_Controller extends JiangQie_API_Base_Controller
 		//同步到媒体库
 		$res = jiangqie_free_import_image2attachment($qrcode);
 		if (!is_wp_error($res)) {
-			$qrcode_link = $uploads['baseurl'] . '/jiangqie_bdacode/' . $res;
+			$qrcode_link = $uploads['baseurl'] . '/jiangqie_wxacode/' . $res;
 		}
 
 		return $this->make_success($qrcode_link);
