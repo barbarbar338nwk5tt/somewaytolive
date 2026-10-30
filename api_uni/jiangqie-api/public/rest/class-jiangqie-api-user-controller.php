@@ -528,7 +528,7 @@ class JiangQie_API_User_Controller extends JiangQie_API_Base_Controller
 	 */
 	public function user_like($request)
 	{
-		$post_id = $this->param_value($request, 'post_id', 0);
+		$post_id = (int)($this->param_value($request, 'post_id', 0));
 		if (empty($post_id)) {
 			return $this->make_error('缺少参数');
 		}
@@ -571,7 +571,7 @@ class JiangQie_API_User_Controller extends JiangQie_API_Base_Controller
 	 */
 	public function user_favorite($request)
 	{
-		$post_id = $this->param_value($request, 'post_id', 0);
+		$post_id = (int)($this->param_value($request, 'post_id', 0));
 		if (empty($post_id)) {
 			return $this->make_error('缺少参数');
 		}

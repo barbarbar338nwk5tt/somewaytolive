@@ -93,12 +93,12 @@ class JiangQie_API_Comment_Controller extends JiangQie_API_Base_Controller
 	 */
 	public function comment_index($request)
 	{
-		$post_id = $this->param_value($request, 'post_id', 0);
+		$post_id = (int)($this->param_value($request, 'post_id', 0));
 		if (empty($post_id)) {
 			return $this->make_error('缺少参数');
 		}
 
-		$offset = $this->param_value($request, 'offset', 0);
+		$offset = (int)($this->param_value($request, 'offset', 0));
 
 		$my_user_id = $this->check_login($request);
 
@@ -125,8 +125,8 @@ class JiangQie_API_Comment_Controller extends JiangQie_API_Base_Controller
 			return $this->make_error('评论功能未开启');
 		}
 
-		$post_id = $this->param_value($request, 'post_id', 0);
-		$parent_id = $this->param_value($request, 'parent_id', 0);
+		$post_id = (int)($this->param_value($request, 'post_id', 0));
+		$parent_id = (int)($this->param_value($request, 'parent_id', 0));
 		$content = $this->param_value($request, 'content', '');
 		if (empty($post_id) || empty($content)) {
 			return $this->make_error('缺少参数');
@@ -158,7 +158,7 @@ class JiangQie_API_Comment_Controller extends JiangQie_API_Base_Controller
 			return $this->make_error('还没有登陆', -1);
 		}
 
-		$comment_id = $this->param_value($request, 'comment_id', 0);
+		$comment_id = (int)($this->param_value($request, 'comment_id', 0));
 		if (empty($comment_id)) {
 			return $this->make_error('缺少参数');
 		}

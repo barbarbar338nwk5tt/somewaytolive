@@ -153,7 +153,7 @@ class JiangQie_API_Post_Controller extends JiangQie_API_Base_Controller
 	 */
 	public function get_last_posts($request)
 	{
-		$offset = $this->param_value($request, 'offset', 0);
+		$offset = (int)($this->param_value($request, 'offset', 0));
 
 		$args = [
 			'posts_per_page' => JiangQie_API::POSTS_PER_PAGE,
@@ -176,7 +176,7 @@ class JiangQie_API_Post_Controller extends JiangQie_API_Base_Controller
 	 */
 	public function get_search_posts($request)
 	{
-		$offset = $this->param_value($request, 'offset', 0);
+		$offset = (int)($this->param_value($request, 'offset', 0));
 		$search = $this->param_value($request, 'search', '');
 
 		if (empty($search)) {
@@ -248,7 +248,7 @@ class JiangQie_API_Post_Controller extends JiangQie_API_Base_Controller
 	 */
 	public function get_post_detail($request)
 	{
-		$post_id = $this->param_value($request, 'post_id');
+		$post_id = (int)($this->param_value($request, 'post_id'));
 		if (!$post_id) {
 			return $this->make_error('缺少参数');
 		}
@@ -380,8 +380,7 @@ class JiangQie_API_Post_Controller extends JiangQie_API_Base_Controller
 	 */
 	public function get_post_page($request)
 	{
-		$page_id = $this->param_value($request, 'page_id');
-		$page_id = (int)$page_id;
+		$page_id = (int)($this->param_value($request, 'page_id'));
 		if (!$page_id) {
 			return $this->make_error('缺少参数');
 		}
@@ -407,8 +406,8 @@ class JiangQie_API_Post_Controller extends JiangQie_API_Base_Controller
 	 */
 	public function get_tag_posts($request)
 	{
-		$offset = $this->param_value($request, 'offset', 0);
-		$tag_id = $this->param_value($request, 'tag_id', 0);
+		$offset = (int)($this->param_value($request, 'offset', 0));
+		$tag_id = (int)($this->param_value($request, 'tag_id', 0));
 
 		$args = [
 			'posts_per_page' => JiangQie_API::POSTS_PER_PAGE,
@@ -427,8 +426,8 @@ class JiangQie_API_Post_Controller extends JiangQie_API_Base_Controller
 	 */
 	public function get_category_posts($request)
 	{
-		$offset = $this->param_value($request, 'offset', 0);
-		$cat_id = $this->param_value($request, 'cat_id', 0);
+		$offset = (int)($this->param_value($request, 'offset', 0));
+		$cat_id = (int)($this->param_value($request, 'cat_id', 0));
 
 		$args = [
 			'posts_per_page' => JiangQie_API::POSTS_PER_PAGE,
@@ -446,7 +445,7 @@ class JiangQie_API_Post_Controller extends JiangQie_API_Base_Controller
 	 */
 	public function get_hot_posts($request)
 	{
-		$offset = $this->param_value($request, 'offset', 0);
+		$offset = (int)($this->param_value($request, 'offset', 0));
 
 		$args = [
 			'posts_per_page' => JiangQie_API::POSTS_PER_PAGE,
@@ -508,7 +507,7 @@ class JiangQie_API_Post_Controller extends JiangQie_API_Base_Controller
 			return $this->make_error('缺少参数');
 		}
 
-		$offset = $this->param_value($request, 'offset', 0);
+		$offset = (int)($this->param_value($request, 'offset', 0));
 
 		global $wpdb;
 		if ($track == 'views') {
