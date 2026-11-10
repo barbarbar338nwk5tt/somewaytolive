@@ -839,6 +839,7 @@
 		border: 1rpx solid #AAA;
 		border-radius: 26rpx;
 		margin-right: 12rpx;
+		display: none;
 	}
 
 	.jiangqie-news-time {

@@ -750,7 +750,7 @@
 		height: 32rpx;
 		width: 32rpx;
 		margin-right: 10rpx;
-		vertical-align: middle;
+		vertical-align: text-bottom;
 		margin-bottom: 2rpx;
 	}
 
@@ -778,6 +778,11 @@
 		line-height: 2rem;
 		font-weight: 300;
 		font-size: 30rpx;
+	}
+	.jiangqie-page-body rich-text {
+		line-height: 2rem;
+		min-height: 2rem;
+		display: block;
 	}
 
 	.wxParse-p {
