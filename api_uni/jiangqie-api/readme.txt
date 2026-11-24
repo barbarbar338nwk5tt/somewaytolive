@@ -5,7 +5,7 @@ Donate link: https://www.jiangqie.com/
 Tags: 追格,酱茄,小程序
 Requires at least: 5.6
 Tested up to: 5.9
-Stable tag: 1.7.0
+Stable tag: 1.8.0
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -82,6 +82,18 @@ gitee下载（优先更新）：https://gitee.com/longwenjunj/jiangqie_kafei
 
 
 == Changelog ==
+
+= 1.8.0 =
+
+1. 修复：文章详情内容无法空行问题；
+
+2. 优化：界面细节优化；
+
+3. 优化：参数查询和数据效验（安全）问题；
+
+4. 优化：避免恶意测试时生成了一些垃圾图片；
+
+5. 优化：海报生成2次的问题；
 
 = 1.7.0 =
 
